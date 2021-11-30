@@ -1,0 +1,16 @@
+// This is to help use css property assing color with fallback
+@mixin grays($property, $variable) {
+  #{$property}: var(--#{$variable}, map-get($grays, $variable));
+}
+
+@mixin blues($property, $variable) {
+  #{$property}: var(--#{$variable}, map-get($blues, $variable));
+}
+
+@mixin theme-colors($property, $variable) {
+  #{$property}: var(--#{$variable}, map-get($theme-colors, $variable));
+}
+
+@mixin notification-colors($property, $variable) {
+  #{$property}: var(--#{$variable}, map-get($notification-colors, $variable));
+}
