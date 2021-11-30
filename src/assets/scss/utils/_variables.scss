@@ -1,0 +1,83 @@
+// Color system
+$white: #fff !default;
+$gray-100: #e5e5e5 !default;
+$gray-900: #1c1c1c !default;
+$black: #000 !default;
+
+$grays: (
+  "g-0": $white,
+  "g-100": $gray-100,
+  "g-900": $gray-900,
+  "black": $black,
+) !default;
+
+$blue-100: #e6ecf0 !default;
+$blue-200: #ccd6dd !default;
+$blue-300: #9197a3 !default;
+$blue-600: #657786 !default;
+$blue-800: #50b5ff !default;
+$blue-1000: #0099ff !default;
+
+$blues: (
+  "b-100": $blue-100,
+  "b-200": $blue-200,
+  "b-300": $blue-300,
+  "b-600": $blue-600,
+  "b-800": $blue-800,
+  "b-1000": $blue-1000,
+) !default;
+
+$pink: #fc5a5a !default;
+$red: #e0245e !default;
+$orange-100: #ff6600 !default;
+$orange-200: #ff5500 !default;
+$yellow: #ffba6c !default;
+$green: #82c43c !default;
+
+// theme color variables
+$primary: $orange-100 !default;
+$error: $pink !default;
+$success: $green !default;
+
+$theme-colors: (
+  "primary": $primary,
+  "error": $error,
+  "success": $success,
+) !default;
+
+$notification-colors: (
+  "bg-default": $gray-100,
+  "input-default": $blue-600,
+  "input-hover": $blue-800,
+  "input-error": $error,
+  "tweet-error": $error,
+  "alert-error": $error,
+  "input-success": $success,
+  "button-focus-outline-color": $yellow,
+  "button-hover-color": $orange-200,
+) !default;
+
+:root {
+  // this will generate all css variables for above colors from Color system, for example, --button-hover-color:#f50.  To use variable, use var() function
+  @each $prop, $var in $grays {
+    --#{$prop}: #{$var};
+  }
+  @each $prop, $var in $blues {
+    --#{$prop}: #{$var};
+  }
+  @each $prop, $var in $theme-colors {
+    --#{$prop}: #{$var};
+  }
+  @each $prop, $var in $notification-colors {
+    --#{$prop}: #{$var};
+  }
+
+  // font family Noto Sans TC by default
+  --ff-primary: "Noto Sans TC", sans-serif;
+
+  // font weight system
+  --fw-thin: 400;
+  --fw-normal: 500;
+  --fw-bold: 700;
+  --fw-bolder: 900;
+}
