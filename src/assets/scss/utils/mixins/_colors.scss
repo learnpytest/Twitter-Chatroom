@@ -14,3 +14,7 @@
 @mixin notification-colors($property, $variable) {
   #{$property}: var(--#{$variable}, map-get($notification-colors, $variable));
 }
+
+@mixin background-colors($property, $variable) {
+  #{$property}: var(--#{$variable}, map-get($background-colors, $variable));
+}

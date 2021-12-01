@@ -1,11 +1,13 @@
 // Color system
 $white: #fff !default;
+$gray-50: #f5f8fa !default;
 $gray-100: #e5e5e5 !default;
 $gray-900: #1c1c1c !default;
 $black: #000 !default;
 
 $grays: (
   "g-0": $white,
+  "g-50": $gray-50,
   "g-100": $gray-100,
   "g-900": $gray-900,
   "black": $black,
@@ -46,7 +48,6 @@ $theme-colors: (
 ) !default;
 
 $notification-colors: (
-  "bg-default": $gray-100,
   "input-default": $blue-600,
   "input-hover": $blue-800,
   "input-error": $error,
@@ -55,6 +56,11 @@ $notification-colors: (
   "input-success": $success,
   "button-focus-outline-color": $yellow,
   "button-hover-color": $orange-200,
+) !default;
+
+$background-colors: (
+  "bg-default": $gray-100,
+  "bg-secondary": $gray-50,
 ) !default;
 
 :root {
@@ -69,6 +75,9 @@ $notification-colors: (
     --#{$prop}: #{$var};
   }
   @each $prop, $var in $notification-colors {
+    --#{$prop}: #{$var};
+  }
+  @each $prop, $var in $background-colors {
     --#{$prop}: #{$var};
   }
 
