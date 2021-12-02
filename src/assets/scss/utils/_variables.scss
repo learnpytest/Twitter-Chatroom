@@ -1,30 +1,33 @@
 // Color system
 $white: #fff !default;
 $gray-50: #f5f8fa !default;
+$gray-75: #e6ecf0 !default;
 $gray-100: #e5e5e5 !default;
+$gray-150: #e0e0e0 !default;
+$gray-200: #ccd6dd !default;
+$gray-600: #657786 !default;
+$gray-650: #828282 !default;
+$gray-700: #9197a3 !default;
 $gray-900: #1c1c1c !default;
 $black: #000 !default;
 
 $grays: (
   "g-0": $white,
   "g-50": $gray-50,
+  "g-75": $gray-75,
   "g-100": $gray-100,
+  "g-150": $gray-150,
+  "g-200": $gray-200,
+  "g-600": $gray-600,
+  "g-700": $gray-700,
   "g-900": $gray-900,
   "black": $black,
 ) !default;
 
-$blue-100: #e6ecf0 !default;
-$blue-200: #ccd6dd !default;
-$blue-300: #9197a3 !default;
-$blue-600: #657786 !default;
 $blue-800: #50b5ff !default;
 $blue-1000: #0099ff !default;
 
 $blues: (
-  "b-100": $blue-100,
-  "b-200": $blue-200,
-  "b-300": $blue-300,
-  "b-600": $blue-600,
   "b-800": $blue-800,
   "b-1000": $blue-1000,
 ) !default;
@@ -40,15 +43,17 @@ $green: #82c43c !default;
 $primary: $orange-100 !default;
 $error: $pink !default;
 $success: $green !default;
+$disabled: $gray-650 !default;
 
 $theme-colors: (
   "primary": $primary,
   "error": $error,
   "success": $success,
+  "disabled": $disabled,
 ) !default;
 
 $notification-colors: (
-  "input-default": $blue-600,
+  "input-default": $gray-600,
   "input-hover": $blue-800,
   "input-error": $error,
   "tweet-error": $error,
@@ -61,6 +66,7 @@ $notification-colors: (
 $background-colors: (
   "bg-default": $gray-100,
   "bg-secondary": $gray-50,
+  "bg-disabled": $gray-150,
 ) !default;
 
 :root {
