@@ -13,7 +13,9 @@
         >
       </template>
       <template v-slot:button
-        ><PrimaryButtonLarge>登入 </PrimaryButtonLarge>
+        ><PrimaryButtonLarge @click.native.prevent.stop="login"
+          >登入
+        </PrimaryButtonLarge>
       </template>
     </LoginForm>
   </div>
@@ -22,12 +24,22 @@
 <script>
 import LoginForm from "@/components/LoginForm";
 import PrimaryButtonLarge from "@/components/Buttons/PrimaryButtonLarge.vue";
+import { mapActions } from "vuex";
+import { POST_LOGIN } from "../store/store-types";
 
 export default {
   name: "UserLogin",
   components: {
     LoginForm,
     PrimaryButtonLarge,
+  },
+  methods: {
+    login() {
+      this.postLogin();
+    },
+    ...mapActions({
+      postLogin: POST_LOGIN,
+    }),
   },
 };
 </script>

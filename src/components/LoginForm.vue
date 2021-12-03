@@ -10,7 +10,14 @@
     </div>
     <div class="form__group">
       <label for="account">Email</label>
-      <input type="email" id="email" name="email" :class="['form__input']" />
+      <input
+        type="email"
+        id="email"
+        name="email"
+        :class="['form__input']"
+        v-model="email"
+        @input="updateLoginInfo"
+      />
       <div>
         <!-- todo error message -->
       </div>
@@ -22,14 +29,12 @@
         id="password"
         name="password"
         :class="['form__input']"
+        v-model="password"
+        @input="updateLoginInfo"
       />
       <div>
         <!-- todo error message -->
       </div>
-    </div>
-
-    <div>
-      <router-link> <slot></slot></router-link>
     </div>
 
     <slot name="button"></slot>
@@ -41,8 +46,25 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+import { SET_LOGIN_INFO } from "../store/store-types";
 export default {
   name: "LoginForm",
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+
+  methods: {
+    updateLoginInfo() {
+      this.setLoginInfo({ email: this.email, password: this.password });
+    },
+    ...mapActions({
+      setLoginInfo: SET_LOGIN_INFO,
+    }),
+  },
 };
 </script>
 
