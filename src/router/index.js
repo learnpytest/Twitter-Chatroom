@@ -27,6 +27,11 @@ const routes = [
     component: () => import("@/views/AdminUsers"),
   },
   {
+    path: "/admin/tweets",
+    name: "admin-tweet-list",
+    component: () => import("@/views/AdminMain"),
+  },
+  {
     path: "/",
     name: "Home",
   },
