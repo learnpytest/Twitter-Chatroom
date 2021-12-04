@@ -65,7 +65,7 @@ export default {
 <style lang="scss" scoped>
 @import "./src/assets/scss/main.scss";
 .reply-tweet-modal {
-  background-color: rgb(28, 28, 28, 0.5);
+  background-color: rgba(28, 28, 28, 0.5);
   height: 100%;
   padding-top: 50px;
 }
