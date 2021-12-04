@@ -3,7 +3,7 @@
     <div class="header">首頁</div>
     <div class="text-box">
       <div class="user-info">
-        <img class="user-pic" src="./../assets/images/Photo_user1.png" alt="" />
+        <img class="user-pic" src="./../../assets/images/Photo_user1.png" alt="" />
       </div>
       <div class="text-area" @click="handleShowModalClick">
         <textarea class="form-control" rows="3" placeholder="有什麽新鮮事？" />
@@ -44,7 +44,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "./../assets/scss/main.scss";
+@import "./../../assets/scss/main.scss";
 .addtweet-wrapper {
   min-height: 190px;
 }
@@ -64,12 +64,10 @@ export default {
 .user-info {
   color: $gray-700;
   width: 10%;
-  img {
+  .user-pic {
+    margin-right: 10px;
     max-width: 50px;
     max-height: 50px;
-    .user-pic {
-      margin-right: 10px;
-    }
   }
 }
 

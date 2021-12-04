@@ -2,7 +2,7 @@
   <div class="popular-wrapper">
     <div class="popular-header">Popular</div>
     <div class="popular-card">
-      <img src="./../assets/images/Photo_user1.png" alt="" />
+      <img src="./../../assets/images/Photo_user1.png" alt="" />
       <div class="popular-card_info">
         <p class="user-name">Pizza Hut</p>
         <p class="user-info">@pizzahut</p>
@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="popular-card">
-      <img src="./../assets/images/Photo_user1.png" alt="" />
+      <img src="./../../assets/images/Photo_user1.png" alt="" />
       <div class="popular-card_info">
         <p class="user-name">Pizza Hut</p>
         <p class="user-info">@pizzahut</p>
@@ -24,7 +24,7 @@
   </div>
 </template>
 <style lang="scss" scoped>
-@import "./../assets/scss/main.scss";
+@import "./../../assets/scss/main.scss";
 .popular-wrapper {
   background-color: $gray-50;
   height: 100%;

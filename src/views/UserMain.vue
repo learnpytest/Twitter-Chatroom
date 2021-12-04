@@ -1,10 +1,7 @@
 ﻿<template>
   <div class="container">
     <div class="reply-modal" v-if="showModal">
-      <ReplyTweetModal
-        :initialShowModal="showModal"
-        @show-modal="modalToggle"
-      />
+      <NewTweetModal :initialShowModal="showModal" @show-modal="modalToggle" />
     </div>
     <div class="usermain">
       <div class="sidebar"><Sidebar /></div>
@@ -21,11 +18,11 @@
 
 <script>
 // import Sidebar from "../modules/Sidebar.vue";
-import AddTweet from "../modules/AddTweet.vue";
-import Tweets from "../modules/Tweets.vue";
-import Popular from "../modules/Popular.vue";
-import Sidebar from "../modules/Sidebar.vue";
-import ReplyTweetModal from "../modules/user/ReplyTweetModal.vue";
+import AddTweet from "../modules/user/AddTweet.vue";
+import Tweets from "../modules/user/Tweets.vue";
+import Popular from "../modules/user/Popular.vue";
+import Sidebar from "../modules/user/Sidebar.vue";
+import NewTweetModal from "../modules/user/NewTweetModal.vue";
 
 const dummyData = {
   users: [
@@ -213,7 +210,7 @@ export default {
     Tweets,
     Popular,
     Sidebar,
-    ReplyTweetModal,
+    NewTweetModal,
   },
   data() {
     return {

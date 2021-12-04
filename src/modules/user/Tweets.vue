@@ -14,19 +14,19 @@
         <div class="tweet-text">{{ tweet.text }}</div>
         <div class="tweet-buttons-control">
           <div class="tweet-buttons">
-            <img src="./../assets/images/icon_reply.svg" alt="" />
+            <img src="./../../assets/images/icon_reply.svg" alt="" />
             <p class="reply-num">{{ tweet.reply.length }}</p>
           </div>
           <div class="tweet-buttons">
             <img
               id="liked-btn"
-              src="./../assets/images/icon_like_fill.svg"
+              src="./../../assets/images/icon_like_fill.svg"
               alt=""
               @click="handleLikeButton(tweet.isLiked)"
               v-if="tweet.isLiked"
             />
             <img
-              src="./../assets/images/icon_like.svg"
+              src="./../../assets/images/icon_like.svg"
               alt=""
               @click="handleLikeButton(tweet.isLiked)"
               v-else
@@ -68,7 +68,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "./../assets/scss/main.scss";
+@import "./../../assets/scss/main.scss";
 .tweets-wrapper {
   width: 100%;
 }

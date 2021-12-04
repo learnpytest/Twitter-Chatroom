@@ -3,7 +3,7 @@
     <ul class="nav-links">
       <li>
         <router-link to="#">
-          <img class="logo" src="./../assets/images/Logo_small.svg" alt="" />
+          <img class="logo" src="./../../assets/images/Logo_small.svg" alt="" />
         </router-link>
       </li>
 
@@ -12,7 +12,7 @@
           <div class="nav-link active">
             <img
               class="filter-orange"
-              src="./../assets/images/icon_index.svg"
+              src="./../../assets/images/icon_index.svg"
               alt=""
             />
             <p class="nav-link_text">首頁</p>
@@ -22,7 +22,7 @@
       <li>
         <router-link to="#">
           <div class="nav-link">
-            <img src="./../assets/images/icon_user.svg" alt="" />
+            <img src="./../../assets/images/icon_user.svg" alt="" />
             <p class="nav-link_text">個人資料</p>
           </div>
         </router-link>
@@ -30,7 +30,7 @@
       <li>
         <router-link to="#">
           <div class="nav-link">
-            <img src="./../assets/images/icon_cog.svg" alt="" />
+            <img src="./../../assets/images/icon_cog.svg" alt="" />
             <p class="nav-link_text">設定</p>
           </div>
         </router-link>
@@ -41,7 +41,7 @@
     <div class="logout">
       <router-link to="#">
         <div class="nav-link">
-          <img src="./../assets/images/icon_logout.svg" alt="" />
+          <img src="./../../assets/images/icon_logout.svg" alt="" />
           <p class="nav-link_text">登出</p>
         </div>
       </router-link>
@@ -49,7 +49,7 @@
   </div>
 </template>
 <style lang="scss" scoped>
-@import "./../assets/scss/main.scss";
+@import "./../../assets/scss/main.scss";
 
 .active .filter-orange {
   filter: invert(43%) sepia(89%) saturate(2516%) hue-rotate(1deg)
