@@ -22,6 +22,11 @@ const routes = [
     component: () => import("@/views/AdminLogin"),
   },
   {
+    path: "/admin/users",
+    name: "admin-users-list",
+    component: () => import("@/views/AdminUsers"),
+  },
+  {
     path: "/",
     name: "Home",
   },
