@@ -9,5 +9,6 @@
 #simple-twitter-app {
   max-width: 1920px;
   margin: 0 auto;
+  height: 100%;
 }
 </style>
