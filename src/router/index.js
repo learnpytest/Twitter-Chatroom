@@ -1,13 +1,13 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import UserMain from "../views/UserMain.vue";
 import store from "../store";
-import {
-  SET_CURRENT_USER
-} from "../store/store-types";
+import { SET_CURRENT_USER } from "../store/store-types";
 
 Vue.use(VueRouter);
 
-const routes = [{
+const routes = [
+  {
     path: "/login",
     name: "user-login",
     component: () => import("@/views/UserLogin"),
@@ -28,7 +28,12 @@ const routes = [{
   },
   {
     path: "/",
-    name: "home",
+    name: "Home",
+  },
+  {
+    path: "/usermain",
+    name: "UserMain",
+    component: UserMain,
   },
 ];
 

@@ -6,4 +6,9 @@
 
 <style lang="scss">
 @import "@/assets/scss/main.scss";
+#simple-twitter-app {
+  max-width: 1920px;
+  margin: 0 auto;
+  height: 100%;
+}
 </style>
