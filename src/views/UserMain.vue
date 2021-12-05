@@ -286,7 +286,7 @@ export default {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
-  min-height: 100%;
+  height: 100vh;
 }
 .container {
   height: 100%;

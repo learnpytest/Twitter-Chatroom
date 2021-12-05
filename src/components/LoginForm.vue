@@ -103,8 +103,12 @@ export default {
     margin-bottom: 1.9rem;
     @include grays(color, g-600);
     font-size: 1rem;
-
+    background-color: $gray-50;
     font-weight: var(--fw-normal);
+  }
+  label {
+    font-size: 12px;
+    margin: 5px;
   }
   &__group + &__group {
     margin-bottom: 2.7rem;
@@ -112,9 +116,12 @@ export default {
   &__input {
     width: 100%;
     border: none;
-    border-bottom: 1px solid var(--g-600);
+    padding: 5px;
+    border-bottom: 1.5px solid $gray-600;
     @include grays(border-color, g-600);
+    background-color: $gray-50;
   }
+
   &__links {
     margin-top: 1.25rem;
     display: flex;
@@ -124,5 +131,10 @@ export default {
       font-weight: var(--fw-bold);
     }
   }
+}
+
+.form__input:focus,
+.form__input:hover {
+  border-bottom: 1.5px solid $blue-800;
 }
 </style>

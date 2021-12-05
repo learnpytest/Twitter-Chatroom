@@ -40,13 +40,16 @@ export default {
 
 .tweet {
   display: flex;
-  gap: 1rem;
   width: 100%;
+  padding: 0.5rem;
+  border-bottom: 1px solid $gray-75;
+  align-items: center;
   &__img {
     width: 50px;
     height: 50px;
     flex-shrink: 0;
-    margin-top: 0.3rem;
+    margin-right: 10px;
+    // margin-top: 0.3rem;
     border-radius: 50%;
     overflow: hidden;
   }
