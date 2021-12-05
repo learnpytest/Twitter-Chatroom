@@ -1,9 +1,15 @@
 ﻿<template>
   <div class="tweets-wrapper">
-    <div class="tweet" v-for="tweet in tweets" :key="tweet.id">
+    <div
+      class="tweet"
+      v-for="tweet in tweets"
+      :key="tweet.id"
+      @click.stop.prevent="() => $router.push('reply')"
+    >
       <div class="user-pic">
         <img :src="tweet.userImg" alt="" />
       </div>
+
       <div class="tweet-info">
         <div class="info">
           <p class="user-name">
@@ -11,18 +17,26 @@
             ><span class="time">{{ tweet.isCreated }}小時</span>
           </p>
         </div>
-        <div class="tweet-text">{{ tweet.text }}</div>
+
+        <div class="tweet-text">
+          {{ tweet.text }}
+        </div>
+
         <div class="tweet-buttons-control">
           <div class="tweet-buttons">
-            <img src="./../../assets/images/icon_reply.svg" alt="" />
-            <p class="reply-num">{{ tweet.reply.length }}</p>
+            <img
+              src="./../../assets/images/icon_reply.svg"
+              alt=""
+              @click.stop.prevent="handleShowModalClick"
+            />
+            <p class="reply-num">3</p>
           </div>
           <div class="tweet-buttons">
             <img
               id="liked-btn"
               src="./../../assets/images/icon_like_fill.svg"
               alt=""
-              @click="handleLikeButton(tweet.isLiked)"
+              @click.stop.prevent="handleLikeButton(tweet.isLiked)"
               v-if="tweet.isLiked"
             />
             <img
@@ -45,13 +59,18 @@
 export default {
   props: {
     initialTweets: {
-      type: Array,
+      type: () => [],
+      required: true,
+    },
+    initialShowReplyModal: {
+      type: Boolean,
       required: true,
     },
   },
   data() {
     return {
       tweets: [],
+      showReplyModal: false,
     };
   },
   created() {
@@ -60,9 +79,19 @@ export default {
   methods: {
     fetchData() {
       this.tweets = this.initialTweets;
+      this.showReplyModal = this.initialShowReplyModal;
     },
     handleLikeButton(isLiked) {
+      this.tweet = {
+        ...this.tweet,
+        isLiked: true,
+      };
       console.log(isLiked);
+      console.log(this.tweet);
+    },
+    handleShowModalClick() {
+      this.showReplyModal = true;
+      this.$emit("show-reply-modal");
     },
   },
 };
@@ -78,6 +107,7 @@ export default {
   padding: 15px 10px 15px 10px;
   font-size: 14px;
   border-bottom: 1px solid $gray-75;
+  cursor: pointer;
 }
 
 .user-pic {
@@ -119,6 +149,9 @@ export default {
 
   .liked {
     color: $red;
+  }
+  :hover {
+    cursor: pointer;
   }
 }
 </style>

@@ -5,23 +5,47 @@
       <AdminSidebar />
     </div>
     <div class="panel--data">
-      <div class="panel--data__title">使用者列表</div>
-      <div class="cards">
-        <AdminUserCard v-for="(i, index) in 10" :key="index" />
+      <div class="panel--data__title">推文清單</div>
+      <div class="tweets">
+        <!-- todo get real tweets and use v-for to render all tweets then pass id as prop to tweet card to run delete function -->
+        <!-- <AdminTweet v-for="i in 10" :key="i" /> -->
+        <AdminTweet
+          v-for="tweet in getAllTweets"
+          :key="tweet.id"
+          :tweet="tweet"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import AdminTweet from "@/modules/Admin/AdminTweet.vue";
 import AdminSidebar from "@/modules/Admin/AdminSidebar.vue";
-import AdminUserCard from "@/views/AdminUserCard.vue";
+
+import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
+
+import { SET_ALL_TWEETS, GET_ALL_TWEETS } from "../store/store-types";
 
 export default {
-  name: "AdminUsers",
+  name: "AdminMain",
   components: {
+    AdminTweet,
     AdminSidebar,
-    AdminUserCard,
+  },
+  created() {
+    this.setAllTweets();
+  },
+  methods: {
+    ...mapActions({
+      setAllTweets: SET_ALL_TWEETS,
+    }),
+  },
+  computed: {
+    ...mapGetters({
+      getAllTweets: GET_ALL_TWEETS,
+    }),
   },
 };
 </script>
@@ -33,6 +57,7 @@ export default {
 .container--horizontal {
   display: flex;
   width: 100%;
+  height: 100%;
 }
 .sidebar {
   width: 25%;
@@ -41,15 +66,14 @@ export default {
   height: 100vh;
 }
 .panel--data {
-  height: 100vh;
-  overflow: scroll;
+  height: 100%;
+  overflow-y: scroll;
   flex: 1;
   border-left: 1px solid #e6ecf0;
   &__title {
     height: 3.5rem;
     line-height: 3.5rem;
     min-height: 3rem;
-    margin-bottom: 1rem;
     padding: 0 1.6rem;
     font-size: 1.3rem;
     font-weight: var(--fw-bold);
@@ -57,11 +81,9 @@ export default {
     border-bottom: 1px solid #e6ecf0;
     border-color: var(--g-75);
   }
-}
-.cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding: 1rem;
+  .tweets {
+    display: flex;
+    flex-wrap: wrap;
+  }
 }
 </style>
