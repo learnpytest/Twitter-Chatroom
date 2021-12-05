@@ -147,7 +147,7 @@ export default {
 }
 
 .new-tweet-modal {
-  background-color: rgb(28, 28, 28, 0.5);
+  background-color: rgba(28, 28, 28, 0.5);
   height: 100%;
   padding-top: 50px;
 }

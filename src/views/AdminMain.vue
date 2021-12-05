@@ -10,8 +10,8 @@
         <!-- todo get real tweets and use v-for to render all tweets then pass id as prop to tweet card to run delete function -->
         <!-- <AdminTweet v-for="i in 10" :key="i" /> -->
         <AdminTweet
-          v-for="tweet in getAllTweets"
-          :key="tweet.id"
+          v-for="(tweet, index) in getAllTweets"
+          :key="index"
           :tweet="tweet"
         />
       </div>

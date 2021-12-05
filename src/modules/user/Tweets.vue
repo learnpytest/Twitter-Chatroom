@@ -2,8 +2,8 @@
   <div class="tweets-wrapper">
     <div
       class="tweet"
-      v-for="tweet in tweets"
-      :key="tweet.id"
+      v-for="(tweet, index) in tweets"
+      :key="index"
       @click.stop.prevent="() => $router.push('reply')"
     >
       <div class="user-pic">
@@ -21,19 +21,20 @@
         <div class="tweet-text">{{ tweet.description }}</div>
         <div class="tweet-buttons-control">
           <div class="tweet-buttons">
-            <img src="./../../assets/images/icon_reply.svg" alt="" @click.stop.prevent="handleShowModalClick"/>
+            <img
+              src="./../../assets/images/icon_reply.svg"
+              alt=""
+              @click.stop.prevent="handleShowModalClick"
+            />
             <!-- todo need backend to add replies data for tweets -->
             <p class="reply-num">{{ tweet.id }}</p>
-
           </div>
           <div class="tweet-buttons">
             <img
               id="liked-btn"
               src="./../../assets/images/icon_like_fill.svg"
               alt=""
-
               @click.stop.prevent="handleLikeButton(tweet.isLiked === 'true')"
-
               v-if="tweet.isLiked"
             />
             <img
@@ -57,12 +58,7 @@ import { mapGetters, mapActions } from "vuex";
 import { GET_ALL_TWEETS, SET_ALL_TWEETS } from "../../store/store-types";
 
 export default {
-
   props: {
-    initialTweets: {
-      type: () => [],
-      required: true,
-    },
     initialShowReplyModal: {
       type: Boolean,
       required: true,
@@ -70,7 +66,6 @@ export default {
   },
   data() {
     return {
-      tweets: [],
       showReplyModal: false,
     };
   },
@@ -80,7 +75,6 @@ export default {
   },
   methods: {
     fetchData() {
-      this.tweets = this.initialTweets;
       this.showReplyModal = this.initialShowReplyModal;
     },
     handleLikeButton(isLiked) {
