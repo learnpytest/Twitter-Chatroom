@@ -20,7 +20,7 @@
         </router-link>
       </li>
       <li>
-        <router-link to="#">
+        <router-link to="#1">
           <div class="nav-link">
             <img src="./../../assets/images/icon_user.svg" alt="" />
             <p class="nav-link_text">個人資料</p>
@@ -28,7 +28,7 @@
         </router-link>
       </li>
       <li>
-        <router-link to="#">
+        <router-link to="#2">
           <div class="nav-link">
             <img src="./../../assets/images/icon_cog.svg" alt="" />
             <p class="nav-link_text">設定</p>
@@ -38,8 +38,10 @@
 
       <li class="nav-link"><button>推文</button></li>
     </ul>
+task#38-sprint#2-demo-sync-up-Rachel
     <div class="logout" @click="logout">
       <router-link to="#">
+ main
         <div class="nav-link">
           <img src="./../../assets/images/icon_logout.svg" alt="" />
           <p class="nav-link_text">登出</p>

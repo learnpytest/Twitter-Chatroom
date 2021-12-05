@@ -63,6 +63,7 @@ export default {
   height: 100vh;
   overflow: scroll;
   flex: 1;
+  border-left: 1px solid #e6ecf0;
   &__title {
     height: 3.5rem;
     line-height: 3.5rem;

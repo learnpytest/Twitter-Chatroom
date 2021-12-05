@@ -57,6 +57,7 @@ export default {
 .container--horizontal {
   display: flex;
   width: 100%;
+  height: 100%;
 }
 .sidebar {
   width: 25%;
@@ -65,14 +66,14 @@ export default {
   height: 100vh;
 }
 .panel--data {
-  height: 100vh;
-  overflow: scroll;
+  height: 100%;
+  overflow-y: scroll;
   flex: 1;
+  border-left: 1px solid #e6ecf0;
   &__title {
     height: 3.5rem;
     line-height: 3.5rem;
     min-height: 3rem;
-    margin-bottom: 1rem;
     padding: 0 1.6rem;
     font-size: 1.3rem;
     font-weight: var(--fw-bold);
@@ -83,8 +84,6 @@ export default {
   .tweets {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
-    padding: 1rem;
   }
 }
 </style>

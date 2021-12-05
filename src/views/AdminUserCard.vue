@@ -52,10 +52,11 @@ export default {
 
 // Admin user card sigle style only
 .card {
+  background-color: #f6f7f8;
   border-radius: 10px 10px 10px 10px;
-  min-width: 245px;
+  // min-width: 245px;
   overflow: hidden;
-  flex-grow: 1;
+  width: 23.5%;
   &__header {
     position: relative;
     width: 100%;

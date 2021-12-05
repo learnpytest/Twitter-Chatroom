@@ -27,7 +27,6 @@
 @import "./../../assets/scss/main.scss";
 .popular-wrapper {
   background-color: $gray-50;
-  height: 100%;
   border-radius: 10px;
   margin-top: 10px;
   font-weight: var(--fw-bold);
@@ -35,7 +34,6 @@
 }
 .popular-header {
   padding: 10px;
-  border-bottom: 1px solid $gray-75;
 }
 
 .popular-card {
@@ -43,7 +41,7 @@
   flex-flow: row nowrap;
   align-items: center;
   padding: 15px;
-  border-bottom: 1px solid $gray-75;
+  border-top: 1px solid $gray-75;
 }
 
 .popular-card img {
