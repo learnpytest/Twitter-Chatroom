@@ -73,4 +73,39 @@ const router = new VueRouter({
   routes,
 });
 
+router.beforeEach(async (to, from, next) => {
+  const tokenInLocalStorage = localStorage.getItem("token");
+  // const tokenInStore = store.state.token
+
+  // if (tokenInLocalStorage & tokenInLocalStorage !== tokenInStore) {
+  //   isAuthenticated = await store.dispatch('getCurrentUser')
+  // }
+  let isAuthenticated = false;
+  if (tokenInLocalStorage) {
+    isAuthenticated = store.state.user.isAuthenticated;
+  }
+  // const pathsWithoutAuthentication = ['admin/login', 'login']
+  const pathsWithoutAuthentication = ["user-login"];
+  const adminPathsWithoutAuthentication = ["admin-login"];
+
+  // if (!isAuthenticated && !pathsWithoutAuthentication.includes(to.name)) {
+  //   next("/login");
+  //   return;
+  // }
+  console.log(to.name, isAuthenticated);
+  if (isAuthenticated && pathsWithoutAuthentication.includes(to.name)) {
+    next("/usermain");
+    return;
+  }
+  console.log(to.name, isAuthenticated);
+  if (
+    store.state.user.currentUser.account === "admin" &&
+    adminPathsWithoutAuthentication.includes(to.name)
+  ) {
+    next("/admin/tweets");
+    return;
+  }
+  next();
+});
+
 export default router;
