@@ -15,7 +15,6 @@
         <div class="addtweet">
           <AddTweet :initialShowModal="showModal" @show-modal="modalToggle" />
         </div>
-<<<<<<< HEAD
         <div class="tweets">
           <Tweets
             :initialShowReplyModal="showReplyModal"
@@ -23,10 +22,6 @@
             @show-reply-modal="replyModalToggle"
           />
         </div>
-=======
-
-        <div class="tweets"><Tweets :initialTweets="tweets" /></div>
->>>>>>> origin/task#38-sprint#2-demo-sync-up
       </div>
       <div class="popular"><Popular /></div>
     </div>
