@@ -226,7 +226,7 @@ export default {
   },
   created() {
     // this.fetchData();
-    this.setAllTweets();
+    // this.setAllTweets();
   },
   methods: {
     fetchData() {
