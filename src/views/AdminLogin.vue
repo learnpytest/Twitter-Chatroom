@@ -36,3 +36,11 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+@import "@/assets/scss/utils/mixins/_colors.scss";
+@import "@/assets/scss/utils/_variables.scss";
+
+a {
+  @include grays(color, g-600);
+}
+</style>
