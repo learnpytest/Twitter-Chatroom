@@ -45,7 +45,7 @@
 export default {
   props: {
     initialTweets: {
-      type: Array,
+      type: () => [],
       required: true,
     },
   },

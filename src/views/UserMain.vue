@@ -9,6 +9,7 @@
         <div class="addtweet">
           <AddTweet :initialShowModal="showModal" @show-modal="modalToggle" />
         </div>
+
         <div class="tweets"><Tweets :initialTweets="tweets" /></div>
       </div>
       <div class="popular"><Popular /></div>
@@ -23,6 +24,9 @@ import Tweets from "../modules/user/Tweets.vue";
 import Popular from "../modules/user/Popular.vue";
 import Sidebar from "../modules/user/Sidebar.vue";
 import NewTweetModal from "../modules/user/NewTweetModal.vue";
+
+import { mapGetters, mapActions } from "vuex";
+import { GET_ALL_TWEETS, SET_ALL_TWEETS } from "../store/store-types";
 
 const dummyData = {
   users: [
@@ -216,11 +220,12 @@ export default {
     return {
       showModal: false,
       users: [],
-      tweets: [],
+      // tweets: [],
     };
   },
   created() {
-    this.fetchData();
+    // this.fetchData();
+    this.setAllTweets();
   },
   methods: {
     fetchData() {
@@ -235,6 +240,12 @@ export default {
         this.showModal = false;
       }
     },
+    ...mapActions({ setAllTweets: SET_ALL_TWEETS }),
+  },
+  computed: {
+    ...mapGetters({
+      tweets: GET_ALL_TWEETS,
+    }),
   },
 };
 </script>

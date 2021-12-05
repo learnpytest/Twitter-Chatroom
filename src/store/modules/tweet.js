@@ -32,10 +32,7 @@ const actions = {
 };
 const mutations = {
   [SET_ALL_TWEETS]: (state, allTweets) => {
-    state.allTweets = {
-      ...state.allTweets,
-      ...allTweets,
-    };
+    state.allTweets = [...state.allTweets, ...allTweets];
   },
 };
 
