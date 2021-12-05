@@ -1,6 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import UserMain from "../views/UserMain.vue";
 import store from "../store";
 
 const authenticateIsAdmin = (to, from, next) => {
@@ -11,6 +10,21 @@ const authenticateIsAdmin = (to, from, next) => {
     next("/admin/login");
   }
   next();
+};
+
+const authenticateIsLoggedinUser = (to, from, next) => {
+  const currentUser = store.state.user.currentUser;
+  if (currentUser && currentUser.account === "admin") {
+    alert("YOU ARE NOT LOGGEDIN YET");
+    // next("PERSSION DENIED");
+    next("/login");
+  } else if (currentUser && store.state.user.isAuthenticated) {
+    next();
+  } else {
+    alert("YOU ARE NOT LOGGEDIN YET");
+    // next("PERSSION DENIED");
+    next("/login");
+  }
 };
 
 Vue.use(VueRouter);
@@ -47,21 +61,16 @@ const routes = [
     component: () => import("@/views/AdminMain"),
     beforeEnter: authenticateIsAdmin,
   },
-
-  {
-    path: "/usermain",
-    name: "UserMain",
-    component: UserMain,
-  },
-  {
-    path: "/admin",
-    name: "admin-root",
-    redirect: "/admin/login",
-  },
   {
     path: "/",
     name: "root",
     redirect: "/login",
+  },
+  {
+    path: "/usermain",
+    name: "UserMain",
+    component: () => import("@/views/UserMain"),
+    beforeEnter: authenticateIsLoggedinUser,
   },
 ];
 
@@ -70,13 +79,39 @@ const router = new VueRouter({
   routes,
 });
 
-// router.beforeEach((to, from, next) => {
-//   // 已經登入以後
-//   // 在這個地方要使用vuex要import store
-//   console.log("beforeEach", to, from);
-//   store.dispatch(SET_CURRENT_USER);
-//   // 等取得現在使用者資料再用commit存好當前使用者
-//   next();
-// });
+router.beforeEach(async (to, from, next) => {
+  const tokenInLocalStorage = localStorage.getItem("token");
+  // const tokenInStore = store.state.token
+
+  // if (tokenInLocalStorage & tokenInLocalStorage !== tokenInStore) {
+  //   isAuthenticated = await store.dispatch('getCurrentUser')
+  // }
+  let isAuthenticated = false;
+  if (tokenInLocalStorage) {
+    isAuthenticated = store.state.user.isAuthenticated;
+  }
+  // const pathsWithoutAuthentication = ['admin/login', 'login']
+  const pathsWithoutAuthentication = ["user-login"];
+  const adminPathsWithoutAuthentication = ["admin-login"];
+
+  // if (!isAuthenticated && !pathsWithoutAuthentication.includes(to.name)) {
+  //   next("/login");
+  //   return;
+  // }
+  console.log(to.name, isAuthenticated);
+  if (isAuthenticated && pathsWithoutAuthentication.includes(to.name)) {
+    next("/usermain");
+    return;
+  }
+  console.log(to.name, isAuthenticated);
+  if (
+    store.state.user.currentUser.account === "admin" &&
+    adminPathsWithoutAuthentication.includes(to.name)
+  ) {
+    next("/admin/tweets");
+    return;
+  }
+  next();
+});
 
 export default router;

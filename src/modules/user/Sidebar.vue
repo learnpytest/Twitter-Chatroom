@@ -38,8 +38,10 @@
 
       <li class="nav-link"><button>推文</button></li>
     </ul>
-    <div class="logout">
-      <router-link to="#3">
+task#38-sprint#2-demo-sync-up-Rachel
+    <div class="logout" @click="logout">
+      <router-link to="#">
+ main
         <div class="nav-link">
           <img src="./../../assets/images/icon_logout.svg" alt="" />
           <p class="nav-link_text">登出</p>
@@ -48,6 +50,24 @@
     </div>
   </div>
 </template>
+<script>
+import { mapActions } from "vuex";
+import { REVOKE_AUTHENTICATION } from "@/store/store-types";
+
+export default {
+  name: "Sidebar",
+  methods: {
+    ...mapActions({
+      revokeAuthentication: REVOKE_AUTHENTICATION,
+    }),
+    logout() {
+      console.log("logout");
+      this.revokeAuthentication();
+      this.$router.push("/login");
+    },
+  },
+};
+</script>
 <style lang="scss" scoped>
 @import "./../../assets/scss/main.scss";
 

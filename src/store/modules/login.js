@@ -51,9 +51,15 @@ const actions = {
   }) => {
     // if success set current user, save token to localstorage
     // write first start
+    const email = state.loginInfo.email;
+    const password = state.loginInfo.password;
+    if (!email.length || !password.length) {
+      alert("PLEASE ENTER EMAIL AND PASSWORD");
+      return;
+    }
     const res = await authorizationAPI.usersSignIn({
-      email: state.loginInfo.email,
-      password: state.loginInfo.password,
+      email,
+      password,
     });
 
     const {
@@ -97,9 +103,16 @@ const actions = {
     // todo request login api with state.email, state.password
     // if success set current user, save token to localstorage
     // write first start
+    const email = state.loginInfo.email;
+    const password = state.loginInfo.password;
+    if (!email.length || !password.length) {
+      alert("PLEASE ENTER EMAIL AND PASSWORD");
+      return;
+    }
+
     const res = await authorizationAPI.signIn({
-      email: state.loginInfo.email,
-      password: state.loginInfo.password,
+      email,
+      password,
     });
     const {
       data,

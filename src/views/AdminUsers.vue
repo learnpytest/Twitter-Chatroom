@@ -17,12 +17,31 @@
 import AdminSidebar from "@/modules/Admin/AdminSidebar.vue";
 import AdminUserCard from "@/views/AdminUserCard.vue";
 
+// todo remove comment use this code after backend complete api
+// import { mapGetters, mapActions } from "vuex";
+
+// import { SET_ALL_USERS, GET_ALL_USERS } from "../store/store-types";
+
 export default {
   name: "AdminUsers",
   components: {
     AdminSidebar,
     AdminUserCard,
   },
+  created() {
+    // this.setAllUser();
+  },
+
+  // methods: {
+  //   ...mapActions({
+  //     setAllUser: SET_ALL_USERS,
+  //   }),
+  // },
+  // computed: {
+  //   ...mapGetters({
+  //     getAllUsers: GET_ALL_USERS,
+  //   }),
+  // },
 };
 </script>
 
