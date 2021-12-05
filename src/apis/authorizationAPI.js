@@ -7,7 +7,16 @@ export default {
     email,
     password
   }) {
-    return apiHelper.post("/signin", {
+    return apiHelper.post("/admin/signin", {
+      email,
+      password,
+    });
+  },
+  usersSignIn({
+    email,
+    password
+  }) {
+    return apiHelper.post("/users/signin", {
       email,
       password,
     });

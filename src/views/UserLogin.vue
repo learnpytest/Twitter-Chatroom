@@ -25,7 +25,7 @@
 import LoginForm from "@/components/LoginForm";
 import PrimaryButtonLarge from "@/components/Buttons/PrimaryButtonLarge.vue";
 import { mapActions } from "vuex";
-import { POST_LOGIN } from "../store/store-types";
+import { POST_USER_LOGIN } from "../store/store-types";
 
 export default {
   name: "UserLogin",
@@ -35,10 +35,10 @@ export default {
   },
   methods: {
     login() {
-      this.postLogin();
+      this.postUserLogin();
     },
     ...mapActions({
-      postLogin: POST_LOGIN,
+      postUserLogin: POST_USER_LOGIN,
     }),
   },
 };

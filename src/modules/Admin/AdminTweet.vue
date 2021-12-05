@@ -1,16 +1,16 @@
 <template>
   <div class="tweet">
     <div class="tweet__img">
-      <img class="tweet__avatar" src="http://fakeimg.pl/50x50" alt="" />
+      <img class="tweet__avatar" :src="tweet.User.avatar" alt="" />
     </div>
     <div class="tweet__txt">
       <div class="tweet__control">
         <div class="tweet__info">
-          <div class="tweet__username">Apple</div>
+          <div class="tweet__username">{{ tweet.User.name }}</div>
           <div class="tweet__account">
             @apple<span class="dot">&bull;</span>
           </div>
-          <div class="tweet__created">3小時</div>
+          <div class="tweet__created">{{ tweet.createdAt }}</div>
         </div>
         <div class="tweet__delete">
           <img
@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="tweet__content">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum
+        {{ tweet.description }}
       </div>
     </div>
   </div>
@@ -30,6 +30,7 @@
 <script>
 export default {
   name: "AdminTweet",
+  props: ["tweet"],
 };
 </script>
 

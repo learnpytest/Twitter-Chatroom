@@ -1,4 +1,6 @@
 // import axios from "axios";
+// import api
+import tweets from "../../apis/tweets";
 
 import {
   GET_ALL_TWEETS,
@@ -15,14 +17,17 @@ const actions = {
   [SET_ALL_TWEETS]: async ({
     commit
   }) => {
-    // todo send api to get reponse of all tweets and pass tweets to mutation to change state all the tweets
+    const res = await tweets.all();
+    // send api to get reponse of all tweets and pass tweets to mutation to change state all the tweets
     // start
-    // const response = await axios.get("https://fakestoreapi.com/products");
-    // const {data, status, statusText} = response
-    // if (status !== 'success' || data.status !== 'success') throw new Error('statusText')
-    // commit(SET_ALL_TWEETS, allTweets);
+    const {
+      data,
+      statusText
+    } = res;
+    if (statusText !== "OK") throw new Error("statusText");
+    commit(SET_ALL_TWEETS, data);
     // end
-    commit(SET_ALL_TWEETS);
+    console.log(res.data, "tweets");
   },
 };
 const mutations = {

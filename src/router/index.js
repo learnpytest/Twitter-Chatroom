@@ -5,7 +5,7 @@ import store from "../store";
 
 const authenticateIsAdmin = (to, from, next) => {
   const currentUser = store.state.user.currentUser;
-  if (currentUser && !currentUser.isAdmin) {
+  if (currentUser && currentUser.account !== "admin") {
     alert("PERSSION DENIED");
     // next("PERSSION DENIED");
     next("/admin/login");
@@ -46,6 +46,11 @@ const routes = [{
     path: "/usermain",
     name: "UserMain",
     component: UserMain,
+  },
+  {
+    path: "/admin",
+    name: "admin-root",
+    redirect: "/admin/login",
   },
   {
     path: "/",

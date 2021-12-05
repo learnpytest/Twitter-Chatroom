@@ -3,7 +3,7 @@ import axios from "axios";
 // import store from "../../store"
 
 // const baseURL = 'https://forum-express-api.herokuapp.com/api'
-const baseURL = "http://localhost:3000/api";
+const baseURL = "https://twitter-llrs-api.herokuapp.com/api";
 
 const axiosInstance = axios.create({
   baseURL,

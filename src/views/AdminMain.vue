@@ -8,7 +8,12 @@
       <div class="panel--data__title">推文清單</div>
       <div class="tweets">
         <!-- todo get real tweets and use v-for to render all tweets then pass id as prop to tweet card to run delete function -->
-        <AdminTweet v-for="i in 10" :key="i" />
+        <!-- <AdminTweet v-for="i in 10" :key="i" /> -->
+        <AdminTweet
+          v-for="tweet in getAllTweets"
+          :key="tweet.id"
+          :tweet="tweet"
+        />
       </div>
     </div>
   </div>
@@ -18,11 +23,29 @@
 import AdminTweet from "@/modules/Admin/AdminTweet.vue";
 import AdminSidebar from "@/modules/Admin/AdminSidebar.vue";
 
+import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
+
+import { SET_ALL_TWEETS, GET_ALL_TWEETS } from "../store/store-types";
+
 export default {
   name: "AdminMain",
   components: {
     AdminTweet,
     AdminSidebar,
+  },
+  created() {
+    this.setAllTweets();
+  },
+  methods: {
+    ...mapActions({
+      setAllTweets: SET_ALL_TWEETS,
+    }),
+  },
+  computed: {
+    ...mapGetters({
+      getAllTweets: GET_ALL_TWEETS,
+    }),
   },
 };
 </script>
