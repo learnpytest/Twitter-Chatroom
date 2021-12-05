@@ -31,6 +31,11 @@ Vue.use(VueRouter);
 
 const routes = [
   {
+    path: "/user",
+    name: "user",
+    component: () => import("@/views/User"),
+  },
+  {
     path: "/reply",
     name: "reply-list",
     component: () => import("@/views/ReplyList"),

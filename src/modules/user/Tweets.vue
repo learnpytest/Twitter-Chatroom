@@ -14,7 +14,7 @@
         <div class="info">
           <p class="user-name">
             {{ tweet.User.name }}
-            <span class="user-id">{{ tweet.UserId }} • </span
+            <span class="user-id">@{{ tweet.UserId }} • </span
             ><span class="time">{{ tweet.createdAt }}小時</span>
           </p>
         </div>
@@ -100,6 +100,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "./../../assets/scss/main.scss";
+@import "./../../assets/scss/tweet.scss";
 .tweets-wrapper {
   width: 100%;
 }
@@ -110,50 +111,5 @@ export default {
   font-size: 14px;
   border-bottom: 1px solid $gray-75;
   cursor: pointer;
-}
-
-.user-pic {
-  width: 70px;
-}
-.user-pic img {
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
-  border-radius: 50%;
-}
-
-.info {
-  padding-bottom: 5px;
-}
-.user-name {
-  font-weight: var(--fw-bold);
-}
-
-.info span {
-  color: $gray-600;
-  font-weight: var(--fw-normal);
-}
-
-.tweet-buttons-control {
-  display: flex;
-  font-size: 12px;
-}
-
-.tweet-buttons {
-  margin-right: 45px;
-  display: flex;
-  padding-top: 10px;
-  color: $gray-600;
-  img {
-    width: 14px;
-    margin-right: 7px;
-  }
-
-  .liked {
-    color: $red;
-  }
-  :hover {
-    cursor: pointer;
-  }
 }
 </style>
