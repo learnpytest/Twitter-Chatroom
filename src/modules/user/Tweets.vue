@@ -2,27 +2,29 @@
   <div class="tweets-wrapper">
     <div class="tweet" v-for="tweet in tweets" :key="tweet.id">
       <div class="user-pic">
-        <img :src="tweet.userImg" alt="" />
+        <img :src="tweet.User.avatar" alt="" />
       </div>
       <div class="tweet-info">
         <div class="info">
           <p class="user-name">
-            {{ tweet.name }} <span class="user-id">{{ tweet.userId }} • </span
-            ><span class="time">{{ tweet.isCreated }}小時</span>
+            {{ tweet.User.name }}
+            <span class="user-id">{{ tweet.UserId }} • </span
+            ><span class="time">{{ tweet.createdAt }}小時</span>
           </p>
         </div>
-        <div class="tweet-text">{{ tweet.text }}</div>
+        <div class="tweet-text">{{ tweet.description }}</div>
         <div class="tweet-buttons-control">
           <div class="tweet-buttons">
             <img src="./../../assets/images/icon_reply.svg" alt="" />
-            <p class="reply-num">{{ tweet.reply.length }}</p>
+            <!-- todo need backend to add replies data for tweets -->
+            <p class="reply-num">{{ tweet.id }}</p>
           </div>
           <div class="tweet-buttons">
             <img
               id="liked-btn"
               src="./../../assets/images/icon_like_fill.svg"
               alt=""
-              @click="handleLikeButton(tweet.isLiked)"
+              @click="handleLikeButton(tweet.isLiked === 'true')"
               v-if="tweet.isLiked"
             />
             <img
@@ -33,7 +35,7 @@
             />
 
             <p class="liked-num" :class="{ liked: tweet.isLiked }">
-              {{ tweet.likeNum }}
+              {{ tweet.LikedUsers.length }}
             </p>
           </div>
         </div>
@@ -42,20 +44,23 @@
   </div>
 </template>
 <script>
+import { mapGetters, mapActions } from "vuex";
+import { GET_ALL_TWEETS, SET_ALL_TWEETS } from "../../store/store-types";
+
 export default {
-  props: {
-    initialTweets: {
-      type: () => [],
-      required: true,
-    },
-  },
-  data() {
-    return {
-      tweets: [],
-    };
-  },
+  // props: {
+  //   initialTweets: {
+  //     type: () => [],
+  //     required: true,
+  //   },
+  // },
+  // data() {
+  //   return {
+  //     tweets: [],
+  //   };
+  // },
   created() {
-    this.fetchData();
+    this.setAllTweets();
   },
   methods: {
     fetchData() {
@@ -64,6 +69,12 @@ export default {
     handleLikeButton(isLiked) {
       console.log(isLiked);
     },
+    ...mapActions({ setAllTweets: SET_ALL_TWEETS }),
+  },
+  computed: {
+    ...mapGetters({
+      tweets: GET_ALL_TWEETS,
+    }),
   },
 };
 </script>

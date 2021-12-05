@@ -10,7 +10,8 @@
           <AddTweet :initialShowModal="showModal" @show-modal="modalToggle" />
         </div>
 
-        <div class="tweets"><Tweets :initialTweets="tweets" /></div>
+        <!-- <div class="tweets"><Tweets :initialTweets="tweets" /></div> -->
+        <div class="tweets"><Tweets /></div>
       </div>
       <div class="popular"><Popular /></div>
     </div>
@@ -25,8 +26,8 @@ import Popular from "../modules/user/Popular.vue";
 import Sidebar from "../modules/user/Sidebar.vue";
 import NewTweetModal from "../modules/user/NewTweetModal.vue";
 
-import { mapGetters, mapActions } from "vuex";
-import { GET_ALL_TWEETS, SET_ALL_TWEETS } from "../store/store-types";
+// import { mapGetters, mapActions } from "vuex";
+// import { GET_ALL_TWEETS, SET_ALL_TWEETS } from "../store/store-types";
 
 const dummyData = {
   users: [
@@ -90,122 +91,122 @@ const dummyData = {
       ],
     },
   ],
-  tweets: [
-    {
-      id: 1,
-      name: "apple",
-      userId: "@apple",
-      userImg: "https://i.pravatar.cc/300",
-      isCreated: 3,
-      text: "asdfafdhsmnbxcvhbjksiiewrhiu fasdnkjh d asduif eriuh asdfkb akf oweoiab dfjk iwerg jnsdbf oaiyerg mnz sdfioyagwer oiadskf yig weig oifya jasdkb oaiwertyg ao",
-      isLiked: true,
-      reply: [
-        {
-          id: 30,
-          name: "samsung",
-          userId: "@samsung",
-          isCreated: "12",
-          text: "asdfafdasdf asd g hdfhfg o",
-        },
-      ],
-      likeNum: 3,
-    },
-    {
-      id: 2,
-      name: "Bill Withers",
-      userId: "@bill",
-      userImg: "https://i.pravatar.cc/300",
-      isCreated: 3,
-      text: "asjh d asduif eriuh asdfkb akf oweoiab dfjk iwerg jnsdbf oaiyerg mnz sdfioyagwer oiadskf yig weig oifya jasdkb oaiwertyg ao",
-      isLiked: true,
-      reply: [
-        {
-          id: 30,
-          name: "samsung",
-          userId: "@samsung",
-          isCreated: "12",
-          text: "asdfafdasdf asd g hdfhfg o",
-        },
-      ],
-      likeNum: 3,
-    },
-    {
-      id: 3,
-      name: "Rai",
-      userId: "@sunrai",
-      userImg: "https://i.pravatar.cc/300",
-      isCreated: 3,
-      text: "asjh d asduif eriuh asdfkb akf oweoiab dfjk iwerg jnsdbf oaiyerg mnz sdfioyagwer oiadskf yig weig oifya jasdkb oaiwertyg ao",
-      isLiked: true,
-      reply: [
-        {
-          id: 30,
-          name: "samsung",
-          userId: "@samsung",
-          isCreated: "12",
-          text: "asdfafdasdf asd g hdfhfg o",
-        },
-      ],
-      likeNum: 3,
-    },
-    {
-      id: 4,
-      name: "apple",
-      userId: "@apple",
-      userImg: "https://i.pravatar.cc/300",
-      isCreated: 3,
-      text: "asdfafdhsmnbxcvhbjksiiewrhiu fasdnkjh d asduif eriuh asdfkb akf oweoiab dfjk iwerg jnsdbf oaiyerg mnz sdfioyagwer oiadskf yig weig oifya jasdkb oaiwertyg ao",
-      isLiked: false,
-      reply: [
-        {
-          id: 30,
-          name: "samsung",
-          userId: "@samsung",
-          isCreated: "12",
-          text: "asdfafdasdf asd g hdfhfg o",
-        },
-      ],
-      likeNum: 3,
-    },
-    {
-      id: 5,
-      name: "Bill Withers",
-      userId: "@bill",
-      userImg: "https://i.pravatar.cc/300",
-      isCreated: 3,
-      text: "asjh d asduif eriuh asdfkb akf oweoiab dfjk iwerg jnsdbf oaiyerg mnz sdfioyagwer oiadskf yig weig oifya jasdkb oaiwertyg ao",
-      isLiked: true,
-      reply: [
-        {
-          id: 30,
-          name: "samsung",
-          userId: "@samsung",
-          isCreated: "12",
-          text: "asdfafdasdf asd g hdfhfg o",
-        },
-      ],
-      likeNum: 3,
-    },
-    {
-      id: 6,
-      name: "Rai",
-      userId: "@sunrai",
-      userImg: "https://i.pravatar.cc/300",
-      isCreated: 3,
-      text: "asjh d asduif eriuh asdfkb akf oweoiab dfjk iwerg jnsdbf oaiyerg mnz sdfioyagwer oiadskf yig weig oifya jasdkb oaiwertyg ao",
-      isLiked: true,
-      reply: [
-        {
-          id: 30,
-          name: "samsung",
-          userId: "@samsung",
-          isCreated: "12",
-          text: "asdfafdasdf asd g hdfhfg o",
-        },
-      ],
-      likeNum: 3,
-    },
-  ],
+  // tweets: [
+  //   {
+  //     id: 1,
+  //     name: "apple",
+  //     userId: "@apple",
+  //     userImg: "https://i.pravatar.cc/300",
+  //     isCreated: 3,
+  //     text: "asdfafdhsmnbxcvhbjksiiewrhiu fasdnkjh d asduif eriuh asdfkb akf oweoiab dfjk iwerg jnsdbf oaiyerg mnz sdfioyagwer oiadskf yig weig oifya jasdkb oaiwertyg ao",
+  //     isLiked: true,
+  //     reply: [
+  //       {
+  //         id: 30,
+  //         name: "samsung",
+  //         userId: "@samsung",
+  //         isCreated: "12",
+  //         text: "asdfafdasdf asd g hdfhfg o",
+  //       },
+  //     ],
+  //     likeNum: 3,
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Bill Withers",
+  //     userId: "@bill",
+  //     userImg: "https://i.pravatar.cc/300",
+  //     isCreated: 3,
+  //     text: "asjh d asduif eriuh asdfkb akf oweoiab dfjk iwerg jnsdbf oaiyerg mnz sdfioyagwer oiadskf yig weig oifya jasdkb oaiwertyg ao",
+  //     isLiked: true,
+  //     reply: [
+  //       {
+  //         id: 30,
+  //         name: "samsung",
+  //         userId: "@samsung",
+  //         isCreated: "12",
+  //         text: "asdfafdasdf asd g hdfhfg o",
+  //       },
+  //     ],
+  //     likeNum: 3,
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Rai",
+  //     userId: "@sunrai",
+  //     userImg: "https://i.pravatar.cc/300",
+  //     isCreated: 3,
+  //     text: "asjh d asduif eriuh asdfkb akf oweoiab dfjk iwerg jnsdbf oaiyerg mnz sdfioyagwer oiadskf yig weig oifya jasdkb oaiwertyg ao",
+  //     isLiked: true,
+  //     reply: [
+  //       {
+  //         id: 30,
+  //         name: "samsung",
+  //         userId: "@samsung",
+  //         isCreated: "12",
+  //         text: "asdfafdasdf asd g hdfhfg o",
+  //       },
+  //     ],
+  //     likeNum: 3,
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "apple",
+  //     userId: "@apple",
+  //     userImg: "https://i.pravatar.cc/300",
+  //     isCreated: 3,
+  //     text: "asdfafdhsmnbxcvhbjksiiewrhiu fasdnkjh d asduif eriuh asdfkb akf oweoiab dfjk iwerg jnsdbf oaiyerg mnz sdfioyagwer oiadskf yig weig oifya jasdkb oaiwertyg ao",
+  //     isLiked: false,
+  //     reply: [
+  //       {
+  //         id: 30,
+  //         name: "samsung",
+  //         userId: "@samsung",
+  //         isCreated: "12",
+  //         text: "asdfafdasdf asd g hdfhfg o",
+  //       },
+  //     ],
+  //     likeNum: 3,
+  //   },
+  //   {
+  //     id: 5,
+  //     name: "Bill Withers",
+  //     userId: "@bill",
+  //     userImg: "https://i.pravatar.cc/300",
+  //     isCreated: 3,
+  //     text: "asjh d asduif eriuh asdfkb akf oweoiab dfjk iwerg jnsdbf oaiyerg mnz sdfioyagwer oiadskf yig weig oifya jasdkb oaiwertyg ao",
+  //     isLiked: true,
+  //     reply: [
+  //       {
+  //         id: 30,
+  //         name: "samsung",
+  //         userId: "@samsung",
+  //         isCreated: "12",
+  //         text: "asdfafdasdf asd g hdfhfg o",
+  //       },
+  //     ],
+  //     likeNum: 3,
+  //   },
+  //   {
+  //     id: 6,
+  //     name: "Rai",
+  //     userId: "@sunrai",
+  //     userImg: "https://i.pravatar.cc/300",
+  //     isCreated: 3,
+  //     text: "asjh d asduif eriuh asdfkb akf oweoiab dfjk iwerg jnsdbf oaiyerg mnz sdfioyagwer oiadskf yig weig oifya jasdkb oaiwertyg ao",
+  //     isLiked: true,
+  //     reply: [
+  //       {
+  //         id: 30,
+  //         name: "samsung",
+  //         userId: "@samsung",
+  //         isCreated: "12",
+  //         text: "asdfafdasdf asd g hdfhfg o",
+  //       },
+  //     ],
+  //     likeNum: 3,
+  //   },
+  // ],
 };
 
 export default {
@@ -240,13 +241,13 @@ export default {
         this.showModal = false;
       }
     },
-    ...mapActions({ setAllTweets: SET_ALL_TWEETS }),
+    // ...mapActions({ setAllTweets: SET_ALL_TWEETS }),
   },
-  computed: {
-    ...mapGetters({
-      tweets: GET_ALL_TWEETS,
-    }),
-  },
+  // computed: {
+  //   ...mapGetters({
+  //     tweets: GET_ALL_TWEETS,
+  //   }),
+  // },
 };
 </script>
 

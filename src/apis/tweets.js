@@ -8,6 +8,9 @@ export default {
   all() {
     return apiHelper.get("/tweets");
   },
+  tweet(tweetId) {
+    return apiHelper.get(`/tweets/:${tweetId}/replies`);
+  },
   // 如果沒有使用helper設定token，會是
   // getCurrentUser() {
   //   return apiHelper.get("/get_current_user", {
