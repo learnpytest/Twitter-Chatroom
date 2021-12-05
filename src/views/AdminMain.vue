@@ -5,23 +5,47 @@
       <AdminSidebar />
     </div>
     <div class="panel--data">
-      <div class="panel--data__title">使用者列表</div>
-      <div class="cards">
-        <AdminUserCard v-for="(i, index) in 10" :key="index" />
+      <div class="panel--data__title">推文清單</div>
+      <div class="tweets">
+        <!-- todo get real tweets and use v-for to render all tweets then pass id as prop to tweet card to run delete function -->
+        <!-- <AdminTweet v-for="i in 10" :key="i" /> -->
+        <AdminTweet
+          v-for="tweet in getAllTweets"
+          :key="tweet.id"
+          :tweet="tweet"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import AdminTweet from "@/modules/Admin/AdminTweet.vue";
 import AdminSidebar from "@/modules/Admin/AdminSidebar.vue";
-import AdminUserCard from "@/views/AdminUserCard.vue";
+
+import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
+
+import { SET_ALL_TWEETS, GET_ALL_TWEETS } from "../store/store-types";
 
 export default {
-  name: "AdminUsers",
+  name: "AdminMain",
   components: {
+    AdminTweet,
     AdminSidebar,
-    AdminUserCard,
+  },
+  created() {
+    this.setAllTweets();
+  },
+  methods: {
+    ...mapActions({
+      setAllTweets: SET_ALL_TWEETS,
+    }),
+  },
+  computed: {
+    ...mapGetters({
+      getAllTweets: GET_ALL_TWEETS,
+    }),
   },
 };
 </script>
@@ -56,11 +80,11 @@ export default {
     border-bottom: 1px solid #e6ecf0;
     border-color: var(--g-75);
   }
-}
-.cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding: 1rem;
+  .tweets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+  }
 }
 </style>

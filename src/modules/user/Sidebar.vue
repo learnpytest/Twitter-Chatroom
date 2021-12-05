@@ -8,8 +8,8 @@
       </li>
 
       <li>
-        <router-link to="#">
-          <div class="nav-link active">
+        <router-link :to="{ name: 'UserMain' }">
+          <div class="nav-link">
             <img
               class="filter-orange"
               src="./../../assets/images/icon_index.svg"
