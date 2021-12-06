@@ -66,6 +66,10 @@ export default {
           };
           break;
       }
+<<<<<<< HEAD
+=======
+      console.log("check tabs");
+>>>>>>> 2a79e4d (set filter tweets type for user page upon chainge the tabs)
       this.setTweetsFilterType(this.filterType);
 
       // loop over all the tabs
