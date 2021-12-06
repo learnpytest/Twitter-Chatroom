@@ -59,34 +59,7 @@ export default {
         //   this.$store.dispatch(SET_ONE_USER_LIKES, this.userId);
         //   break;
       }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-      console.log("check tabs");
->>>>>>> 2a79e4d (set filter tweets type for user page upon chainge the tabs)
-=======
 
-      // switch (i) {
-      //   case 0:
-      //     this.filterType = {
-      //       getter: GET_ONE_USER_TWEETS,
-      //       setter: SET_ONE_USER_TWEETS,
-      //     };
-      //     break;
-      //   case 1:
-      //     this.filterType = {
-      //       getter: GET_ONE_USER_REPLIES,
-      //       setter: SET_ONE_USER_REPLIES,
-      //     };
-      //     break;
-      //   case 2:
-      //     this.filterType = {
-      //       getter: GET_ONE_USER_LIKES,
-      //       setter: SET_ONE_USER_LIKES,
-      //     };
-      //     break;
-      // }
->>>>>>> 6632066 (task16-19-userProfile-Tabs-Comments-get-data)
       this.setTweetsFilterType(this.filterType);
 
       // loop over all the tabs
