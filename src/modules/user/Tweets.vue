@@ -8,7 +8,8 @@
       @click.stop.prevent="() => $router.push('reply')"
     >
       <div class="user-pic">
-        <img src="#" alt="" />
+        <!-- 沒有上傳照片產生空圖 -->
+        <img :src="tweet.User.avatar | emptyImage" alt="" />
       </div>
 
       <div class="tweet-info">
@@ -67,7 +68,10 @@ import { mapGetters } from "vuex";
 
 import { GET_FILLTERED_TWEETS } from "../../store/store-types";
 
+import { mixinEmptyImage } from "../../utils/mixin";
+
 export default {
+  mixins: [mixinEmptyImage],
   props: {
     initialShowReplyModal: {
       type: Boolean,
