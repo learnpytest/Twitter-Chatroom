@@ -16,7 +16,9 @@
             @click="$router.back()"
           />
           <div class="header-info">
-            <p>John Doe</p>
+            <!-- <p>John Doe</p>
+            <p>25 <span>推文</span></p> -->
+            <p>{{ getCurrentUser.name }}</p>
             <p>25 <span>推文</span></p>
           </div>
         </div>
@@ -27,7 +29,9 @@
           />
         </div>
         <tabs class="tabs">
-          <tab title="推文"><Tweets /></tab>
+          <tab title="推文"
+            ><Tweets :initialShowReplyModal="showReplyModal"
+          /></tab>
           <tab class="comments" title="推文與回覆"><Comments /></tab>
           <tab title="喜歡的內容"><Tweets /></tab>
         </tabs>
@@ -46,6 +50,12 @@ import Tab from "../modules/user/Tab.vue";
 import Comments from "../modules/user/Comments.vue";
 import UserEditModal from "../modules/user/UserEditModal.vue";
 
+import { mapGetters } from "vuex";
+
+import {
+  GET_CURRENT_USER,
+  // SET_ONE_USER_TWEETS,
+} from "../store/store-types";
 export default {
   components: {
     Popular,
@@ -71,6 +81,26 @@ export default {
       }
     },
   },
+  data() {
+    // test
+    return {
+      showReplyModal: false,
+    };
+  },
+  computed: {
+    ...mapGetters({
+      getCurrentUser: GET_CURRENT_USER,
+    }),
+  },
+  // created() {
+  //   this.setTweetsFilterType({
+  //     getter: GET_ONE_USER_TWEETS,
+  //     setter: SET_ONE_USER_TWEETS,
+  //   });
+  // },
+  // methods: {
+  //   ...mapActions({ setTweetsFilterType: SET_TWEETS_FILTER_TYPE }),
+  // },
 };
 </script>
 
