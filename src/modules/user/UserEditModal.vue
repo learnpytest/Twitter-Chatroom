@@ -186,6 +186,10 @@ export default {
     background-color: $gray-50;
     font-size: 1rem;
   }
+  input:hover,
+  input:focus {
+    border-bottom: 1.5px solid $blue-800;
+  }
   label {
     padding: 5px 5px 5px 15px;
     display: block;

@@ -29,13 +29,14 @@ const authenticateIsAdmin = (to, from, next) => {
 
 Vue.use(VueRouter);
 
-const routes = [{
+const routes = [
+  {
     path: "/user",
     name: "user",
     component: () => import("@/views/User"),
   },
   {
-    path: "/reply",
+    path: "/reply/:id",
     name: "reply-list",
     component: () => import("@/views/ReplyList"),
   },

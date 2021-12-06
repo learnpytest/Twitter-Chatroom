@@ -1,7 +1,12 @@
 <template>
   <div class="container">
+    <div class="new-tweet-modal" v-if="showModal">
+      <NewTweetModal :initialShowModal="showModal" @show-modal="modalToggle" />
+    </div>
     <div class="usermain">
-      <div class="sidebar"><Sidebar /></div>
+      <div class="sidebar">
+        <Sidebar :initialShowModal="showModal" @show-modal="modalToggle" />
+      </div>
       <div class="main">
         <div class="tweets">
           <AccountForm class="form" :isSettingExistingAccount="true">
@@ -28,7 +33,7 @@
 import Sidebar from "../modules/user/Sidebar.vue";
 import AccountForm from "@/components/AccountForm";
 import PrimaryButtonSmall from "@/components/Buttons/PrimaryButtonSmall.vue";
-
+import NewTweetModal from "../modules/user/NewTweetModal.vue";
 import { mapActions } from "vuex";
 import { PUT_ACCOUNT } from "../store/store-types";
 
@@ -38,6 +43,12 @@ export default {
     AccountForm,
     PrimaryButtonSmall,
     Sidebar,
+    NewTweetModal,
+  },
+  data() {
+    return {
+      showModal: false,
+    };
   },
   methods: {
     saveUserSetting() {
@@ -46,6 +57,13 @@ export default {
     ...mapActions({
       putAccount: PUT_ACCOUNT,
     }),
+    modalToggle() {
+      if (!this.showModal) {
+        this.showModal = true;
+      } else {
+        this.showModal = false;
+      }
+    },
   },
 };
 </script>

@@ -7,6 +7,7 @@
 <script>
 import notificationMessage from "@/components/Notifications/notificationMessage";
 
+
 export default {
   name: "simpleTwitterApp",
   components: {

@@ -5,16 +5,18 @@
       class="tweet"
       v-for="(tweet, index) in tweets"
       :key="index"
-      @click.stop.prevent="() => $router.push('reply')"
+      @click.stop.prevent="
+        () => $router.push({ name: 'reply-list', params: { id: tweet.id } })
+      "
     >
       <div class="user-pic">
-        <img src="#" alt="" />
+        <img :src="tweet.avatar" alt="" />
       </div>
 
       <div class="tweet-info">
         <div class="info">
           <p class="user-name">
-            <!-- {{ tweet.User.name }} -->
+            {{ tweet.name }}
             <span class="user-id">@{{ tweet.UserId }} • </span
             ><span class="time">{{ tweet.createdAt }}小時</span>
           </p>
@@ -42,18 +44,17 @@
               id="liked-btn"
               src="./../../assets/images/icon_like_fill.svg"
               alt=""
-              @click.stop.prevent="handleLikeButton(tweet.isLiked === 'true')"
-              v-if="tweet.isLiked"
+              @click.stop.prevent="handleLikeButton(tweet.isLiked == 'true')"
+              v-if="tweet.isLiked == false"
             />
             <img
               src="./../../assets/images/icon_like.svg"
               alt=""
-              @click="handleLikeButton(tweet.isLiked)"
-              v-else
+              @click.stop.prevent="addLike(tweet.isLiked)"
             />
 
             <p class="liked-num" :class="{ liked: tweet.isLiked }">
-              <!-- {{ tweet.LikedUsers.length }} -->
+              {{ tweet.LikedUsers.length }}
             </p>
           </div>
         </div>
@@ -65,6 +66,7 @@
 import { mapGetters } from "vuex";
 
 import { GET_TWEETS_FILTER_TYPE } from "../../store/store-types";
+import likeshipAPI from "./../../apis/likeshipAPI";
 
 export default {
   props: {
@@ -87,13 +89,22 @@ export default {
     fetchData() {
       this.showReplyModal = this.initialShowReplyModal;
     },
-    handleLikeButton(isLiked) {
-      this.tweet = {
-        ...this.tweet,
-        isLiked: true,
-      };
-      console.log(isLiked);
-      console.log(this.tweet);
+    // handleLikeButton(isLiked) {
+    //   // this.tweet = {
+    //   //   ...this.tweet,
+    //   //   isLiked: true,
+    //   // };
+    // },
+    async addLike(tweetId) {
+      try {
+        const { data } = await likeshipAPI.postLike({ tweetId });
+        console.log(this.tweet);
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+      } catch (error) {
+        console.log("error", error);
+      }
     },
     handleShowModalClick() {
       this.showReplyModal = true;

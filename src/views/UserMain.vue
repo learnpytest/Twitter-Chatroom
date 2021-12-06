@@ -10,7 +10,9 @@
       />
     </div>
     <div class="usermain">
-      <div class="sidebar"><Sidebar /></div>
+      <div class="sidebar">
+        <Sidebar :initialShowModal="showModal" @show-modal="modalToggle" />
+      </div>
       <div class="main">
         <div class="addtweet">
           <AddTweet :initialShowModal="showModal" @show-modal="modalToggle" />

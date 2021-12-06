@@ -33,12 +33,37 @@
         <p>808<span>喜歡次數</span></p>
       </div>
       <div class="tweet-detail-box_btn-control">
-        <img src="./../../assets/images/icon_reply.svg" alt="" />
+        <img
+          src="./../../assets/images/icon_reply.svg"
+          alt=""
+          @click.stop.prevent="handleShowModalClick"
+        />
         <img src="./../../assets/images/icon_like.svg" alt="" />
       </div>
     </div>
   </div>
 </template>
+<script>
+export default {
+  props: {
+    initialShowReplyModal: {
+      type: Boolean,
+      //test need to set required on true
+      // required: true,
+    },
+  },
+  data() {
+    return {
+      showReplyModal: false,
+    };
+  },
+  methods: {
+    fetchData() {
+      this.showReplyModal = this.initialShowReplyModal;
+    },
+  },
+};
+</script>
 <style lang="scss" scoped>
 @import "./../../assets/scss/main.scss";
 .tweet-detail-wrapper {

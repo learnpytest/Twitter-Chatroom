@@ -22,7 +22,11 @@
       <li>
         <router-link :to="{ name: 'user' }">
           <div class="nav-link">
-            <img src="./../../assets/images/icon_user.svg" alt="" />
+            <img
+              class="filter-orange"
+              src="./../../assets/images/icon_user.svg"
+              alt=""
+            />
             <p class="nav-link_text">個人資料</p>
           </div>
         </router-link>
@@ -30,18 +34,28 @@
       <li>
         <router-link :to="{ name: 'user-setting' }">
           <div class="nav-link">
-            <img src="./../../assets/images/icon_cog.svg" alt="" />
+            <img
+              class="filter-orange"
+              src="./../../assets/images/icon_cog.svg"
+              alt=""
+            />
             <p class="nav-link_text">設定</p>
           </div>
         </router-link>
       </li>
 
-      <li class="nav-link"><button>推文</button></li>
+      <li class="nav-link">
+        <button @click="handleShowModalClick">推文</button>
+      </li>
     </ul>
     <div class="logout" @click="logout">
       <router-link to="#">
         <div class="nav-link">
-          <img src="./../../assets/images/icon_logout.svg" alt="" />
+          <img
+            class="filter-orange"
+            src="./../../assets/images/icon_logout.svg"
+            alt=""
+          />
           <p class="nav-link_text">登出</p>
         </div>
       </router-link>
@@ -54,6 +68,18 @@ import { REVOKE_AUTHENTICATION } from "@/store/store-types";
 
 export default {
   name: "Sidebar",
+  props: {
+    initialShowModal: {
+      type: Boolean,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      showModal: "",
+    };
+  },
+
   methods: {
     ...mapActions({
       revokeAuthentication: REVOKE_AUTHENTICATION,
@@ -62,6 +88,10 @@ export default {
       console.log("logout");
       this.revokeAuthentication();
       this.$router.push("/login");
+    },
+    handleShowModalClick() {
+      this.showModal = true;
+      this.$emit("show-modal");
     },
   },
 };

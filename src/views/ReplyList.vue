@@ -1,8 +1,19 @@
 ﻿<template>
   <div class="container">
+    <div class="new-tweet-modal" v-if="showModal">
+      <NewTweetModal :initialShowModal="showModal" @show-modal="modalToggle" />
+    </div>
+    <div class="new-tweet-modal" v-if="showReplyModal">
+      <ReplyTweetModal
+        :initialShowReplyModal="showReplyModal"
+        @show-reply-modal="replyModalToggle"
+      />
+    </div>
     <div class="reply-modal"></div>
     <div class="reply-list">
-      <div class="sidebar"><Sidebar /></div>
+      <div class="sidebar">
+        <Sidebar :initialShowModal="showModal" @show-modal="modalToggle" />
+      </div>
       <div class="main">
         <div class="tweet-detail"><TweetDetail /></div>
         <div class="tweets"></div>
@@ -15,11 +26,68 @@
 import Popular from "../modules/user/Popular.vue";
 import Sidebar from "../modules/user/Sidebar.vue";
 import TweetDetail from "../modules/user/TweetDetail.vue";
+import NewTweetModal from "../modules/user/NewTweetModal.vue";
+import tweetsAPI from "./../apis/tweets";
+import ReplyTweetModal from "../modules/user/ReplyTweetModal.vue";
 export default {
   components: {
     Popular,
     Sidebar,
     TweetDetail,
+    NewTweetModal,
+    ReplyTweetModal,
+  },
+  data() {
+    return {
+      showModal: false,
+      showReplyModal: false,
+    };
+  },
+  created() {
+    this.fetchTweet({ tweetId: this.$route.params.id });
+  },
+  methods: {
+    async fetchTweets({ tweetId }) {
+      try {
+        const response = await tweetsAPI.getTweets({
+          tweetId,
+        });
+        console.log(response);
+        // const {
+        //   restaurants,
+        //   categories,
+        //   categoryId,
+        //   page,
+        //   totalPage,
+        //   prev,
+        //   next,
+        // } = response.data;
+
+        // this.restaurants = restaurants;
+        // this.categories = categories;
+        // this.categoryId = categoryId;
+        // this.currentPage = page;
+        // this.totalPage = totalPage;
+        // this.previousPage = prev;
+        // this.nextPage = next;
+      } catch (error) {
+        console.log("error", error);
+      }
+    },
+    modalToggle() {
+      if (!this.showModal) {
+        this.showModal = true;
+      } else {
+        this.showModal = false;
+      }
+    },
+    replyModalToggle() {
+      if (!this.showReplyModal) {
+        this.showReplyModal = true;
+      } else {
+        this.showReplyModal = false;
+      }
+    },
   },
 };
 </script>

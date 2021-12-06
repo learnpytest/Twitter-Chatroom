@@ -33,39 +33,26 @@ const getters = {
   [GET_ONE_USER_LIKES]: (state) => state.onUserLikes,
 };
 const actions = {
-  [SET_TWEETS_FILTER_TYPE]: async ({
-    commit
-  }, filterType) => {
+  [SET_TWEETS_FILTER_TYPE]: async ({ commit }, filterType) => {
     commit(SET_TWEETS_FILTER_TYPE, filterType);
   },
-  [SET_ALL_TWEETS]: async ({
-    commit
-  }) => {
+  [SET_ALL_TWEETS]: async ({ commit }) => {
     console.log("setalltweets");
     const res = await tweets.all();
     // send api to get reponse of all tweets and pass tweets to mutation to change state all the tweets
     // start
-    const {
-      data,
-      statusText
-    } = res;
+    const { data, statusText } = res;
     if (statusText !== "OK") throw new Error("statusText");
     commit(SET_ALL_TWEETS, data);
   },
-  [SET_ONE_USER_TWEETS]: async ({
-    commit,
-    rootState
-  }) => {
+  [SET_ONE_USER_TWEETS]: async ({ commit, rootState }) => {
     // send api
 
     console.log("setoneusertweets");
     try {
       const userId = rootState.user.currentUser.id;
       const res = await tweets.getOneUserTweet(userId);
-      const {
-        data,
-        statusText
-      } = res;
+      const { data, statusText } = res;
       console.log(res);
       if (statusText !== "OK") throw new Error("statusText");
       commit(SET_ONE_USER_TWEETS, data);
