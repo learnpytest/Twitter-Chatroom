@@ -12,9 +12,10 @@
       </div>
       <div class="text-box">
         <div class="user-info">
+          <!-- 沒有上傳照片產生空圖 -->
           <img
             class="user-pic"
-            src="./../../assets/images/Photo_user1.png"
+            :src="getCurrentUser.avatar | emptyImage"
             alt=""
           />
         </div>
@@ -36,7 +37,12 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
+import { GET_CURRENT_USER } from "../../store/store-types";
+import { mixinEmptyImage } from "../../utils/mixin";
+
 export default {
+  mixins: [mixinEmptyImage],
   props: {
     initialShowModal: {
       type: Boolean,
@@ -68,6 +74,9 @@ export default {
 
       return limit - char + " / " + limit + "剩餘字數";
     },
+    ...mapGetters({
+      getCurrentUser: GET_CURRENT_USER,
+    }),
   },
 };
 </script>

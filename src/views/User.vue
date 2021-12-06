@@ -76,6 +76,7 @@ export default {
     return {
       showModal: false,
       showEditModal: false,
+      showReplyModal: false,
     };
   },
   methods: {
