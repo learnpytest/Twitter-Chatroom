@@ -1,11 +1,10 @@
 <template>
   <form class="form">
+    <div class="form__title">
+      <slot name="title"></slot>
+    </div>
     <div class="form__header">
-      <img
-        class="form__logo"
-        src="../assets/images/Logo_small.png"
-        alt="logo"
-      />
+      <slot name="logo"> </slot>
       <slot name="header"></slot>
     </div>
     <div class="form__group">
@@ -16,7 +15,35 @@
         name="account"
         :class="['form__input']"
         v-model="account"
-        @input="updateLoginInfo"
+        @input="updateAccountInfo"
+      />
+      <div>
+        <!-- todo error message -->
+      </div>
+    </div>
+    <div class="form__group">
+      <label for="username">名稱</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        :class="['form__input']"
+        v-model="username"
+        @input="updateAccountInfo"
+      />
+      <div>
+        <!-- todo error message -->
+      </div>
+    </div>
+    <div class="form__group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        :class="['form__input']"
+        v-model="email"
+        @input="updateAccountInfo"
       />
       <div>
         <!-- todo error message -->
@@ -30,40 +57,60 @@
         name="password"
         :class="['form__input']"
         v-model="password"
-        @input="updateLoginInfo"
+        @input="updateAccountInfo"
       />
       <div>
         <!-- todo error message -->
       </div>
     </div>
-
+    <div class="form__group">
+      <label for="checkPassword">確認密碼</label>
+      <input
+        type="password"
+        id="checkPassword"
+        name="checkPassword"
+        :class="['form__input']"
+        v-model="checkPassword"
+        @input="updateAccountInfo"
+      />
+      <div>
+        <!-- todo error message -->
+      </div>
+    </div>
     <slot name="button"></slot>
     <div class="form__links">
-      <slot name="register"></slot>
-      <slot name="login"></slot>
+      <slot name="cancel"></slot>
     </div>
   </form>
 </template>
 
 <script>
 import { mapActions } from "vuex";
-import { SET_LOGIN_INFO } from "../store/store-types";
+import { SET_ACCOUNT_INFO } from "../store/store-types";
+
 export default {
-  name: "LoginForm",
+  name: "AccountForm",
   data() {
     return {
       account: "",
+      username: "",
+      email: "",
       password: "",
+      checkPassword: "",
     };
   },
-
   methods: {
-    // need to rename email to account and change vuex rename email to account
-    updateLoginInfo() {
-      this.setLoginInfo({ email: this.account, password: this.password });
+    updateAccountInfo() {
+      this.setAccountInfo({
+        account: this.account,
+        username: this.username,
+        email: this.email,
+        password: this.password,
+        checkPassword: this.checkPassword,
+      });
     },
     ...mapActions({
-      setLoginInfo: SET_LOGIN_INFO,
+      setAccountInfo: SET_ACCOUNT_INFO,
     }),
   },
 };
@@ -75,12 +122,19 @@ export default {
 
 .form {
   font-family: var(--ff-primary);
-  width: 100%;
-  height: 100vh;
+  margin: 0 auto;
+  max-width: 540px;
+  // width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 4rem;
+
+  &__title {
+    width: 100%;
+    padding: 0.8rem 0 0 0;
+  }
   &__header {
     display: flex;
     flex-direction: column;
@@ -91,16 +145,11 @@ export default {
     font-size: 1.5rem;
     font-weight: var(--fw-bold);
   }
-  &__logo {
-    width: 3rem;
-    height: 3rem;
-  }
-  &__group,
-  &__links {
-    width: 540px;
-    max-width: 70%;
-  }
+
   &__group {
+    // width: 540px;
+    // max-width: 70%;
+    width: 100%;
     margin-bottom: 1.9rem;
     @include grays(color, g-600);
     font-size: 1rem;
@@ -122,11 +171,13 @@ export default {
     @include grays(border-color, g-600);
     background-color: $gray-50;
   }
-
+  &__btn {
+    margin-bottom: 1.3rem;
+  }
   &__links {
-    margin-top: 1.25rem;
     display: flex;
     justify-content: flex-end;
+    padding-bottom: 5rem;
     .link--login {
       @include grays(color, b-1000);
       font-weight: var(--fw-bold);
