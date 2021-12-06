@@ -3,12 +3,13 @@
   <div class="tweets-wrapper">
     <div
       class="tweet"
-      v-for="(tweet, index) in tweets"
-      :key="index"
+      v-for="tweet in tweets"
+      :key="tweet.id"
       @click.stop.prevent="() => $router.push('reply')"
     >
       <div class="user-pic">
-        <img src="#" alt="" />
+        <!-- 沒有上傳照片產生空圖 -->
+        <img :src="tweet.User.avatar | emptyImage" alt="" />
       </div>
 
       <div class="tweet-info">
@@ -27,8 +28,8 @@
               alt=""
               @click.stop.prevent="handleShowModalClick"
             />
-            <!-- todo need backend to add replies data for tweets -->
-            <p class="reply-num">{{ tweet.id }}</p>
+
+            <p class="reply-num">{{ tweet.replyCount }}</p>
           </div>
           <div class="tweet-buttons">
             <!-- <img
@@ -53,7 +54,7 @@
             />
 
             <p class="liked-num" :class="{ liked: tweet.isLiked }">
-              <!-- {{ tweet.LikedUsers.length }} -->
+              {{ tweet.likeCount }}
             </p>
           </div>
         </div>
@@ -63,10 +64,14 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+// import { GET_ALL_TWEETS, SET_ALL_TWEETS } from "../../store/store-types";
 
-import { GET_TWEETS_FILTER_TYPE } from "../../store/store-types";
+import { GET_FILLTERED_TWEETS } from "../../store/store-types";
+
+import { mixinEmptyImage } from "../../utils/mixin";
 
 export default {
+  mixins: [mixinEmptyImage],
   props: {
     initialShowReplyModal: {
       type: Boolean,
@@ -81,7 +86,7 @@ export default {
   },
 
   created() {
-    this.getTweets();
+    // this.getTweets();
   },
   methods: {
     fetchData() {
@@ -105,16 +110,19 @@ export default {
     },
   },
   computed: {
-    tweets() {
-      return this.$store.getters[`${this.filterType.getter}`];
-    },
+    // tweets() {
+    //   return this.$store.getters[`${this.filterType.getter}`];
+    // },
+    // ...mapGetters({
+    //   filterType: GET_TWEETS_FILTER_TYPE,
+    // }),
     ...mapGetters({
-      filterType: GET_TWEETS_FILTER_TYPE,
+      tweets: GET_FILLTERED_TWEETS,
     }),
   },
-  watch: {
-    filterType: "getTweets",
-  },
+  // watch: {
+  //   filterType: "getTweets",
+  // },
 };
 </script>
 <style lang="scss" scoped>
