@@ -1,6 +1,11 @@
 ﻿<template>
   <div class="container">
-    <div class="user-edit-modal"><UserEditModal /></div>
+    <div class="user-edit-modal" v-if="showEditModal">
+      <UserEditModal
+        :initialEditModal="showEditModal"
+        @show-edit-modal="editModalToggle"
+      />
+    </div>
     <div class="user">
       <div class="sidebar"><Sidebar /></div>
       <div class="main">
@@ -16,7 +21,10 @@
           </div>
         </div>
         <div class="user-profile">
-          <UserProfile />
+          <UserProfile
+            :initialEditModal="showEditModal"
+            @show-edit-modal="editModalToggle"
+          />
         </div>
         <tabs class="tabs">
           <tab title="推文"><Tweets /></tab>
@@ -48,6 +56,20 @@ export default {
     Tab,
     Comments,
     UserEditModal,
+  },
+  data() {
+    return {
+      showEditModal: false,
+    };
+  },
+  methods: {
+    editModalToggle() {
+      if (!this.showEditModal) {
+        this.showEditModal = true;
+      } else {
+        this.showEditModal = false;
+      }
+    },
   },
 };
 </script>
