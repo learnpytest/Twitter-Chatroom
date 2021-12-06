@@ -63,6 +63,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+// import { GET_ALL_TWEETS, SET_ALL_TWEETS } from "../../store/store-types";
 
 import { GET_TWEETS_FILTER_TYPE } from "../../store/store-types";
 
