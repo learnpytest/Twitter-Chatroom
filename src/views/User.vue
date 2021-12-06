@@ -10,7 +10,9 @@
             @click="$router.back()"
           />
           <div class="header-info">
-            <p>John Doe</p>
+            <!-- <p>John Doe</p>
+            <p>25 <span>推文</span></p> -->
+            <p>{{ getCurrentUser.name }}</p>
             <p>25 <span>推文</span></p>
           </div>
         </div>
@@ -38,13 +40,12 @@ import Tabs from "../modules/user/Tabs.vue";
 import Tab from "../modules/user/Tab.vue";
 import Comments from "../modules/user/Comments.vue";
 
-// import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
 
-// import {
-//   SET_TWEETS_FILTER_TYPE,
-//   GET_ONE_USER_TWEETS,
-//   SET_ONE_USER_TWEETS,
-// } from "../store/store-types";
+import {
+  GET_CURRENT_USER,
+  // SET_ONE_USER_TWEETS,
+} from "../store/store-types";
 export default {
   components: {
     Popular,
@@ -60,6 +61,11 @@ export default {
     return {
       showReplyModal: false,
     };
+  },
+  computed: {
+    ...mapGetters({
+      getCurrentUser: GET_CURRENT_USER,
+    }),
   },
   // created() {
   //   this.setTweetsFilterType({
