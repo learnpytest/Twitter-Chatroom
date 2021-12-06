@@ -88,7 +88,6 @@ export default {
       getCurrentUser: GET_CURRENT_USER,
     }),
   },
-
   // created() {
   //   this.setTweetsFilterType({
   //     getter: GET_ONE_USER_TWEETS,
