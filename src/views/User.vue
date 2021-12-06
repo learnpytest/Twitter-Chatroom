@@ -1,5 +1,6 @@
 ﻿<template>
   <div class="container">
+    <div class="user-edit-modal"><UserEditModal /></div>
     <div class="user">
       <div class="sidebar"><Sidebar /></div>
       <div class="main">
@@ -35,6 +36,7 @@ import Tweets from "../modules/user/Tweets.vue";
 import Tabs from "../modules/user/Tabs.vue";
 import Tab from "../modules/user/Tab.vue";
 import Comments from "../modules/user/Comments.vue";
+import UserEditModal from "../modules/user/UserEditModal.vue";
 
 export default {
   components: {
@@ -45,6 +47,7 @@ export default {
     Tabs,
     Tab,
     Comments,
+    UserEditModal,
   },
 };
 </script>
@@ -52,6 +55,15 @@ export default {
 <style lang="scss" scoped>
 @import "./src/assets/scss/main.scss";
 
+.user-edit-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  height: 100%;
+}
 .header {
   display: flex;
   align-items: center;

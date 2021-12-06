@@ -70,7 +70,6 @@
 }
 .following-btn {
   color: $white;
-
   background-color: $orange-100;
 }
 
