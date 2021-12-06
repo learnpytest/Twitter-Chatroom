@@ -3,7 +3,7 @@
     <img src="https://picsum.photos/200/300" alt="" class="background-pic" />
     <div class="profile-pic">
       <img src="./../../assets/images/Photo_user1.png" alt="" />
-      <button>編輯個人資料</button>
+      <button @click="handleShowModalClick">編輯個人資料</button>
     </div>
     <div class="profile-details">
       <p class="profile-name">John Doe</p>
@@ -17,6 +17,34 @@
     </div>
   </div>
 </template>
+<script>
+export default {
+  props: {
+    initialEditModal: {
+      type: Boolean,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      showEditModal: false,
+      text: "",
+    };
+  },
+  created() {
+    this.fetchData();
+  },
+  methods: {
+    fetchData() {
+      this.showEditModal = this.initialEditModal;
+    },
+    handleShowModalClick() {
+      this.showEditModal = false;
+      this.$emit("show-edit-modal");
+    },
+  },
+};
+</script>
 <style lang="scss" scoped>
 @import "./src/assets/scss/main.scss";
 .background-pic {
