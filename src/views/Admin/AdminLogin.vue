@@ -18,7 +18,7 @@
 import LoginForm from "@/components/LoginForm";
 import PrimaryButtonLarge from "@/components/Buttons/PrimaryButtonLarge.vue";
 import { mapActions } from "vuex";
-import { POST_LOGIN } from "../store/store-types";
+import { POST_LOGIN } from "@/store/store-types";
 
 export default {
   name: "AdminLogin",

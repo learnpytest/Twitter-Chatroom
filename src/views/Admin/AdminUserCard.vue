@@ -1,19 +1,12 @@
 <template>
   <div class="card">
     <div class="card__header">
-      <img
-        class="card__img card__img--poster"
-        src="http://fakeimg.pl/245x140"
-        alt=""
-      />
-      <img
-        class="card__img card__img--avatar"
-        src="http://fakeimg.pl/100x100/282828/EAE0D0"
-      />
+      <img class="card__img card__img--poster" :src="user.cover" alt="" />
+      <img class="card__img card__img--avatar" :src="user.avatar" />
     </div>
     <div class="card__txt">
-      <div class="card__name">John Doe</div>
-      <div class="card__account">@heyjohn</div>
+      <div class="card__name">{{ user.name }}</div>
+      <div class="card__account">@{{ user.account }}</div>
     </div>
     <div class="card__interaction card__interaction--feeds">
       <div class="feeds">
@@ -21,21 +14,23 @@
           class="feeds__icon"
           src="@/assets/images/icon_reply.png"
           alt=""
-        /><span class="feeds__count">1.5k</span>
+        /><span class="feeds__count">{{ user.TweetCount }}</span>
       </div>
       <div class="feeds">
         <img
           class="feeds__icon"
           src="@/assets/images/icon_like.png"
           alt=""
-        /><span class="feeds__count">20k</span>
+        /><span class="feeds__count">{{ user.likeCounts }}</span>
       </div>
     </div>
     <div class="card__interaction card__interaction--follows">
       <div class="replies">
-        34 <span class="replies--styled">個跟隨中</span>
+        {{ user.FollowingsCount }} <span class="replies--styled">個跟隨中</span>
       </div>
-      <div class="likes">59 <span class="replies--styled">位跟隨者</span></div>
+      <div class="likes">
+        {{ user.FollowersCount }} <span class="replies--styled">位跟隨者</span>
+      </div>
     </div>
   </div>
 </template>
@@ -43,6 +38,12 @@
 <script>
 export default {
   name: "AdminUserCard",
+  props: {
+    user: {
+      type: Object,
+      required: true,
+    },
+  },
 };
 </script>
 
@@ -54,7 +55,8 @@ export default {
 .card {
   background-color: #f6f7f8;
   border-radius: 10px 10px 10px 10px;
-  // min-width: 245px;
+  min-width: 245px;
+  min-height: 140px;
   overflow: hidden;
   width: 23.5%;
   &__header {
@@ -63,6 +65,7 @@ export default {
   }
   &__img {
     width: 100%;
+    height: 100%;
     vertical-align: middle;
     object-fit: cover;
   }
@@ -76,6 +79,9 @@ export default {
     border-radius: 50%;
     border: 4px solid var(--g-0);
     overflow: hidden;
+  }
+  &__img--poster {
+    min-height: 140px;
   }
 
   &__txt {

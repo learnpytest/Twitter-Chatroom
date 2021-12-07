@@ -7,6 +7,13 @@ export default {
   all() {
     return apiHelper.get("/tweets");
   },
+  unFilteredForAdmin() {
+    return apiHelper.get("/admin/tweets");
+  },
+  delete(tweetId) {
+    return apiHelper.delete(`/admin/tweets/${tweetId}`);
+  },
+
   tweet(tweetId) {
     return apiHelper.get(`/tweets/${tweetId}/replies`);
   },
