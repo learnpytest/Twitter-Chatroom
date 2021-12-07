@@ -6,9 +6,11 @@
       @click="removeNotification"
     >
       {{ notification.message }}
-      <template v-show="isNotificationConfirm">
-        <button @click="deleteTweet">確定</button>
-        <button @click="cancelDelete">取消</button>
+      <template>
+        <div v-show="isNotificationConfirm">
+          <button @click="deleteTweet">確定</button>
+          <button @click="cancelDelete">取消</button>
+        </div>
       </template>
 
       <span class="notification__circle">

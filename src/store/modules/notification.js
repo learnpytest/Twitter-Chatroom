@@ -48,6 +48,7 @@ const mutations = {
   },
   [REMOVE_NOTIFICATION]: (state) => {
     state.isOpen = false;
+    state.isNotificationConfirm = false;
     state.notification = {};
   },
 };
