@@ -1,6 +1,5 @@
 <template>
   <div class="popular-wrapper">
-    <div class="popular-header">Following</div>
     <div
       class="popular-card"
       v-for="following in getCurrentUserFollowings"
