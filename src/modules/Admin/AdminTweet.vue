@@ -1,18 +1,18 @@
 <template>
   <div class="tweet">
     <div class="tweet__img">
-      <img class="tweet__avatar" :src="tweet.User.avatar" alt="" />
+      <img class="tweet__avatar" :src="tweet.User.avatar | emptyImage" alt="" />
     </div>
     <div class="tweet__txt">
       <div class="tweet__control">
         <div class="tweet__info">
           <div class="tweet__username">{{ tweet.User.name }}</div>
           <div class="tweet__account">
-            @apple<span class="dot">&bull;</span>
+            @{{ tweet.User.account }}<span class="dot">&bull;</span>
           </div>
           <div class="tweet__created">{{ tweet.createdAt | fromNow }}</div>
         </div>
-        <div class="tweet__delete">
+        <div class="tweet__delete" @click="verifyDeleteTweet(tweet.id)">
           <img
             class="filter-orange"
             src="@/assets/images/icon_close_gray.svg"
@@ -28,12 +28,19 @@
 </template>
 
 <script>
-import { mixinFromNowFilters } from "../../utils/mixin";
+import { mixinFromNowFilters, mixinEmptyImage } from "../../utils/mixin";
+import { mapActions } from "vuex";
+import { VERIFY_DELETE_TWEET } from "../../store/store-types";
 
 export default {
   name: "AdminTweet",
   props: ["tweet"],
-  mixins: [mixinFromNowFilters],
+  mixins: [mixinFromNowFilters, mixinEmptyImage],
+  methods: {
+    ...mapActions({
+      verifyDeleteTweet: VERIFY_DELETE_TWEET,
+    }),
+  },
 };
 </script>
 

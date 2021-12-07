@@ -10,7 +10,7 @@
       "
     >
       <div class="user-pic">
-       <img :src="tweet.User.avatar | emptyImage" alt="" />
+        <img :src="tweet.User.avatar | emptyImage" alt="" />
       </div>
 
       <div class="tweet-info">
@@ -18,7 +18,7 @@
           <p class="user-name">
             {{ tweet.name }}
             <span class="user-id">@{{ tweet.UserId }} • </span
-            ><span class="time">{{ tweet.createdAt }}小時</span>
+            ><span class="time">{{ tweet.createdAt | fromNow }}</span>
           </p>
         </div>
         <div class="tweet-text">{{ tweet.description }}</div>
@@ -45,12 +45,13 @@
               src="./../../assets/images/icon_like_fill.svg"
               alt=""
               @click.stop.prevent="handleLikeButton(tweet.isLiked == 'true')"
-              v-if="tweet.isLiked == false"
+              v-if="tweet.isLiked == true"
             />
             <img
               src="./../../assets/images/icon_like.svg"
               alt=""
               @click.stop.prevent="addLike(tweet.isLiked)"
+              v-else
             />
 
             <p class="liked-num" :class="{ liked: tweet.isLiked }">
@@ -64,16 +65,14 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-// import { GET_ALL_TWEETS, SET_ALL_TWEETS } from "../../store/store-types";
 
 import { GET_FILLTERED_TWEETS } from "../../store/store-types";
 
-
 import likeshipAPI from "./../../apis/likeshipAPI";
-import { mixinEmptyImage } from "../../utils/mixin";
+import { mixinEmptyImage, mixinFromNowFilters } from "../../utils/mixin";
 
 export default {
-  mixins: [mixinEmptyImage],
+  mixins: [mixinEmptyImage, mixinFromNowFilters],
   props: {
     initialShowReplyModal: {
       type: Boolean,
@@ -121,19 +120,10 @@ export default {
     },
   },
   computed: {
-    // tweets() {
-    //   return this.$store.getters[`${this.filterType.getter}`];
-    // },
-    // ...mapGetters({
-    //   filterType: GET_TWEETS_FILTER_TYPE,
-    // }),
     ...mapGetters({
       tweets: GET_FILLTERED_TWEETS,
     }),
   },
-  // watch: {
-  //   filterType: "getTweets",
-  // },
 };
 </script>
 <style lang="scss" scoped>

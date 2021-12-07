@@ -6,8 +6,6 @@ import {
   GET_ALL_TWEETS,
   SET_ALL_TWEETS,
   GET_FILLTERED_TWEETS,
-  GET_TWEETS_FILTER_TYPE,
-  SET_TWEETS_FILTER_TYPE,
   GET_ONE_USER_TWEETS,
   SET_ONE_USER_TWEETS,
   GET_ONE_USER_REPLIES,
@@ -17,10 +15,6 @@ import {
 } from "../store-types";
 
 const state = {
-  tweetsFilterType: {
-    getter: "",
-    setter: "",
-  },
   allTweets: [],
   oneUserTweets: [],
   oneUserReplies: [],
@@ -29,20 +23,17 @@ const state = {
 };
 const getters = {
   [GET_FILLTERED_TWEETS]: (state) => state.filteredTweets,
-  [GET_TWEETS_FILTER_TYPE]: (state) => state.tweetsFilterType,
   [GET_ALL_TWEETS]: (state) => state.allTweets,
   [GET_ONE_USER_TWEETS]: (state) => state.oneUserTweets,
   [GET_ONE_USER_REPLIES]: (state) => state.oneUserReplies,
   [GET_ONE_USER_LIKES]: (state) => state.oenUserLikes,
 };
 const actions = {
-  [SET_TWEETS_FILTER_TYPE]: async ({ commit }, filterType) => {
-    commit(SET_TWEETS_FILTER_TYPE, filterType);
-  },
-  [SET_ALL_TWEETS]: async ({ commit }) => {
-    console.log("setalltweets");
+  [SET_ALL_TWEETS]: async ({
+    commit
+  }) => {
     const res = await tweets.all();
-    // send api to get reponse of all tweets and pass tweets to mutation to change state all the tweets
+    // send api to get reponse of unFiltered tweets and pass tweets to mutation to change state unFiltered the tweets
     // start
     const { data, statusText } = res;
     if (statusText !== "OK") throw new Error("statusText");
@@ -105,11 +96,9 @@ const actions = {
   },
 };
 const mutations = {
-  [SET_TWEETS_FILTER_TYPE]: (state, filterType) => {
-    state.tweetsFilterType = filterType;
-  },
   [SET_ALL_TWEETS]: (state, allTweets) => {
     state.allTweets = [...state.allTweets, ...allTweets];
+    state.filteredTweets = [...allTweets];
   },
   [SET_ONE_USER_TWEETS]: (state, oneUserTweets) => {
     state.oneUserTweets = [...oneUserTweets];

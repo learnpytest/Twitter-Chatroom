@@ -25,8 +25,8 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import { GET_CURRENT_USER } from "../../store/store-types";
-import { mixinEmptyImage } from "../../utils/mixin";
+import { GET_CURRENT_USER } from "@/store/store-types";
+import { mixinEmptyImage } from "@/utils/mixin";
 
 export default {
   mixins: [mixinEmptyImage],

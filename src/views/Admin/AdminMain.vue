@@ -5,43 +5,51 @@
       <AdminSidebar />
     </div>
     <div class="panel--data">
-      <div class="panel--data__title">使用者列表</div>
-      <div class="cards">
-        <AdminUserCard v-for="(i, index) in 10" :key="index" />
+      <div class="panel--data__title">推文清單</div>
+      <div class="tweets">
+        <!-- todo get real tweets and use v-for to render all tweets then pass id as prop to tweet card to run delete function -->
+        <!-- <AdminTweet v-for="i in 10" :key="i" /> -->
+        <AdminTweet
+          v-for="tweet in getUnfilteredTweets"
+          :key="tweet.id"
+          :tweet="tweet"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import AdminTweet from "@/modules/Admin/AdminTweet.vue";
 import AdminSidebar from "@/modules/Admin/AdminSidebar.vue";
-import AdminUserCard from "@/views/AdminUserCard.vue";
 
-// todo remove comment use this code after backend complete api
-// import { mapGetters, mapActions } from "vuex";
+import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
 
-// import { SET_ALL_USERS, GET_ALL_USERS } from "../store/store-types";
+import {
+  GET_UNFILTERED_TWEETS_FOR_ADMIN,
+  SET_UNFILTERED_TWEETS_FOR_ADMIN,
+} from "@/store/store-types";
 
 export default {
-  name: "AdminUsers",
+  name: "AdminMain",
   components: {
+    AdminTweet,
     AdminSidebar,
-    AdminUserCard,
   },
   created() {
-    // this.setAllUser();
+    this.setUnfilteredTweets();
   },
-
-  // methods: {
-  //   ...mapActions({
-  //     setAllUser: SET_ALL_USERS,
-  //   }),
-  // },
-  // computed: {
-  //   ...mapGetters({
-  //     getAllUsers: GET_ALL_USERS,
-  //   }),
-  // },
+  methods: {
+    ...mapActions({
+      setUnfilteredTweets: SET_UNFILTERED_TWEETS_FOR_ADMIN,
+    }),
+  },
+  computed: {
+    ...mapGetters({
+      getUnfilteredTweets: GET_UNFILTERED_TWEETS_FOR_ADMIN,
+    }),
+  },
 };
 </script>
 
@@ -52,6 +60,7 @@ export default {
 .container--horizontal {
   display: flex;
   width: 100%;
+  height: 100%;
 }
 .sidebar {
   width: 25%;
@@ -60,15 +69,14 @@ export default {
   height: 100vh;
 }
 .panel--data {
-  height: 100vh;
-  overflow: scroll;
+  height: 100%;
+  overflow-y: scroll;
   flex: 1;
   border-left: 1px solid #e6ecf0;
   &__title {
     height: 3.5rem;
     line-height: 3.5rem;
     min-height: 3rem;
-    margin-bottom: 1rem;
     padding: 0 1.6rem;
     font-size: 1.3rem;
     font-weight: var(--fw-bold);
@@ -76,11 +84,9 @@ export default {
     border-bottom: 1px solid #e6ecf0;
     border-color: var(--g-75);
   }
-}
-.cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding: 1rem;
+  .tweets {
+    display: flex;
+    flex-wrap: wrap;
+  }
 }
 </style>
