@@ -117,6 +117,7 @@ const mutations = {
   },
   [SET_ALL_TWEETS]: (state, allTweets) => {
     state.allTweets = [...state.allTweets, ...allTweets];
+    state.filteredTweets = [...allTweets];
   },
   [SET_ONE_USER_TWEETS]: (state, oneUserTweets) => {
     state.oneUserTweets = [...oneUserTweets];

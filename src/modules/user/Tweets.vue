@@ -17,7 +17,7 @@
           <p class="user-name">
             <!-- {{ tweet.User.name }} -->
             <span class="user-id">@{{ tweet.UserId }} • </span
-            ><span class="time">{{ tweet.createdAt }}小時</span>
+            ><span class="time">{{ tweet.createdAt | fromNow }}</span>
           </p>
         </div>
         <div class="tweet-text">{{ tweet.description }}</div>
@@ -64,14 +64,13 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-// import { GET_ALL_TWEETS, SET_ALL_TWEETS } from "../../store/store-types";
 
 import { GET_FILLTERED_TWEETS } from "../../store/store-types";
 
-import { mixinEmptyImage } from "../../utils/mixin";
+import { mixinEmptyImage, mixinFromNowFilters } from "../../utils/mixin";
 
 export default {
-  mixins: [mixinEmptyImage],
+  mixins: [mixinEmptyImage, mixinFromNowFilters],
   props: {
     initialShowReplyModal: {
       type: Boolean,
@@ -110,19 +109,10 @@ export default {
     },
   },
   computed: {
-    // tweets() {
-    //   return this.$store.getters[`${this.filterType.getter}`];
-    // },
-    // ...mapGetters({
-    //   filterType: GET_TWEETS_FILTER_TYPE,
-    // }),
     ...mapGetters({
       tweets: GET_FILLTERED_TWEETS,
     }),
   },
-  // watch: {
-  //   filterType: "getTweets",
-  // },
 };
 </script>
 <style lang="scss" scoped>

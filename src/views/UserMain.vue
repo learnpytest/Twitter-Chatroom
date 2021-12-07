@@ -40,8 +40,8 @@ import ReplyTweetModal from "../modules/user/ReplyTweetModal.vue";
 import { mapActions } from "vuex";
 
 import {
-  SET_TWEETS_FILTER_TYPE,
-  GET_ALL_TWEETS,
+  // SET_TWEETS_FILTER_TYPE,
+  // GET_ALL_TWEETS,
   SET_ALL_TWEETS,
 } from "../store/store-types";
 
@@ -62,15 +62,16 @@ export default {
     };
   },
   created() {
-    this.setTweetsFilterType({
-      getter: GET_ALL_TWEETS,
-      setter: SET_ALL_TWEETS,
-    });
+    // this.setTweetsFilterType({
+    //   getter: GET_ALL_TWEETS,
+    //   setter: SET_ALL_TWEETS,
+    // });
+    this.setAllTweets();
   },
 
   methods: {
-    ...mapActions({ setTweetsFilterType: SET_TWEETS_FILTER_TYPE }),
-
+    // ...mapActions({ setTweetsFilterType: SET_TWEETS_FILTER_TYPE }),
+    ...mapActions({ setAllTweets: SET_ALL_TWEETS }),
     // fetchData() {
     //   const { users, tweets } = dummyData;
     //   this.users = users;
