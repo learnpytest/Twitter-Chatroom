@@ -84,7 +84,7 @@ const mutations = {
   [SET_CURRENT_USER_FOLLOWERS]: async (state, currentUserFollowers) => {
     state.currentUserFollowers = [...currentUserFollowers];
   },
-  [SET_CURRENT_USER_FOLLOWERS]: async (state, currentUserFollowings) => {
+  [SET_CURRENT_USER_FOLLOWINGS]: async (state, currentUserFollowings) => {
     state.currentUserFollowings = [...currentUserFollowings];
     console.log("setcurrentUserFollowings mutation");
   },
