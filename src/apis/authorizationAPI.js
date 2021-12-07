@@ -4,20 +4,20 @@ import {
 
 export default {
   signIn({
-    email,
+    account,
     password
   }) {
     return apiHelper.post("/admin/signin", {
-      email,
+      account,
       password,
     });
   },
   usersSignIn({
-    email,
+    account,
     password
   }) {
     return apiHelper.post("/users/signin", {
-      email,
+      account,
       password,
     });
   },

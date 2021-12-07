@@ -60,7 +60,7 @@ export default {
   methods: {
     // need to rename email to account and change vuex rename email to account
     updateLoginInfo() {
-      this.setLoginInfo({ email: this.account, password: this.password });
+      this.setLoginInfo({ account: this.account, password: this.password });
     },
     ...mapActions({
       setLoginInfo: SET_LOGIN_INFO,

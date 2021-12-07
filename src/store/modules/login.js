@@ -16,7 +16,7 @@ import {
 
 const state = {
   loginInfo: {
-    email: "",
+    account: "",
     password: "",
   },
 };
@@ -27,11 +27,11 @@ const actions = {
   [SET_LOGIN_INFO]: async ({
     commit
   }, {
-    email,
+    account,
     password
   }) => {
     commit(SET_LOGIN_INFO, {
-      email,
+      account,
       password,
     });
   },
@@ -42,9 +42,9 @@ const actions = {
   }) => {
     // if success set current user, save token to localstorage
     // write first start
-    const email = state.loginInfo.email;
+    const account = state.loginInfo.account;
     const password = state.loginInfo.password;
-    if (!email.length || !password.length) {
+    if (!account.length || !password.length) {
       dispatch(ADD_NOTIFICATION, {
         type: "error",
         message: "帳號不存在！",
@@ -53,14 +53,13 @@ const actions = {
     }
     try {
       const res = await authorizationAPI.usersSignIn({
-        email,
+        account,
         password,
       });
       const {
         data,
         statusText
       } = res;
-      console.log(data, statusText);
       if (statusText !== "OK" || data.status !== "success") {
         throw new Error(statusText);
       }
@@ -86,9 +85,9 @@ const actions = {
     dispatch
   }) => {
     // write first start
-    const email = state.loginInfo.email;
+    const account = state.loginInfo.account;
     const password = state.loginInfo.password;
-    if (!email.length || !password.length) {
+    if (!account.length || !password.length) {
       dispatch(ADD_NOTIFICATION, {
         type: "error",
         message: "帳號不存在！",
@@ -97,7 +96,7 @@ const actions = {
     }
 
     const res = await authorizationAPI.signIn({
-      email,
+      account,
       password,
     });
     const {
@@ -119,13 +118,13 @@ const actions = {
 };
 const mutations = {
   [SET_LOGIN_INFO]: (state, {
-    email,
+    account,
     password
   }) => {
     state.loginInfo = {
       ...state.loginInfo,
       ...{
-        email,
+        account,
         password,
       },
     };

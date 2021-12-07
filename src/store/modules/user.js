@@ -29,7 +29,6 @@ const actions = {
     commit,
     dispatch
   }) => {
-    console.log("REVOKE_AUTHENTICATION");
     commit(REVOKE_AUTHENTICATION);
     dispatch(ADD_NOTIFICATION, {
       type: "success",
@@ -74,7 +73,6 @@ const actions = {
       if (statusText !== "OK") {
         throw new Error(statusText);
       }
-      console.log("setTopUsers", data);
       commit(SET_TOP_USERS, data);
     } catch (err) {
       throw new Error(err);
@@ -83,7 +81,6 @@ const actions = {
 };
 const mutations = {
   [REVOKE_AUTHENTICATION]: async (state) => {
-    console.log("REVOKE_AUTHENTICATION");
     state.currentUser = {};
     state.isAuthenticated = false;
     localStorage.removeItem("token");
@@ -108,7 +105,6 @@ const mutations = {
   },
   [SET_TOP_USERS]: async (state, topUsers) => {
     state.topUsers = [...topUsers];
-    console.log("setTopUsers mutation");
   },
 };
 

@@ -74,6 +74,24 @@ const routes = [{
     //要移回來
     // beforeEnter: authenticateIsLoggedinUser,
   },
+
+  {
+    path: "/user",
+    name: "user-followship",
+
+    component: () => import("@/views/UserFollowship.vue"),
+    children: [{
+        path: "followers",
+        name: "user-followers",
+      },
+      {
+        path: "followings",
+        name: "user-followings",
+      },
+    ],
+    //要移回來
+    // beforeEnter: authenticateIsLoggedinUser,
+  },
   {
     path: "/user/setting",
     name: "user-setting",
