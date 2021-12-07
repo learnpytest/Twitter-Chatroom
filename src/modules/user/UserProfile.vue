@@ -73,12 +73,15 @@ export default {
   position: relative;
   text-align: right;
   padding: 10px;
+
   img {
     position: absolute;
     width: 140px;
     height: 140px;
+    object-fit: cover;
     top: -70px;
     left: 10px;
+    border-radius: 50%;
   }
   button {
     font-weight: var(--fw-bold);

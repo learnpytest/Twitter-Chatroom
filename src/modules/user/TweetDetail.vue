@@ -51,15 +51,28 @@ export default {
       //test need to set required on true
       // required: true,
     },
+    initialTweet: {
+      type: Object,
+      require: true,
+    },
   },
   data() {
     return {
       showReplyModal: false,
+      tweet: {},
     };
+  },
+  created() {
+    this.fetchData();
   },
   methods: {
     fetchData() {
       this.showReplyModal = this.initialShowReplyModal;
+      this.tweet = this.initialTweet;
+    },
+    handleShowModalClick() {
+      this.showReplyModal = true;
+      this.$emit("show-reply-modal");
     },
   },
 };

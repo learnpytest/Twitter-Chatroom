@@ -15,7 +15,12 @@
         <Sidebar :initialShowModal="showModal" @show-modal="modalToggle" />
       </div>
       <div class="main">
-        <div class="tweet-detail"><TweetDetail /></div>
+        <div class="tweet-detail">
+          <TweetDetail
+            :initialTweet="tweet"
+            @show-reply-modal="replyModalToggle"
+          />
+        </div>
         <div class="tweets"></div>
       </div>
       <div class="popular"><Popular /></div>
@@ -41,18 +46,25 @@ export default {
     return {
       showModal: false,
       showReplyModal: false,
+      tweet: {},
     };
   },
   created() {
-    this.fetchTweet({ tweetId: this.$route.params.id });
+    let tweetId = this.$route.params.id;
+    this.fetchTweet({ tweetId });
   },
   methods: {
-    async fetchTweets({ tweetId }) {
+    async fetchTweet({ tweetId }) {
       try {
-        const response = await tweetsAPI.getTweets({
+        const response = await tweetsAPI.getTweet({
           tweetId,
         });
-        console.log(response);
+        const { data } = response;
+        this.tweet = data;
+        // const { id, UserId, description } = response.data;
+        // this.id = id;
+        // this.UserId = UserId;
+        // this.description = description;
         // const {
         //   restaurants,
         //   categories,
