@@ -18,8 +18,12 @@
         {{ getCurrentUser.introduction }}
       </p>
       <!-- todo api 沒有跟隨者與跟隨中使用者 -->
-      <p class="profile-follow">34個<span>跟隨中</span></p>
-      <p class="profile-follow">59位<span>跟隨者</span></p>
+      <router-link :to="{ name: 'user-followers' }" class="profile-follow"
+        >34個<span>跟隨中</span></router-link
+      >
+      <router-link :to="{ name: 'user-followings' }" class="profile-follow"
+        >59位<span>跟隨者</span></router-link
+      >
     </div>
   </div>
 </template>

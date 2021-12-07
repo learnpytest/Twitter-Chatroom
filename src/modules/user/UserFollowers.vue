@@ -1,41 +1,45 @@
-﻿<template>
+<template>
   <div class="popular-wrapper">
     <div class="popular-header">Popular</div>
-    <div class="popular-card" v-for="user in getTopUsers" :key="user.id">
-      <!-- 沒有上傳照片產生空圖 -->
-      <img :src="user.avatar | emptyImage" alt="user avatar" />
+    <!-- <div class="popular-card" v-for="user in getTopUsers" :key="user.id"> -->
+    <!-- 沒有上傳照片產生空圖 -->
+    <!-- <img :src="user.avatar | emptyImage" alt="user avatar" />
       <div class="popular-card_info">
         <p class="user-name">{{ user.name }}</p>
         <p class="user-info">@{{ user.account }}</p>
+        <p>{{ user.introduction }}</p>
       </div>
       <div class="follow-btn" v-if="user.isFollowed">
         <button class="following-btn">正在跟隨</button>
       </div>
       <div class="follow-btn" v-else>
         <button class="follower-btn">跟隨</button>
-      </div>
-    </div>
+      </div> -->
+    <!-- </div> -->
   </div>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
 import { mixinEmptyImage } from "../../utils/mixin";
 
-import { GET_TOP_USERS, SET_TOP_USERS } from "../../store/store-types";
+import {
+  GET_CURRENT_USER_FOLLOWERS,
+  SET_CURRENT_USER_FOLLOWERS,
+} from "../../store/store-types";
 export default {
   name: "Popular",
   mixins: [mixinEmptyImage],
   created() {
-    this.setTopUsers();
+    this.setCurrentUserFollowers();
   },
   methods: {
     ...mapActions({
-      setTopUsers: SET_TOP_USERS,
+      setCurrentUserFollowers: SET_CURRENT_USER_FOLLOWERS,
     }),
   },
   computed: {
     ...mapGetters({
-      getTopUsers: GET_TOP_USERS,
+      getCurrentUserFollowers: GET_CURRENT_USER_FOLLOWERS,
     }),
   },
 };

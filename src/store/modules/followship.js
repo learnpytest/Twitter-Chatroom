@@ -1,5 +1,5 @@
 // import currentUserAPI from "../../apis/currentUserAPI";
-
+import followshipAPI from "../../apis/followshipAPI";
 // import {
 //   vm
 // } from "../../main";
@@ -23,18 +23,46 @@ const getters = {
 };
 const actions = {
   [SET_CURRENT_USER_FOLLOWERS]: async ({
-    commit
-  }, currentUserFollowers) => {
+    commit,
+    rootState
+  }) => {
     // send api
-    console.log("setcurrentUserFollowers", currentUserFollowers);
-    commit(SET_CURRENT_USER_FOLLOWERS, currentUserFollowers);
+    const userId = rootState.user.currentUser.id;
+    console.log("userId", userId);
+    try {
+      const res = await followshipAPI.getFollowers(userId);
+      const {
+        statusText,
+        data
+      } = res;
+      if (statusText !== "OK") {
+        throw new Error(statusText);
+      }
+      commit(SET_CURRENT_USER_FOLLOWERS, data);
+    } catch (err) {
+      console.log(err);
+    }
   },
   [SET_CURRENT_USER_FOLLOWINGS]: async ({
-    commit
-  }, currentUserFollowings) => {
+    commit,
+    rootState
+  }) => {
     // send api
-    console.log("setcurrentUserFollowings", currentUserFollowings);
-    commit(SET_CURRENT_USER_FOLLOWERS, currentUserFollowings);
+    const userId = rootState.user.currentUser.id;
+
+    try {
+      const res = await followshipAPI.getFollowings(userId);
+      const {
+        statusText,
+        data
+      } = res;
+      if (statusText !== "OK") {
+        throw new Error(statusText);
+      }
+      commit(SET_CURRENT_USER_FOLLOWINGS, data);
+    } catch (err) {
+      console.log(err);
+    }
   },
   [POST_FOLLOWSHIP]: async ({
     dispatch
@@ -48,15 +76,13 @@ const actions = {
     dispatch
   }, targetedUserId) => {
     // send api
-    console.log("DELETE_FOLLOWSHIP", targetedUserId);
-    // dispatch(GET_CURRENT_USER_FOLLOWINGS, currentUserId);
+    console.log(targetedUserId);
     dispatch(GET_CURRENT_USER_FOLLOWINGS);
   },
 };
 const mutations = {
   [SET_CURRENT_USER_FOLLOWERS]: async (state, currentUserFollowers) => {
     state.currentUserFollowers = [...currentUserFollowers];
-    console.log("setcurrentUserFollowers mutation");
   },
   [SET_CURRENT_USER_FOLLOWERS]: async (state, currentUserFollowings) => {
     state.currentUserFollowings = [...currentUserFollowings];
