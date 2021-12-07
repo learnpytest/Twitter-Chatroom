@@ -6,6 +6,11 @@
       @click="removeNotification"
     >
       {{ notification.message }}
+      <template v-show="isNotificationConfirm">
+        <button @click="deleteTweet">確定</button>
+        <button @click="cancelDelete">取消</button>
+      </template>
+
       <span class="notification__circle">
         <span class="icon"></span>
       </span>
@@ -19,6 +24,9 @@ import {
   REMOVE_NOTIFICATION,
   GET_NOTIFICATION,
   IS_NOTIFICATION_OPEN,
+  IS_NOTIFICATION_CONFIRM,
+  DELETE_TWEET,
+  CANCEL_DELETE,
 } from "../../store/store-types";
 
 export default {
@@ -29,11 +37,14 @@ export default {
     ...mapGetters({
       notification: GET_NOTIFICATION,
       isNotificationOpen: IS_NOTIFICATION_OPEN,
+      isNotificationConfirm: IS_NOTIFICATION_CONFIRM,
     }),
   },
 
   methods: mapActions({
     removeNotification: REMOVE_NOTIFICATION,
+    deleteTweet: DELETE_TWEET,
+    cancelDelete: CANCEL_DELETE,
   }),
 };
 </script>

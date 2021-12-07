@@ -53,18 +53,18 @@ const routes = [{
   {
     path: "/admin/login",
     name: "admin-login",
-    component: () => import("@/views/AdminLogin"),
+    component: () => import("@/views/Admin/AdminLogin"),
   },
   {
     path: "/admin/users",
     name: "admin-users-list",
-    component: () => import("@/views/AdminUsers"),
+    component: () => import("@/views/Admin/AdminUsers"),
     beforeEnter: authenticateIsAdmin,
   },
   {
     path: "/admin/tweets",
     name: "admin-tweet-list",
-    component: () => import("@/views/AdminMain"),
+    component: () => import("@/views/Admin/AdminMain"),
     beforeEnter: authenticateIsAdmin,
   },
   {
