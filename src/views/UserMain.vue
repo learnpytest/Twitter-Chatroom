@@ -29,7 +29,6 @@
 </template>
 
 <script>
-// import Sidebar from "../modules/Sidebar.vue";
 import AddTweet from "../modules/user/AddTweet.vue";
 import Tweets from "../modules/user/Tweets.vue";
 import Popular from "../modules/user/Popular.vue";
@@ -39,11 +38,7 @@ import ReplyTweetModal from "../modules/user/ReplyTweetModal.vue";
 
 import { mapActions } from "vuex";
 
-import {
-  // SET_TWEETS_FILTER_TYPE,
-  // GET_ALL_TWEETS,
-  SET_ALL_TWEETS,
-} from "../store/store-types";
+import { SET_ALL_TWEETS } from "../store/store-types";
 
 export default {
   components: {
@@ -62,21 +57,11 @@ export default {
     };
   },
   created() {
-    // this.setTweetsFilterType({
-    //   getter: GET_ALL_TWEETS,
-    //   setter: SET_ALL_TWEETS,
-    // });
     this.setAllTweets();
   },
 
   methods: {
-    // ...mapActions({ setTweetsFilterType: SET_TWEETS_FILTER_TYPE }),
     ...mapActions({ setAllTweets: SET_ALL_TWEETS }),
-    // fetchData() {
-    //   const { users, tweets } = dummyData;
-    //   this.users = users;
-    //   this.tweets = tweets;
-    // },
     modalToggle() {
       if (!this.showModal) {
         this.showModal = true;

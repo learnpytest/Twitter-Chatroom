@@ -100,27 +100,27 @@ const actions = {
 };
 const mutations = {
   [SET_ALL_TWEETS]: (state, allTweets) => {
-    state.allTweets = [...state.allTweets, ...allTweets];
+    // state.allTweets = [...state.allTweets, ...allTweets];
     state.filteredTweets = [...allTweets];
   },
   [SET_ONE_USER_TWEETS]: (state, oneUserTweets) => {
-    state.oneUserTweets = [...oneUserTweets];
+    // state.oneUserTweets = [...oneUserTweets];
     state.filteredTweets = [...oneUserTweets];
   },
   [SET_ONE_USER_REPLIES]: (state, oneUserReplies) => {
-    state.oneUserReplies = [...oneUserReplies];
+    // state.oneUserReplies = [...oneUserReplies];
     state.filteredTweets = [...oneUserReplies];
   },
   [SET_ONE_USER_LIKES]: (state, oneUserLikes) => {
-    state.oneUserLikes = [...oneUserLikes];
+    // state.oneUserLikes = [...oneUserLikes];
     state.filteredTweets = [...oneUserLikes];
   },
   [SET_ONE_USER_REPLIES]: (state, oneUserReplies) => {
-    state.oneUserReplies = [...oneUserReplies];
+    // state.oneUserReplies = [...oneUserReplies];
     state.filteredTweets = [...oneUserReplies];
   },
   [SET_ONE_USER_LIKES]: (state, oneUserLikes) => {
-    state.oneUserLikes = [...oneUserLikes];
+    // state.oneUserLikes = [...oneUserLikes];
     state.filteredTweets = [...oneUserLikes];
   },
 };

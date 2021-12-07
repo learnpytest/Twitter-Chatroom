@@ -84,9 +84,6 @@ export default {
     };
   },
 
-  created() {
-    // this.getTweets();
-  },
   methods: {
     fetchData() {
       this.showReplyModal = this.initialShowReplyModal;
@@ -102,10 +99,6 @@ export default {
     handleShowModalClick() {
       this.showReplyModal = true;
       this.$emit("show-reply-modal");
-    },
-    getTweets() {
-      console.log("dispatch tweets vue");
-      this.$store.dispatch(`${this.filterType.setter}`);
     },
   },
   computed: {

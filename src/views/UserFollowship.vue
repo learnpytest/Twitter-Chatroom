@@ -20,7 +20,9 @@
           <tab title="跟隨者"
             ><UserFollowers :initialShowReplyModal="showReplyModal"
           /></tab>
-          <tab class="comments" title="正在跟隨"><UserFollowers /></tab>
+          <tab class="comments" title="正在跟隨"
+            ><UserFollowings :initialShowReplyModal="showReplyModal"
+          /></tab>
         </tabs-followship>
       </div>
       <div class="popular"><Popular /></div>
@@ -32,6 +34,8 @@ import Popular from "../modules/user/Popular.vue";
 import Sidebar from "../modules/user/Sidebar.vue";
 
 import UserFollowers from "../modules/user/UserFollowers.vue";
+import UserFollowings from "../modules/user/UserFollowings.vue";
+
 import TabsFollowship from "../modules/user/TabsFollowship.vue";
 import Tab from "../modules/user/Tab.vue";
 
@@ -45,7 +49,7 @@ export default {
   components: {
     Popular,
     Sidebar,
-
+    UserFollowings,
     UserFollowers,
     TabsFollowship,
     Tab,
