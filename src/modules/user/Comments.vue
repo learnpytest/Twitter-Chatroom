@@ -11,7 +11,7 @@
           <p class="user-name">
             {{ tweet.User.name }}
             <span class="user-id">@{{ tweet.User.account }} • </span
-            ><span class="time">{{ tweet.createdAt }}</span>
+            ><span class="time">{{ tweet.createdAt | fromNow }}</span>
           </p>
         </div>
         <p Class="reply-to">
@@ -125,10 +125,11 @@ import { mapGetters } from "vuex";
 import { GET_FILLTERED_TWEETS } from "../../store/store-types";
 import { mixinEmptyImage } from "../../utils/mixin";
 
+import { mixinFromNowFilters } from "../../utils/mixin";
+
 export default {
   name: "Comments",
-  mixins: [mixinEmptyImage],
-
+  mixins: [mixinEmptyImage, mixinFromNowFilters],
   methods: {
     getTweets() {
       console.log("comments dispatch get tweets");
