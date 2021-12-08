@@ -9,6 +9,7 @@ import {
   SET_CURRENT_USER_FOLLOWERS,
   GET_CURRENT_USER_FOLLOWINGS,
   SET_CURRENT_USER_FOLLOWINGS,
+  SET_TOP_USERS,
   POST_FOLLOWSHIP,
   DELETE_FOLLOWSHIP,
   ADD_NOTIFICATION,
@@ -77,13 +78,16 @@ const actions = {
       if (data.status !== "success" || statusText !== "OK") {
         throw new Error(data.message);
       }
-      dispatch(ADD_NOTIFICATION, {
-        type: "success",
-        message: "跟隨成功",
-      });
-
       dispatch(SET_CURRENT_USER_FOLLOWINGS);
       dispatch(SET_CURRENT_USER_FOLLOWERS);
+      dispatch(SET_TOP_USERS);
+
+      setTimeout(() => {
+        dispatch(ADD_NOTIFICATION, {
+          type: "success",
+          message: "跟隨成功",
+        });
+      }, 1000);
     } catch (err) {
       dispatch(ADD_NOTIFICATION, {
         type: "error",
@@ -102,12 +106,17 @@ const actions = {
     if (data.status !== "success" || statusText !== "OK") {
       throw new Error(data.message);
     }
-    dispatch(ADD_NOTIFICATION, {
-      type: "success",
-      message: "成功取消跟隨",
-    });
+
     dispatch(SET_CURRENT_USER_FOLLOWINGS);
     dispatch(SET_CURRENT_USER_FOLLOWERS);
+    dispatch(SET_TOP_USERS);
+
+    setTimeout(() => {
+      dispatch(ADD_NOTIFICATION, {
+        type: "success",
+        message: "成功取消跟隨",
+      });
+    }, 1000);
   },
 };
 const mutations = {

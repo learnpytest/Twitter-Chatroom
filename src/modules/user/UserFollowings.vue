@@ -13,11 +13,16 @@
         <p>{{ following.introduction }}</p>
       </div>
       <div class="follow-btn" v-if="following.isFollowed">
-        <button class="following-btn">正在跟隨</button>
+        <button
+          class="following-btn"
+          @click.stop.prevent="cancelFollow(following.followingId)"
+        >
+          正在跟隨
+        </button>
       </div>
-      <div class="follow-btn" v-else>
+      <!-- <div class="follow-btn" v-else>
         <button class="follower-btn">跟隨</button>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -28,6 +33,7 @@ import { mixinEmptyImage } from "../../utils/mixin";
 import {
   GET_CURRENT_USER_FOLLOWINGS,
   SET_CURRENT_USER_FOLLOWINGS,
+  DELETE_FOLLOWSHIP,
 } from "../../store/store-types";
 export default {
   name: "Popular",
@@ -38,6 +44,7 @@ export default {
   methods: {
     ...mapActions({
       setCurrentUserFollowings: SET_CURRENT_USER_FOLLOWINGS,
+      cancelFollow: DELETE_FOLLOWSHIP,
     }),
   },
   computed: {
