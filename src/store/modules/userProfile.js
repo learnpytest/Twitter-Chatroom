@@ -9,8 +9,10 @@ import currentUserAPI from "../../apis/currentUserAPI";
 import {
   SET_IS_PROCESSING,
   PUT_CURRENT_USER_PROFILE,
-  SET_CURRENT_USER_PROFILE,
+  RESET_CURRENT_USER_PROFILE,
   FETCH_CURRENT_USER,
+  REVOKE_AUTHENTICATION,
+  ADD_NOTIFICATION,
 } from "../store-types";
 
 const state = {};
@@ -18,12 +20,27 @@ const getters = {
   [FETCH_CURRENT_USER]: (state) => state.currentUserProfile,
 };
 const actions = {
-  [SET_CURRENT_USER_PROFILE]: async ({
-    commit
+  [RESET_CURRENT_USER_PROFILE]: async ({
+    commit,
+    dispatch
   }) => {
-    const res = await currentUserAPI.getCurrentUser();
-
-    commit(SET_CURRENT_USER_PROFILE, res.data);
+    // 將使用RESET_CURRENT_USER_PROFILE來驗證每一次轉址使用者是否仍有權限。需要設定router的beforeEach來監聽每一個轉址token有無變化
+    try {
+      const {
+        data,
+        statusText
+      } = await currentUserAPI.getCurrentUser();
+      if (statusText !== "OK") throw new Error("無法取得現在使用者");
+      commit(RESET_CURRENT_USER_PROFILE, data);
+      return true;
+    } catch (err) {
+      dispatch(ADD_NOTIFICATION, {
+        type: "error",
+        message: "無法取得現在使用者，請稍後再試",
+      });
+      commit(REVOKE_AUTHENTICATION);
+      return false;
+    }
   },
   [PUT_CURRENT_USER_PROFILE]: async ({
     rootState,
@@ -43,7 +60,7 @@ const actions = {
       if (statusText !== "OK" || data.status !== "success") {
         throw new Error(data.message);
       }
-      dispatch(SET_CURRENT_USER_PROFILE);
+      dispatch(RESET_CURRENT_USER_PROFILE);
       console.log("putuserprofile", userId, res);
       dispatch(SET_IS_PROCESSING, false);
     } catch (err) {
@@ -85,7 +102,7 @@ const actions = {
 };
 
 const mutations = {
-  [SET_CURRENT_USER_PROFILE]: async (state, currentUserProfile) => {
+  [RESET_CURRENT_USER_PROFILE]: async (state, currentUserProfile) => {
     state.currentUserProfile = {
       ...currentUserProfile,
     };
