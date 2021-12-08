@@ -10,9 +10,21 @@
           $router.push({ name: 'reply-list', params: { id: tweet.TweetId } })
       "
     >
-      <div class="user-pic">
+      <div
+        class="user-pic"
+        @click.stop.prevent="
+          () => $router.push({ name: 'user', params: { id: tweet.User.id } })
+        "
+      >
         <img :src="tweet.User.avatar | emptyImage" alt="" />
       </div>
+
+      <!-- <router-link
+        class="user-pic"
+        :to="{ name: 'user', params: { id: tweet.User.id } }"
+      >
+        <img :src="tweet.User.avatar | emptyImage" alt="" />
+      </router-link> -->
 
       <div class="tweet-info">
         <div class="info">

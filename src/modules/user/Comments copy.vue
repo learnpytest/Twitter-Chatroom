@@ -26,44 +26,19 @@
 </template>
 
 <script>
-// import { mapGetters } from "vuex";
-// import { GET_FILLTERED_TWEETS } from "../../store/store-types";
+import { mapGetters } from "vuex";
+import { GET_FILLTERED_TWEETS } from "../../store/store-types";
 
 import { mixinEmptyImage, mixinFromNowFilters } from "../../utils/mixin";
 
 export default {
   name: "Comments",
-  props: {
-    initialTweets: {
-      type: Array,
-      required: true,
-    },
-  },
-
-  data() {
-    return {
-      showReplyModal: false,
-      tweets: [],
-    };
-  },
-  watch: {
-    initialTweets(newValue) {
-      this.tweets = {
-        ...this.tweets,
-        ...newValue,
-      };
-    },
-  },
-  methods: {
-    fetchData() {
-      this.tweets = this.initialTweets;
-    },
-  },
-
-  created() {
-    this.fetchData();
-  },
   mixins: [mixinEmptyImage, mixinFromNowFilters],
+  computed: {
+    ...mapGetters({
+      tweets: GET_FILLTERED_TWEETS,
+    }),
+  },
 };
 </script>
 

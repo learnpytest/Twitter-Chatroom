@@ -23,8 +23,8 @@
           <div class="header-info">
             <!-- <p>John Doe</p>
             <p>25 <span>推文</span></p> -->
-            <p>{{ userObj.name }}</p>
-            <p>{{ userObj.TweetCount }} <span>推文</span></p>
+            <p>{{ getCurrentUser.name }}</p>
+            <p>25 <span>推文</span></p>
           </div>
         </div>
         <div class="user-profile">
@@ -35,10 +35,8 @@
         </div>
         <tabs class="tabs">
           <tab title="推文"><Tweets :initialTweets="userTweets" /></tab>
-          <tab class="comments" title="推文與回覆"
-            ><Comments :initialTweets="userRepliesTweets"
-          /></tab>
-          <tab title="喜歡的內容"><Tweets :initialTweets="userLikes" /></tab>
+          <tab class="comments" title="推文與回覆"><Comments /></tab>
+          <tab title="喜歡的內容"><Tweets :initialTweets="userTweets" /></tab>
         </tabs>
       </div>
       <div class="popular"><Popular /></div>
@@ -52,12 +50,16 @@ import UserProfile from "../modules/user/UserProfile.vue";
 import Tweets from "../modules/user/Tweets.vue";
 import Tabs from "../modules/user/Tabs.vue";
 import Tab from "../modules/user/Tab.vue";
-import Comments from "../modules/user/Comments.vue";
+// import Comments from "../modules/user/Comments.vue";
 import UserEditModal from "../modules/user/UserEditModal.vue";
 import NewTweetModal from "../modules/user/NewTweetModal.vue";
-
-import usersAPI from "./../apis/usersAPI";
-
+// import tweetsAPI from "./../apis/tweets";
+import { mapGetters } from "vuex";
+import {
+  GET_CURRENT_USER,
+  // SET_ONE_USER_TWEETS,
+} from "../store/store-types";
+import currentUserApi from "./../apis/currentUserAPI";
 import tweetsApi from "./../apis/tweets";
 export default {
   components: {
@@ -67,7 +69,7 @@ export default {
     Tweets,
     Tabs,
     Tab,
-    Comments,
+    // Comments,
     UserEditModal,
     NewTweetModal,
   },
@@ -78,65 +80,32 @@ export default {
       showReplyModal: false,
       currentUserId: -1,
       userTweets: [],
-      userId: "",
-      userObj: {},
-      userRepliesTweets: [],
-      userLikes: [],
     };
   },
   created() {
-    this.userId = this.$route.params.id;
-    this.getUsersTweets(this.userId);
-    this.fetchUser(this.userId);
-    this.getUserRepliesTweets(this.userId);
-    this.getUserLikes(this.userId);
+    this.fetchCurrentUser();
   },
   methods: {
-    async getUserLikes(userId) {
+    async fetchCurrentUser() {
       try {
-        const res = await usersAPI.getUserLikes(userId);
-        const { data, statusText } = res;
-        if (statusText !== "OK") {
-          throw new Error(statusText);
-        }
-        this.userLikes = [...data];
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    async getUserRepliesTweets(userId) {
-      try {
-        const res = await usersAPI.getUserRepliesTweets(userId);
-        const { data, statusText } = res;
-        if (statusText !== "OK") {
-          throw new Error(statusText);
-        }
-        this.userRepliesTweets = [...data];
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    async fetchUser(userId) {
-      try {
-        const res = await usersAPI.getUser(userId);
-        const { data, statusText } = res;
-        if (statusText !== "OK") {
-          throw new Error(statusText);
-        }
-        this.userObj = { ...data };
-      } catch (err) {
-        console.log(err);
+        const response = await currentUserApi.getCurrentUser();
+        const { id } = response.data;
+        console.log(id);
+        this.currentUserId = id;
+        this.getUsersTweets(this.currentUserId);
+      } catch (error) {
+        console.log("error", error);
       }
     },
     async getUsersTweets(userId) {
       try {
-        const response = await tweetsApi.getOneUserTweet(userId);
-        const { data, statusText } = response;
-        console.log("userId", userId, "userdata", data, "response", response);
-        if (statusText !== "OK") {
+        const response = await tweetsApi.getOneUserTweet({ userId });
+        console.log(userId);
+        const { data } = response;
+        if (data.status !== "success") {
           throw new Error(data.message);
         }
-        this.userTweets = [...data];
+        console.log(response);
       } catch (error) {
         console.log("error", error);
       }
@@ -196,11 +165,11 @@ export default {
       }
     },
   },
-  // computed: {
-  //   ...mapGetters({
-  //     getCurrentUser: GET_CURRENT_USER,
-  //   }),
-  // },
+  computed: {
+    ...mapGetters({
+      getCurrentUser: GET_CURRENT_USER,
+    }),
+  },
   // created() {
   //   this.setTweetsFilterType({
   //     getter: GET_ONE_USER_TWEETS,
