@@ -32,33 +32,7 @@ const actions = {
       message: "成功登出",
     });
   },
-<<<<<<< HEAD
   [SET_CURRENT_USER]: async ({ commit }, currentUser) => {
-    // 取得使用者權限，希望使用者每一次切換頁面路由都可以取一次currentUser，需要設定router 在router的beforeEach
-    // try{
-    //   const {
-    //     data
-    //   } = await currentUserAPI.getCurrentUser()
-    // 如果沒有成功，應該導回登入頁(需要call logout嗎)
-    //   if(data.status === 'error') throw new Error(data.message)
-    // }catch(err){
-    //   console.log(err)
-    // }
-
-    // todo replace the dummyCurrentUser with response by sending api
-    // start
-    // const response = await axios.get("https://fakestoreapi.com/products");
-    // const {data, status, statusText} = response
-    // if (status !== 'success' || data.status !== 'success') throw new Error('statusText')
-    // const {id, name, email, image, isAdmin} = data
-    // commit(SET_CURRENT_USER, {id, name, email, image, isAdmin});
-    // end
-
-=======
-  [SET_CURRENT_USER]: async ({
-    commit
-  }, currentUser) => {
->>>>>>> 733725f8b18df67170375b9961a707ea897d1374
     commit(SET_CURRENT_USER, currentUser);
   },
   [SET_TOP_USERS]: async ({ commit }) => {

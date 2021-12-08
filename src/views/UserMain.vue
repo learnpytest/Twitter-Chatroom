@@ -45,7 +45,7 @@ import ReplyTweetModal from "../modules/user/ReplyTweetModal.vue";
 import { mapActions, mapGetters } from "vuex";
 
 import { SET_ALL_TWEETS, GET_IS_PROCESSING } from "../store/store-types";
-
+import tweetsApi from "./../apis/tweets";
 export default {
   components: {
     AddTweet,
@@ -59,11 +59,12 @@ export default {
     return {
       showModal: false,
       showReplyModal: false,
-      users: [],
+      userTweets: [],
     };
   },
   created() {
-    this.setAllTweets();
+    // this.setAllTweets();
+    this.getTweets();
   },
 
   methods: {
@@ -75,12 +76,21 @@ export default {
         this.showModal = false;
       }
     },
-    getTweets() {
-      console.log(this.$store.state);
-      console.log("dispatch tweets vue");
-
-      this.$store.dispatch(`${this.filterType.setter}`);
+    async getTweets() {
+      try {
+        const response = await tweetsApi.getAllTweet();
+        const { data } = response;
+        this.userTweets = data;
+      } catch (error) {
+        console.log(error);
+      }
     },
+    // getTweets() {
+    //   console.log(this.$store.state);
+    //   console.log("dispatch tweets vue");
+
+    //   this.$store.dispatch(`${this.filterType.setter}`);
+    // },
     replyModalToggle() {
       if (!this.showReplyModal) {
         this.showReplyModal = true;

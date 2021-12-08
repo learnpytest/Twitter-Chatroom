@@ -61,7 +61,6 @@ import {
 } from "../store/store-types";
 import currentUserApi from "./../apis/currentUserAPI";
 import tweetsApi from "./../apis/tweets";
-
 export default {
   components: {
     Popular,

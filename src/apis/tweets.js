@@ -14,6 +14,9 @@ export default {
   tweet(tweetId) {
     return apiHelper.get(`/tweets/${tweetId}/replies`);
   },
+  getAllTweet() {
+    return apiHelper.get(`/tweets/`);
+  },
   getTweet(tweetId) {
     return apiHelper.get(`/tweets/${tweetId}`);
   },
@@ -26,7 +29,7 @@ export default {
   getOneUserLikes(userId) {
     return apiHelper.get(`/users/${userId}/likes`);
   },
-  postOneUserTweet(description) {
+  postOneUserTweet({ description }) {
     return apiHelper.post(`/tweets/`, { description });
   },
 };

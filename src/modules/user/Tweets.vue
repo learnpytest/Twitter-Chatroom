@@ -71,14 +71,14 @@ import { mixinEmptyImage, mixinFromNowFilters } from "../../utils/mixin";
 export default {
   mixins: [mixinEmptyImage, mixinFromNowFilters],
   props: {
+    initialTweets: {
+      type: Array,
+      required: true,
+    },
     initialShowReplyModal: {
       type: Boolean,
       //test need to set required on true
       // required: true,
-    },
-    initialTweets: {
-      type: Array,
-      required: true,
     },
   },
   data() {
@@ -86,6 +86,14 @@ export default {
       showReplyModal: false,
       tweets: [],
     };
+  },
+  watch: {
+    initialTweets(newValue) {
+      this.tweets = {
+        ...this.tweets,
+        ...newValue,
+      };
+    },
   },
 
   created() {
@@ -95,6 +103,7 @@ export default {
   methods: {
     fetchData() {
       this.showReplyModal = this.initialShowReplyModal;
+      console.log(this.initialTweets);
       this.tweets = this.initialTweets;
     },
     // handleLikeButton(isLiked) {
