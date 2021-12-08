@@ -13,13 +13,12 @@
       <div class="user-pic">
         <img :src="tweet.User.avatar | emptyImage" alt="" />
       </div>
-      {{ tweet }}
 
       <div class="tweet-info">
         <div class="info">
           <p class="user-name">
-            {{ tweet.name }}
-            <span class="user-id">@{{ tweet.UserId }} • </span
+            {{ tweet.User.name }}
+            <span class="user-id">@{{ tweet.User.account }} • </span
             ><span class="time">{{ tweet.createdAt | fromNow }}</span>
           </p>
         </div>
