@@ -28,9 +28,8 @@
 <script>
 import { mapGetters } from "vuex";
 import { GET_FILLTERED_TWEETS } from "../../store/store-types";
-import { mixinEmptyImage } from "../../utils/mixin";
 
-import { mixinFromNowFilters } from "../../utils/mixin";
+import { mixinEmptyImage, mixinFromNowFilters } from "../../utils/mixin";
 
 export default {
   name: "Comments",

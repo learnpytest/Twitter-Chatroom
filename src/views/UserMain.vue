@@ -1,5 +1,5 @@
 ﻿<template>
-  <div class="container">
+  <div class="container" v-if="!isProcessing">
     <div class="new-tweet-modal" v-if="showModal">
       <NewTweetModal :initialShowModal="showModal" @show-modal="modalToggle" />
     </div>
@@ -28,6 +28,9 @@
       <div class="popular"><Popular /></div>
     </div>
   </div>
+  <div v-else class="container" style="text-align: center">
+    <div>取得資料中...</div>
+  </div>
 </template>
 
 <script>
@@ -38,9 +41,9 @@ import Sidebar from "../modules/user/Sidebar.vue";
 import NewTweetModal from "../modules/user/NewTweetModal.vue";
 import ReplyTweetModal from "../modules/user/ReplyTweetModal.vue";
 
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
-import { SET_ALL_TWEETS } from "../store/store-types";
+import { SET_ALL_TWEETS, GET_IS_PROCESSING } from "../store/store-types";
 
 export default {
   components: {
@@ -79,6 +82,11 @@ export default {
         this.showReplyModal = false;
       }
     },
+  },
+  computed: {
+    ...mapGetters({
+      isProcessing: GET_IS_PROCESSING,
+    }),
   },
 };
 </script>
