@@ -1,4 +1,5 @@
 import usersAPI from "../../apis/usersAPI";
+import currentUserAPI from "../../apis/currentUserAPI";
 
 import {
   vm
@@ -7,6 +8,8 @@ import {
 import {
   GET_CURRENT_USER,
   SET_CURRENT_USER,
+  FETCH_CURRENT_USER,
+  SET_CURRENT_USER_PROFILE,
   REVOKE_AUTHENTICATION,
   ADD_NOTIFICATION,
   GET_TOP_USERS,
@@ -15,6 +18,7 @@ import {
 
 const state = {
   currentUser: {},
+  currentUserProfile: {},
   isAuthenticated: false,
   topUsers: [],
   currentUserFollowers: [],
@@ -23,8 +27,16 @@ const state = {
 const getters = {
   [GET_CURRENT_USER]: (state) => state.currentUser,
   [GET_TOP_USERS]: (state) => state.topUsers,
+  [FETCH_CURRENT_USER]: (state) => state.currentUserProfile,
 };
 const actions = {
+  [SET_CURRENT_USER_PROFILE]: async ({
+    commit
+  }) => {
+    const res = await currentUserAPI.getCurrentUser();
+
+    commit(SET_CURRENT_USER_PROFILE, res.data);
+  },
   [REVOKE_AUTHENTICATION]: async ({
     commit,
     dispatch
@@ -80,6 +92,12 @@ const actions = {
   },
 };
 const mutations = {
+  [SET_CURRENT_USER_PROFILE]: async (state, currentUserProfile) => {
+    state.currentUserProfile = {
+      ...currentUserProfile,
+    };
+  },
+
   [REVOKE_AUTHENTICATION]: async (state) => {
     state.currentUser = {};
     state.isAuthenticated = false;
