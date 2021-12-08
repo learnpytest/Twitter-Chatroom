@@ -1,7 +1,7 @@
 ﻿<template>
   <div class="popular-wrapper">
     <div class="popular-header">Popular</div>
-    <div class="popular-card" v-for="user in getTopUsers" :key="user.id">
+    <div class="popular-card" v-for="user in getTopUsers" :key="user.UserId">
       <!-- 沒有上傳照片產生空圖 -->
       <img :src="user.avatar | emptyImage" alt="user avatar" />
       <div class="popular-card_info">
@@ -9,10 +9,20 @@
         <p class="user-info">@{{ user.account }}</p>
       </div>
       <div class="follow-btn" v-if="user.isFollowed">
-        <button class="following-btn">正在跟隨</button>
+        <button
+          class="following-btn"
+          @click.stop.prevent="cancelFollow(user.UserId)"
+        >
+          正在跟隨
+        </button>
       </div>
       <div class="follow-btn" v-else>
-        <button class="follower-btn">跟隨</button>
+        <button
+          class="follower-btn"
+          @click.stop.prevent="postFollowship(user.UserId)"
+        >
+          跟隨
+        </button>
       </div>
     </div>
   </div>
@@ -21,7 +31,12 @@
 import { mapActions, mapGetters } from "vuex";
 import { mixinEmptyImage } from "../../utils/mixin";
 
-import { GET_TOP_USERS, SET_TOP_USERS } from "../../store/store-types";
+import {
+  GET_TOP_USERS,
+  SET_TOP_USERS,
+  POST_FOLLOWSHIP,
+  DELETE_FOLLOWSHIP,
+} from "../../store/store-types";
 export default {
   name: "Popular",
   mixins: [mixinEmptyImage],
@@ -31,6 +46,8 @@ export default {
   methods: {
     ...mapActions({
       setTopUsers: SET_TOP_USERS,
+      postFollowship: POST_FOLLOWSHIP,
+      cancelFollow: DELETE_FOLLOWSHIP,
     }),
   },
   computed: {

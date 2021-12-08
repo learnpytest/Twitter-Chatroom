@@ -12,6 +12,7 @@
       <div class="user-pic">
         <img :src="tweet.User.avatar | emptyImage" alt="" />
       </div>
+      {{ tweet }}
 
       <div class="tweet-info">
         <div class="info">
