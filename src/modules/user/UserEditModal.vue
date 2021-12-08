@@ -105,7 +105,7 @@
   </form>
 </template>
 <script>
-// import { mixinEmptyImage } from "../../utils/mixin";
+import { mixinEmptyImage } from "../../utils/mixin";
 import { mapActions, mapGetters } from "vuex";
 import {
   FETCH_CURRENT_USER,
