@@ -9,4 +9,10 @@ export default {
   getTop() {
     return apiHelper.get("/users/top");
   },
+  putUserProfile({
+    userId,
+    formData
+  }) {
+    return apiHelper.put(`/users/${userId}`, formData);
+  },
 };

@@ -1,3 +1,7 @@
+// processing.js
+export const SET_IS_PROCESSING = "SET_IS_PROCESSING";
+export const GET_IS_PROCESSING = "GET_IS_PROCESSING";
+
 export const GET_LOGIN_INFO = "GET_LOGIN_INFO";
 export const SET_LOGIN_INFO = "SET_LOGIN_INFO";
 export const POST_LOGIN = "POST_LOGIN";
@@ -37,6 +41,8 @@ export const SET_CURRENT_USER = "SET_CURRENT_USER";
 
 export const FETCH_CURRENT_USER = "GET_CURRENT_USER";
 export const SET_CURRENT_USER_PROFILE = "SET_CURRENT_USER_PROFILE";
+// userProfile.js
+export const PUT_CURRENT_USER_PROFILE = "PUT_CURRENT_USER_PROFILE";
 
 export const GET_TOP_USERS = "GET_TOP_USERS";
 export const SET_TOP_USERS = "SET_TOP_USERS";

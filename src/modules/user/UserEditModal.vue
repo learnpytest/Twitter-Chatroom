@@ -8,7 +8,9 @@
           @click="handleShowModalClick"
         />
         <p class="header-text">編輯個人資料</p>
-        <button type="submit" class="save-btn">儲存</button>
+        <button type="submit" class="save-btn" :disabled="isProcessing">
+          {{ isProcessing ? "處理中..." : "儲存" }}
+        </button>
       </div>
       <div class="background-pic">
         <img :src="userCover" alt="" />
@@ -38,7 +40,7 @@
           <input
             type="file"
             id="cover"
-            name="UserCover"
+            name="cover"
             accept="image/png, image/jpeg"
             style="width: 0"
             @change="handleCoverFileChange"
@@ -66,7 +68,7 @@
             <input
               type="file"
               id="avatar"
-              name="UserAvatar"
+              name="avatar"
               accept="image/png, image/jpeg"
               style="width: 0"
               @change="handleAvatarFileChange"
@@ -77,7 +79,7 @@
       <div class="form__groups">
         <div class="form__group">
           <label for="name">名稱</label>
-          <input type="name" id="name" name="UserName" v-model="username" />
+          <input type="name" id="name" name="name" v-model="username" />
           <div class="limit-error">
             <!-- todo error message -->
             <p>8/50</p>
@@ -88,7 +90,7 @@
           <input
             type="bio"
             id="bio"
-            name="UserIntroduction"
+            name="introduction"
             v-model="userIntroduction"
           />
           <div class="limit-error">
@@ -106,6 +108,8 @@ import { mapActions, mapGetters } from "vuex";
 import {
   FETCH_CURRENT_USER,
   SET_CURRENT_USER_PROFILE,
+  PUT_CURRENT_USER_PROFILE,
+  GET_IS_PROCESSING,
 } from "../../store/store-types";
 export default {
   props: {
@@ -135,8 +139,9 @@ export default {
   methods: {
     handleSubmit(e) {
       const form = e.target; // <form></form>
-      const formData = new FormData(form);
 
+      const formData = new FormData(form);
+      this.putCurrentUserProfile(formData);
       // 測試用
       for (let [name, value] of formData.entries()) {
         console.log(name + ": " + value);
@@ -171,6 +176,7 @@ export default {
     },
     ...mapActions({
       setCurrentUserProfile: SET_CURRENT_USER_PROFILE,
+      putCurrentUserProfile: PUT_CURRENT_USER_PROFILE,
     }),
     fetchData() {
       this.showEditModal = this.initialEditModal;
@@ -183,6 +189,7 @@ export default {
   computed: {
     ...mapGetters({
       fetchCurrentUser: FETCH_CURRENT_USER,
+      isProcessing: GET_IS_PROCESSING,
     }),
   },
 };
