@@ -107,7 +107,6 @@
 import { mapActions, mapGetters } from "vuex";
 import {
   FETCH_CURRENT_USER,
-  SET_CURRENT_USER_PROFILE,
   PUT_CURRENT_USER_PROFILE,
   GET_IS_PROCESSING,
 } from "../../store/store-types";
@@ -129,7 +128,6 @@ export default {
     };
   },
   created() {
-    this.setCurrentUserProfile();
     this.username = this.fetchCurrentUser.name;
     this.userCover = this.fetchCurrentUser.cover;
     this.userAvatar = this.fetchCurrentUser.avatar;
@@ -175,7 +173,6 @@ export default {
       this.userCover = "";
     },
     ...mapActions({
-      setCurrentUserProfile: SET_CURRENT_USER_PROFILE,
       putCurrentUserProfile: PUT_CURRENT_USER_PROFILE,
     }),
     fetchData() {
