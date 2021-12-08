@@ -1,5 +1,5 @@
 ﻿<template>
-  <form class="user-edit-modal">
+  <form class="user-edit-modal" @submit.stop.prevent="handleSubmit">
     <div class="user-edit-box">
       <div class="header-btn">
         <img
@@ -8,7 +8,7 @@
           @click="handleShowModalClick"
         />
         <p class="header-text">編輯個人資料</p>
-        <button class="save-btn">儲存</button>
+        <button type="submit" class="save-btn">儲存</button>
       </div>
       <div class="background-pic">
         <img :src="userCover" alt="" />
@@ -38,9 +38,10 @@
           <input
             type="file"
             id="cover"
-            name="cover"
+            name="UserCover"
             accept="image/png, image/jpeg"
             style="width: 0"
+            @change="handleCoverFileChange"
           />
           <img
             src="./../../assets/images/icon_delete.png"
@@ -55,7 +56,7 @@
           <div class="profile-pic-wrapper">
             <!-- <img :src="fetchCurrentUser.avatar" alt="" class="" /> -->
             <label for="avatar">
-              <img :src="fetchCurrentUser.avatar" alt="" class="" />
+              <img :src="userAvatar" alt="" class="" />
               <img
                 src="./../../assets/images/icon_uploadPhoto.png"
                 alt=""
@@ -65,9 +66,10 @@
             <input
               type="file"
               id="avatar"
-              name="avatar"
+              name="UserAvatar"
               accept="image/png, image/jpeg"
               style="width: 0"
+              @change="handleAvatarFileChange"
             />
           </div>
         </div>
@@ -75,7 +77,7 @@
       <div class="form__groups">
         <div class="form__group">
           <label for="name">名稱</label>
-          <input type="name" id="name" name="name" v-model="username" />
+          <input type="name" id="name" name="UserName" v-model="username" />
           <div class="limit-error">
             <!-- todo error message -->
             <p>8/50</p>
@@ -83,7 +85,12 @@
         </div>
         <div class="form__group">
           <label for="bio">自我介紹</label>
-          <input type="bio" id="bio" name="bio" v-model="userIntroduction" />
+          <input
+            type="bio"
+            id="bio"
+            name="UserIntroduction"
+            v-model="userIntroduction"
+          />
           <div class="limit-error">
             <!-- todo error message -->
             <p>8/50</p>
@@ -111,6 +118,7 @@ export default {
     return {
       username: "",
       userCover: "",
+      userAvatar: "",
       userIntroduction: "",
       showEditModal: false,
       text: "",
@@ -120,10 +128,44 @@ export default {
     this.setCurrentUserProfile();
     this.username = this.fetchCurrentUser.name;
     this.userCover = this.fetchCurrentUser.cover;
+    this.userAvatar = this.fetchCurrentUser.avatar;
     this.userIntroduction = this.fetchCurrentUser.introduction;
     this.fetchData();
   },
   methods: {
+    handleSubmit(e) {
+      const form = e.target; // <form></form>
+      const formData = new FormData(form);
+
+      // 測試用
+      for (let [name, value] of formData.entries()) {
+        console.log(name + ": " + value);
+      }
+    },
+    handleAvatarFileChange(e) {
+      const { files } = e.target;
+
+      if (files.length === 0) {
+        // this.userAvatar = "";
+        return;
+      } else {
+        // 產生預覽圖
+        const imageURL = window.URL.createObjectURL(files[0]);
+        this.userAvatar = imageURL;
+      }
+    },
+    handleCoverFileChange(e) {
+      const { files } = e.target;
+
+      if (files.length === 0) {
+        // this.userCover = "";
+        return;
+      } else {
+        // 產生預覽圖
+        const imageURL = window.URL.createObjectURL(files[0]);
+        this.userCover = imageURL;
+      }
+    },
     deleteCover() {
       this.userCover = "";
     },
