@@ -11,6 +11,7 @@ import {
   SET_CURRENT_USER_FOLLOWINGS,
   POST_FOLLOWSHIP,
   DELETE_FOLLOWSHIP,
+  ADD_NOTIFICATION,
 } from "../store-types";
 
 const state = {
@@ -28,7 +29,7 @@ const actions = {
   }) => {
     // send api
     const userId = rootState.user.currentUser.id;
-    console.log("userId", userId);
+
     try {
       const res = await followshipAPI.getFollowers(userId);
       const {
@@ -69,15 +70,49 @@ const actions = {
   }, targetedUserId) => {
     // send api
     console.log("POST_FOLLOWSHIP", targetedUserId);
-    // dispatch(GET_CURRENT_USER_FOLLOWINGS, currentUserId);
-    dispatch(GET_CURRENT_USER_FOLLOWINGS);
+    try {
+      const res = await followshipAPI.postFollowships(targetedUserId);
+
+      const {
+        data,
+        statusText
+      } = res;
+      if (data.status !== "success" || statusText !== "OK") {
+        throw new Error(data.message);
+      }
+      dispatch(ADD_NOTIFICATION, {
+        type: "success",
+        message: "跟隨成功",
+      });
+      // console.log(res);
+      // check
+      dispatch(SET_CURRENT_USER_FOLLOWINGS);
+    } catch (err) {
+      dispatch(ADD_NOTIFICATION, {
+        type: "error",
+        message: "更新跟隨資料失敗，請稍後再試",
+      });
+    }
   },
   [DELETE_FOLLOWSHIP]: async ({
     dispatch
   }, targetedUserId) => {
     // send api
     console.log(targetedUserId);
-    dispatch(GET_CURRENT_USER_FOLLOWINGS);
+    const res = await followshipAPI.deleteFollowship(targetedUserId);
+    console.log(res);
+    const {
+      data,
+      statusText
+    } = res;
+    if (data.status !== "success" || statusText !== "OK") {
+      throw new Error(data.message);
+    }
+    dispatch(ADD_NOTIFICATION, {
+      type: "success",
+      message: "成功取消跟隨",
+    });
+    dispatch(SET_CURRENT_USER_FOLLOWINGS);
   },
 };
 const mutations = {

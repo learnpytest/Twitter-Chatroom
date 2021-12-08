@@ -19,8 +19,6 @@ const state = {
   token: "",
   isAuthenticated: false,
   topUsers: [],
-  currentUserFollowers: [],
-  currentUserFollowings: [],
 };
 const getters = {
   [GET_CURRENT_USER]: (state) => state.currentUser,
