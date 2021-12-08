@@ -15,20 +15,6 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-
-import {
-  SET_TWEETS_FILTER_TYPE,
-  GET_CURRENT_USER,
-  // GET_ONE_USER_TWEETS,
-  // GET_ONE_USER_REPLIES,
-  // GET_ONE_USER_LIKES,
-  SET_ONE_USER_TWEETS,
-  SET_ONE_USER_REPLIES,
-
-  // SET_ONE_USER_LIKES,
-} from "../../store/store-types";
-
 export default {
   data() {
     return {
@@ -48,31 +34,10 @@ export default {
       this.selectedIndex = i;
       // select tabs will set the filter type to decide what tweets to render
 
-      switch (i) {
-        case 0:
-          this.$store.dispatch(SET_ONE_USER_TWEETS, this.userId);
-          break;
-        case 1:
-          this.$store.dispatch(SET_ONE_USER_REPLIES, this.userId);
-
-          break;
-        // case 2:
-        //   this.$store.dispatch(SET_ONE_USER_LIKES, this.userId);
-        //   break;
-      }
-
-      this.setTweetsFilterType(this.filterType);
-
       // loop over all the tabs
       this.tabs.forEach((tab, index) => {
         tab.isActive = index === i;
       });
-    },
-    ...mapActions({ setTweetsFilterType: SET_TWEETS_FILTER_TYPE }),
-  },
-  computed: {
-    userId() {
-      return this.$store.getters[GET_CURRENT_USER].id;
     },
   },
 };
