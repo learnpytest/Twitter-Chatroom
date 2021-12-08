@@ -83,6 +83,7 @@ const actions = {
       });
 
       dispatch(SET_CURRENT_USER_FOLLOWINGS);
+      dispatch(SET_CURRENT_USER_FOLLOWERS);
     } catch (err) {
       dispatch(ADD_NOTIFICATION, {
         type: "error",
@@ -93,10 +94,7 @@ const actions = {
   [DELETE_FOLLOWSHIP]: async ({
     dispatch
   }, targetedUserId) => {
-    // send api
-
     const res = await followshipAPI.deleteFollowship(targetedUserId);
-    console.log(res);
     const {
       data,
       statusText
@@ -109,6 +107,7 @@ const actions = {
       message: "成功取消跟隨",
     });
     dispatch(SET_CURRENT_USER_FOLLOWINGS);
+    dispatch(SET_CURRENT_USER_FOLLOWERS);
   },
 };
 const mutations = {

@@ -13,7 +13,10 @@
         <p>{{ follower.introduction }}</p>
       </div>
       <div class="follow-btn" v-if="follower.isFollowed">
-        <button class="following-btn" @click.stop.prevent="cancelFollow">
+        <button
+          class="following-btn"
+          @click.stop.prevent="cancelFollow(follower.followerId)"
+        >
           正在跟隨
         </button>
       </div>

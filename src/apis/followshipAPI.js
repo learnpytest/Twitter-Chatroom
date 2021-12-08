@@ -12,8 +12,8 @@ export default {
     return apiHelper.get(`/users/${userId}/followers`);
   },
   // 取消追蹤使用者
-  deleteFollowship(followingId) {
-    return apiHelper.delete(`/followships/${followingId}`);
+  deleteFollowship(id) {
+    return apiHelper.delete(`/followships/${id}`);
   },
 
   // // 追蹤使用者 input userId
@@ -24,7 +24,7 @@ export default {
   // 追蹤使用者 input userId
   postFollowships(id) {
     return apiHelper.post(`/followships`, {
-      id
+      id,
     });
   },
 };
