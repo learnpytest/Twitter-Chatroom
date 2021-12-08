@@ -13,8 +13,10 @@
         >
       </template>
       <template v-slot:button
-        ><PrimaryButtonLarge @click.native.prevent.stop="login"
-          >登入
+        ><PrimaryButtonLarge
+          @click.native.prevent.stop="login"
+          :disabled="isProcessing"
+          >{{ isProcessing ? "登入中..." : "登入" }}
         </PrimaryButtonLarge>
       </template>
     </LoginForm>
@@ -24,8 +26,8 @@
 <script>
 import LoginForm from "@/components/LoginForm";
 import PrimaryButtonLarge from "@/components/Buttons/PrimaryButtonLarge.vue";
-import { mapActions } from "vuex";
-import { POST_USER_LOGIN } from "../store/store-types";
+import { mapActions, mapGetters } from "vuex";
+import { POST_USER_LOGIN, GET_IS_PROCESSING } from "../store/store-types";
 
 export default {
   name: "UserLogin",
@@ -39,6 +41,11 @@ export default {
     },
     ...mapActions({
       postUserLogin: POST_USER_LOGIN,
+    }),
+  },
+  computed: {
+    ...mapGetters({
+      isProcessing: GET_IS_PROCESSING,
     }),
   },
 };

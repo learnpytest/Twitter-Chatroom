@@ -6,6 +6,7 @@ import {
 } from "../../main";
 
 import {
+  SET_IS_PROCESSING,
   GET_LOGIN_INFO,
   SET_LOGIN_INFO,
   POST_LOGIN,
@@ -41,7 +42,7 @@ const actions = {
     dispatch
   }) => {
     // if success set current user, save token to localstorage
-    // write first start
+
     const account = state.loginInfo.account;
     const password = state.loginInfo.password;
     if (!account.length || !password.length) {
@@ -52,6 +53,7 @@ const actions = {
       return;
     }
     try {
+      dispatch(SET_IS_PROCESSING, true);
       const res = await authorizationAPI.usersSignIn({
         account,
         password,
@@ -67,11 +69,13 @@ const actions = {
       localStorage.setItem("token", data.token);
       commit(SET_CURRENT_USER, data.user);
       vm.$router.push("/usermain");
+      dispatch(SET_IS_PROCESSING, false);
       dispatch(ADD_NOTIFICATION, {
         type: "success",
         message: "成功登入",
       });
     } catch (err) {
+      dispatch(SET_IS_PROCESSING, false);
       dispatch(ADD_NOTIFICATION, {
         type: "error",
         message: "帳號不存在!",

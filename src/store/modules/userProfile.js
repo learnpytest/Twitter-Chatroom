@@ -7,8 +7,8 @@ import currentUserAPI from "../../apis/currentUserAPI";
 // } from "../../main";
 
 import {
-  PUT_CURRENT_USER_PROFILE,
   SET_IS_PROCESSING,
+  PUT_CURRENT_USER_PROFILE,
   SET_CURRENT_USER_PROFILE,
   FETCH_CURRENT_USER,
 } from "../store-types";
