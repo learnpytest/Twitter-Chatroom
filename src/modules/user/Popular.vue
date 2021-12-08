@@ -81,6 +81,7 @@ export default {
 .popular-card img {
   width: 50px;
   height: 50px;
+  border-radius: 50%;
 }
 
 .popular-card_info {

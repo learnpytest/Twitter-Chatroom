@@ -83,6 +83,7 @@
           <div class="limit-error">
             <!-- todo error message -->
             <p>8/50</p>
+            <span class="limiter">{{ charactersLeft() }}</span>
           </div>
         </div>
         <div class="form__group">
@@ -95,6 +96,7 @@
           />
           <div class="limit-error">
             <!-- todo error message -->
+
             <p>8/50</p>
           </div>
         </div>
@@ -112,6 +114,7 @@ import {
 } from "../../store/store-types";
 export default {
   props: {
+    mixins: [mixinEmptyImage],
     initialEditModal: {
       type: Boolean,
       required: true,
@@ -124,7 +127,9 @@ export default {
       userAvatar: "",
       userIntroduction: "",
       showEditModal: false,
-      text: "",
+      limit: -1,
+      newName: "",
+      newIntro: "",
     };
   },
   created() {
@@ -177,6 +182,8 @@ export default {
     }),
     fetchData() {
       this.showEditModal = this.initialEditModal;
+      this.newName = this.getCurrentUser.name;
+      this.newIntro = this.getCurrentUser.introduction;
     },
     handleShowModalClick() {
       this.showEditModal = false;
@@ -278,6 +285,9 @@ export default {
 .profile-pic img {
   width: 120px;
   height: 120px;
+}
+#profile-pic {
+  border-radius: 50%;
 }
 .form__group {
   font-size: 1rem;

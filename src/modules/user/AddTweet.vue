@@ -3,10 +3,19 @@
     <div class="header">首頁</div>
     <div class="text-box">
       <div class="user-info">
-        <img class="user-pic" src="./../../assets/images/Photo_user1.png" alt="" />
+        <img
+          class="user-pic"
+          :src="getCurrentUser.avatar | emptyImage"
+          alt=""
+        />
       </div>
       <div class="text-area" @click="handleShowModalClick">
-        <textarea class="form-control" rows="3" placeholder="有什麽新鮮事？" />
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder="有什麽新鮮事"
+          v-model="text"
+        />
       </div>
     </div>
     <div class="tweet-btn">
@@ -16,7 +25,11 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { GET_CURRENT_USER } from "../../store/store-types";
+import { mixinEmptyImage } from "../../utils/mixin";
 export default {
+  mixins: [mixinEmptyImage],
   props: {
     initialShowModal: {
       type: Boolean,
@@ -26,6 +39,7 @@ export default {
   data() {
     return {
       showModal: "",
+      text: "",
     };
   },
   created() {
@@ -39,6 +53,11 @@ export default {
       this.showModal = false;
       this.$emit("show-modal");
     },
+  },
+  computed: {
+    ...mapGetters({
+      getCurrentUser: GET_CURRENT_USER,
+    }),
   },
 };
 </script>
@@ -68,6 +87,7 @@ export default {
     margin-right: 10px;
     max-width: 50px;
     max-height: 50px;
+    border-radius: 50px;
   }
 }
 

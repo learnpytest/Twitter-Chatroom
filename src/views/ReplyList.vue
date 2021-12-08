@@ -60,28 +60,7 @@ export default {
           tweetId,
         });
         const { data } = response;
-        this.tweet = data;
-        // const { id, UserId, description } = response.data;
-        // this.id = id;
-        // this.UserId = UserId;
-        // this.description = description;
-        // const {
-        //   restaurants,
-        //   categories,
-        //   categoryId,
-        //   page,
-        //   totalPage,
-        //   prev,
-        //   next,
-        // } = response.data;
-
-        // this.restaurants = restaurants;
-        // this.categories = categories;
-        // this.categoryId = categoryId;
-        // this.currentPage = page;
-        // this.totalPage = totalPage;
-        // this.previousPage = prev;
-        // this.nextPage = next;
+        console.log(data);
       } catch (error) {
         console.log("error", error);
       }

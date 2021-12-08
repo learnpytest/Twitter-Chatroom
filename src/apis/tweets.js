@@ -11,10 +11,11 @@ export default {
   delete(tweetId) {
     return apiHelper.delete(`/admin/tweets/${tweetId}`);
   },
-
-
   tweet(tweetId) {
     return apiHelper.get(`/tweets/${tweetId}/replies`);
+  },
+  getAllTweet() {
+    return apiHelper.get(`/tweets/`);
   },
   getTweet(tweetId) {
     return apiHelper.get(`/tweets/${tweetId}`);
@@ -27,5 +28,8 @@ export default {
   },
   getOneUserLikes(userId) {
     return apiHelper.get(`/users/${userId}/likes`);
+  },
+  postOneUserTweet({ description }) {
+    return apiHelper.post(`/tweets/`, { description });
   },
 };

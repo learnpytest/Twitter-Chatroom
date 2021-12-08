@@ -1,5 +1,5 @@
 ﻿<template>
-  <div class="new-tweet-modal">
+  <form class="new-tweet-modal" @submit.stop.prevent="handleTweetSubmit">
     <div class="new-text-box">
       <div class="close-btn">
         <button>
@@ -26,21 +26,24 @@
             v-model="text"
             maxlength="140"
             placeholder="有什麽新鮮事？"
-            @submit.stop.prevent="handleTweetSubmit"
+            @click.stop.prevent="resetEmpty"
           /><span class="limiter">{{ charactersLeft }}</span>
         </div>
       </div>
       <div class="tweet-btn">
+        <p v-if="text.length >= 140">字數不可超過140字</p>
+        <p v-if="submitEmptyField">內容不可空白</p>
         <button>推文</button>
       </div>
     </div>
-  </div>
+  </form>
 </template>
 <script>
 import { mapGetters } from "vuex";
 import { GET_CURRENT_USER } from "../../store/store-types";
 import { mixinEmptyImage } from "../../utils/mixin";
-
+import currentUserAPi from "../../apis/currentUserAPI";
+import tweetsAPI from "../../apis/tweets";
 export default {
   mixins: [mixinEmptyImage],
   props: {
@@ -52,19 +55,61 @@ export default {
   data() {
     return {
       showModal: "",
+      limit: -1,
       text: "",
+      currentUserId: "",
+      submitEmptyField: false,
     };
   },
   created() {
     this.fetchData();
+    this.fetchCurrentUser();
   },
   methods: {
     fetchData() {
       this.showModal = this.initialShowModal;
     },
+    async fetchCurrentUser() {
+      try {
+        const response = await currentUserAPi.getCurrentUser();
+        const { id } = response.data;
+        this.currentUserId = id;
+      } catch (error) {
+        console.log("error", error);
+      }
+    },
     handleShowModalClick() {
-      this.showModal = true;
-      this.$emit("show-modal");
+      if (!this.showModal) {
+        this.showModal = true;
+        this.$emit("show-modal");
+      } else {
+        this.showModal = true;
+        this.$emit("show-modal");
+      }
+    },
+    async handleTweetSubmit() {
+      if (!this.text.length) {
+        this.submitEmptyField = true;
+        console.log("Empty");
+        return;
+      }
+      try {
+        const { data } = await tweetsAPI.postOneUserTweet({
+          description: this.text,
+        });
+        this.handleShowModalClick();
+        console.log(data);
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+        // const { id } = response.data;
+        // this.currentUserId = id;
+      } catch (error) {
+        console.log("error", error);
+      }
+    },
+    resetEmpty() {
+      this.submitEmptyField = false;
     },
   },
   computed: {
@@ -128,6 +173,12 @@ export default {
 .tweet-btn {
   text-align: right;
   padding: 10px;
+  p {
+    display: inline-block;
+    margin-right: 20px;
+    color: $red;
+    font-size: 15px;
+  }
 }
 
 .tweet-btn button {
@@ -149,6 +200,7 @@ export default {
   }
   .user-pic {
     margin-right: 10px;
+    border-radius: 50%;
   }
 }
 
