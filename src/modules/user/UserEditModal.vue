@@ -1,5 +1,5 @@
 ﻿<template>
-  <div class="user-edit-modal">
+  <form class="user-edit-modal" @submit.stop.prevent="handleSubmit">
     <div class="user-edit-box">
       <div class="header-btn">
         <img
@@ -8,30 +8,68 @@
           @click="handleShowModalClick"
         />
         <p class="header-text">編輯個人資料</p>
-        <button class="save-btn">儲存</button>
+        <button type="submit" class="save-btn">儲存</button>
       </div>
       <div class="background-pic">
-        <img src="https://picsum.photos/200/300" alt="" />
-        <div class="pic-btn-control">
+        <img :src="userCover" alt="" />
+        <!-- <div class="pic-btn-control">
           <img
             src="./../../assets/images/icon_uploadPhoto.png"
             alt=""
             id="upload-btn"
-          /><img
+          />
+          
+          <img
             src="./../../assets/images/icon_delete.png"
             alt=""
             id="delete-btn"
+            @click="deleteCover"
+          />
+        </div> -->
+
+        <div class="pic-btn-control">
+          <label for="cover">
+            <img
+              src="./../../assets/images/icon_uploadPhoto.png"
+              alt=""
+              id="upload-btn"
+            />
+          </label>
+          <input
+            type="file"
+            id="cover"
+            name="UserCover"
+            accept="image/png, image/jpeg"
+            style="width: 0"
+            @change="handleCoverFileChange"
+          />
+          <img
+            src="./../../assets/images/icon_delete.png"
+            alt=""
+            id="delete-btn"
+            @click="deleteCover"
           />
         </div>
       </div>
       <div class="edit-profile-pic">
         <div class="profile-pic">
           <div class="profile-pic-wrapper">
-            <img src="./../../assets/images/Photo_user1.png" alt="" class="" />
-            <img
-              src="./../../assets/images/icon_uploadPhoto.png"
-              alt=""
-              class="asd"
+            <!-- <img :src="fetchCurrentUser.avatar" alt="" class="" /> -->
+            <label for="avatar">
+              <img :src="userAvatar" alt="" class="" />
+              <img
+                src="./../../assets/images/icon_uploadPhoto.png"
+                alt=""
+                class="asd"
+              />
+            </label>
+            <input
+              type="file"
+              id="avatar"
+              name="UserAvatar"
+              accept="image/png, image/jpeg"
+              style="width: 0"
+              @change="handleAvatarFileChange"
             />
           </div>
         </div>
@@ -39,7 +77,7 @@
       <div class="form__groups">
         <div class="form__group">
           <label for="name">名稱</label>
-          <input type="name" id="name" name="name" />
+          <input type="name" id="name" name="UserName" v-model="username" />
           <div class="limit-error">
             <!-- todo error message -->
             <p>8/50</p>
@@ -47,7 +85,12 @@
         </div>
         <div class="form__group">
           <label for="bio">自我介紹</label>
-          <input type="bio" id="bio" name="bio" />
+          <input
+            type="bio"
+            id="bio"
+            name="UserIntroduction"
+            v-model="userIntroduction"
+          />
           <div class="limit-error">
             <!-- todo error message -->
             <p>8/50</p>
@@ -55,9 +98,15 @@
         </div>
       </div>
     </div>
-  </div>
+  </form>
 </template>
 <script>
+// import { mixinEmptyImage } from "../../utils/mixin";
+import { mapActions, mapGetters } from "vuex";
+import {
+  FETCH_CURRENT_USER,
+  SET_CURRENT_USER_PROFILE,
+} from "../../store/store-types";
 export default {
   props: {
     initialEditModal: {
@@ -67,14 +116,62 @@ export default {
   },
   data() {
     return {
+      username: "",
+      userCover: "",
+      userAvatar: "",
+      userIntroduction: "",
       showEditModal: false,
       text: "",
     };
   },
   created() {
+    this.setCurrentUserProfile();
+    this.username = this.fetchCurrentUser.name;
+    this.userCover = this.fetchCurrentUser.cover;
+    this.userAvatar = this.fetchCurrentUser.avatar;
+    this.userIntroduction = this.fetchCurrentUser.introduction;
     this.fetchData();
   },
   methods: {
+    handleSubmit(e) {
+      const form = e.target; // <form></form>
+      const formData = new FormData(form);
+
+      // 測試用
+      for (let [name, value] of formData.entries()) {
+        console.log(name + ": " + value);
+      }
+    },
+    handleAvatarFileChange(e) {
+      const { files } = e.target;
+
+      if (files.length === 0) {
+        // this.userAvatar = "";
+        return;
+      } else {
+        // 產生預覽圖
+        const imageURL = window.URL.createObjectURL(files[0]);
+        this.userAvatar = imageURL;
+      }
+    },
+    handleCoverFileChange(e) {
+      const { files } = e.target;
+
+      if (files.length === 0) {
+        // this.userCover = "";
+        return;
+      } else {
+        // 產生預覽圖
+        const imageURL = window.URL.createObjectURL(files[0]);
+        this.userCover = imageURL;
+      }
+    },
+    deleteCover() {
+      this.userCover = "";
+    },
+    ...mapActions({
+      setCurrentUserProfile: SET_CURRENT_USER_PROFILE,
+    }),
     fetchData() {
       this.showEditModal = this.initialEditModal;
     },
@@ -82,6 +179,11 @@ export default {
       this.showEditModal = false;
       this.$emit("show-edit-modal");
     },
+  },
+  computed: {
+    ...mapGetters({
+      fetchCurrentUser: FETCH_CURRENT_USER,
+    }),
   },
 };
 </script>
