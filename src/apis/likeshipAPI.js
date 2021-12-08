@@ -13,6 +13,6 @@ export default {
   },
   // 取消喜歡
   deleteLike(tweetId) {
-    return apiHelper.delete(`/tweets/${tweetId}/like`);
+    return apiHelper.post(`/tweets/${tweetId}/unlike`);
   },
 };

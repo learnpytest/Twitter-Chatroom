@@ -38,7 +38,7 @@
         <div class="user-info">
           <img
             class="user-pic"
-            src="./../../assets/images/Photo_user1.png"
+            :src="getCurrentUser.avatar | emptyImage"
             alt=""
           />
         </div>
@@ -47,6 +47,7 @@
             class="form-control"
             rows="3"
             v-model="text"
+            maxlength="140"
             placeholder="推你的回覆"
             @submit.stop.prevent="handleTweetSubmit"
           /><span class="limiter">{{ charactersLeft }}</span>
@@ -61,9 +62,12 @@
 </template>
 <script>
 // need to take targeted user
-
+import { mapGetters } from "vuex";
+import { GET_CURRENT_USER } from "../../store/store-types";
+import { mixinEmptyImage } from "../../utils/mixin";
 export default {
   props: {
+    mixins: [mixinEmptyImage],
     initialShowReplyModal: {
       type: Boolean,
       required: true,
@@ -94,6 +98,9 @@ export default {
 
       return limit - char + " / " + limit + "剩餘字數";
     },
+    ...mapGetters({
+      getCurrentUser: GET_CURRENT_USER,
+    }),
   },
 };
 </script>
@@ -212,5 +219,8 @@ export default {
 .tweet-info p {
   color: $gray-700;
   letter-spacing: 1px;
+}
+.user-pic {
+  border-radius: 50%;
 }
 </style>

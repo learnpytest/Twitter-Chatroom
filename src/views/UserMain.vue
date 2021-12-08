@@ -22,6 +22,7 @@
           <Tweets
             :initialShowReplyModal="showReplyModal"
             @show-reply-modal="replyModalToggle"
+            :initialTweets="userTweets"
           />
         </div>
       </div>
@@ -38,9 +39,9 @@ import Popular from "../modules/user/Popular.vue";
 import Sidebar from "../modules/user/Sidebar.vue";
 import NewTweetModal from "../modules/user/NewTweetModal.vue";
 import ReplyTweetModal from "../modules/user/ReplyTweetModal.vue";
-
+import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
-
+import { GET_FILLTERED_TWEETS } from "./../store/store-types";
 import {
   // SET_TWEETS_FILTER_TYPE,
   // GET_ALL_TWEETS,
@@ -74,6 +75,7 @@ export default {
   methods: {
     // ...mapActions({ setTweetsFilterType: SET_TWEETS_FILTER_TYPE }),
     ...mapActions({ setAllTweets: SET_ALL_TWEETS }),
+
     // fetchData() {
     //   const { users, tweets } = dummyData;
     //   this.users = users;
@@ -86,7 +88,12 @@ export default {
         this.showModal = false;
       }
     },
+    getTweets() {
+      console.log(this.$store.state);
+      console.log("dispatch tweets vue");
 
+      this.$store.dispatch(`${this.filterType.setter}`);
+    },
     replyModalToggle() {
       if (!this.showReplyModal) {
         this.showReplyModal = true;
@@ -94,6 +101,11 @@ export default {
         this.showReplyModal = false;
       }
     },
+  },
+  computed: {
+    ...mapGetters({
+      userTweets: GET_FILLTERED_TWEETS,
+    }),
   },
 };
 </script>

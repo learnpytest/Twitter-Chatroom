@@ -11,7 +11,7 @@
         <button class="save-btn">儲存</button>
       </div>
       <div class="background-pic">
-        <img src="https://picsum.photos/200/300" alt="" />
+        <img :src="getCurrentUser.cover | emptyImage" alt="" />
         <div class="pic-btn-control">
           <img
             src="./../../assets/images/icon_uploadPhoto.png"
@@ -27,7 +27,12 @@
       <div class="edit-profile-pic">
         <div class="profile-pic">
           <div class="profile-pic-wrapper">
-            <img src="./../../assets/images/Photo_user1.png" alt="" class="" />
+            <img
+              id="profile-pic"
+              :src="getCurrentUser.avatar | emptyImage"
+              alt=""
+              class=""
+            />
             <img
               src="./../../assets/images/icon_uploadPhoto.png"
               alt=""
@@ -39,17 +44,31 @@
       <div class="form__groups">
         <div class="form__group">
           <label for="name">名稱</label>
-          <input type="name" id="name" name="name" />
+          <input
+            type="name"
+            id="name"
+            name="name"
+            maxlength="50"
+            v-model="this.newName"
+          />
           <div class="limit-error">
             <!-- todo error message -->
             <p>8/50</p>
+            <span class="limiter">{{ charactersLeft() }}</span>
           </div>
         </div>
         <div class="form__group">
           <label for="bio">自我介紹</label>
-          <input type="bio" id="bio" name="bio" />
+          <input
+            type="bio"
+            id="bio"
+            name="bio"
+            maxlength="160"
+            :value="this.newIntro"
+          />
           <div class="limit-error">
             <!-- todo error message -->
+
             <p>8/50</p>
           </div>
         </div>
@@ -58,8 +77,12 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
+import { GET_CURRENT_USER } from "../../store/store-types";
+import { mixinEmptyImage } from "../../utils/mixin";
 export default {
   props: {
+    mixins: [mixinEmptyImage],
     initialEditModal: {
       type: Boolean,
       required: true,
@@ -68,7 +91,9 @@ export default {
   data() {
     return {
       showEditModal: false,
-      text: "",
+      limit: -1,
+      newName: "",
+      newIntro: "",
     };
   },
   created() {
@@ -77,11 +102,24 @@ export default {
   methods: {
     fetchData() {
       this.showEditModal = this.initialEditModal;
+      this.newName = this.getCurrentUser.name;
+      this.newIntro = this.getCurrentUser.introduction;
     },
     handleShowModalClick() {
       this.showEditModal = false;
       this.$emit("show-edit-modal");
     },
+  },
+  computed: {
+    ...mapGetters({
+      getCurrentUser: GET_CURRENT_USER,
+    }),
+    // charactersLeft() {
+    //   let char = this.newName;
+    //   this.limit = 50;
+
+    //   return this.limit - char.length + " / " + this.limit + "剩餘字數";
+    // },
   },
 };
 </script>
@@ -172,6 +210,9 @@ export default {
 .profile-pic img {
   width: 120px;
   height: 120px;
+}
+#profile-pic {
+  border-radius: 50%;
 }
 .form__group {
   font-size: 1rem;

@@ -9,4 +9,5 @@ export default {
   getTop() {
     return apiHelper.get("/users/top");
   },
+  
 };

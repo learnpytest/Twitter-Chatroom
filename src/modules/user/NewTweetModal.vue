@@ -31,7 +31,8 @@
         </div>
       </div>
       <div class="tweet-btn">
-        <button>推文</button>
+        <p v-if="text.length >= 140">字數不可超過140字</p>
+        <button @click.stop.prevent="handleTweetSubmit(text)">推文</button>
       </div>
     </div>
   </div>
@@ -40,6 +41,8 @@
 import { mapGetters } from "vuex";
 import { GET_CURRENT_USER } from "../../store/store-types";
 import { mixinEmptyImage } from "../../utils/mixin";
+import currentUserAPi from "../../apis/currentUserAPI";
+import tweetsAPI from "../../apis/tweets";
 
 export default {
   mixins: [mixinEmptyImage],
@@ -52,19 +55,44 @@ export default {
   data() {
     return {
       showModal: "",
+      limit: -1,
       text: "",
+      currentUserId: "",
     };
   },
   created() {
     this.fetchData();
+    this.fetchCurrentUser();
   },
   methods: {
     fetchData() {
       this.showModal = this.initialShowModal;
     },
+    async fetchCurrentUser() {
+      try {
+        const response = await currentUserAPi.getCurrentUser();
+        const { id } = response.data;
+        this.currentUserId = id;
+      } catch (error) {
+        console.log("error", error);
+      }
+    },
     handleShowModalClick() {
       this.showModal = true;
       this.$emit("show-modal");
+    },
+
+    async handleTweetSubmit(description) {
+      try {
+        const response = await tweetsAPI.postOneUserTweet({
+          description,
+        });
+        console.log(response.data);
+        // const { id } = response.data;
+        // this.currentUserId = id;
+      } catch (error) {
+        console.log("error", error);
+      }
     },
   },
   computed: {
@@ -128,6 +156,12 @@ export default {
 .tweet-btn {
   text-align: right;
   padding: 10px;
+  p {
+    display: inline-block;
+    margin-right: 20px;
+    color: $red;
+    font-size: 15px;
+  }
 }
 
 .tweet-btn button {
@@ -149,6 +183,7 @@ export default {
   }
   .user-pic {
     margin-right: 10px;
+    border-radius: 50%;
   }
 }
 

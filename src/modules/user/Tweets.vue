@@ -4,9 +4,10 @@
     <div
       class="tweet"
       v-for="tweet in tweets"
-      :key="tweet.id"
+      :key="tweet.TweetId"
       @click.stop.prevent="
-        () => $router.push({ name: 'reply-list', params: { id: tweet.id } })
+        () =>
+          $router.push({ name: 'reply-list', params: { id: tweet.TweetId } })
       "
     >
       <div class="user-pic">
@@ -30,7 +31,7 @@
               @click.stop.prevent="handleShowModalClick"
             />
 
-            <p class="reply-num">{{ tweet.replyCount }}</p>
+            <p class="reply-num">{{ tweet.RepliesCount }}</p>
           </div>
           <div class="tweet-buttons">
             <!-- <img
@@ -44,18 +45,18 @@
               id="liked-btn"
               src="./../../assets/images/icon_like_fill.svg"
               alt=""
-              @click.stop.prevent="handleLikeButton(tweet.isLiked == 'true')"
-              v-if="tweet.isLiked == true"
+              @click.stop.prevent="test(tweet.TweetId)"
+              v-if="tweet.isLiked"
             />
             <img
               src="./../../assets/images/icon_like.svg"
               alt=""
-              @click.stop.prevent="addLike(tweet.isLiked)"
+              @click.stop.prevent="addLike(tweet.TweetId)"
               v-else
             />
 
             <p class="liked-num" :class="{ liked: tweet.isLiked }">
-              {{ tweet.likeCount }}
+              {{ tweet.LikesCount }}
             </p>
           </div>
         </div>
@@ -64,10 +65,6 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
-
-import { GET_FILLTERED_TWEETS } from "../../store/store-types";
-
 import likeshipAPI from "./../../apis/likeshipAPI";
 import { mixinEmptyImage, mixinFromNowFilters } from "../../utils/mixin";
 
@@ -79,19 +76,26 @@ export default {
       //test need to set required on true
       // required: true,
     },
+    initialTweets: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
       showReplyModal: false,
+      tweets: [],
     };
   },
 
   created() {
     // this.getTweets();
+    this.fetchData();
   },
   methods: {
     fetchData() {
       this.showReplyModal = this.initialShowReplyModal;
+      this.tweets = this.initialTweets;
     },
     // handleLikeButton(isLiked) {
     //   // this.tweet = {
@@ -99,10 +103,26 @@ export default {
     //   //   isLiked: true,
     //   // };
     // },
+    test(tweetId) {
+      console.log(tweetId);
+    },
     async addLike(tweetId) {
       try {
         const { data } = await likeshipAPI.postLike({ tweetId });
-        console.log(this.tweet);
+        console.log(tweetId);
+        console.log(data);
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+      } catch (error) {
+        console.log("error", error);
+      }
+    },
+    async unLike(tweetId) {
+      try {
+        const { data } = await likeshipAPI.deleteLike({ tweetId });
+        console.log(tweetId);
+        console.log(data);
         if (data.status !== "success") {
           throw new Error(data.message);
         }
@@ -114,15 +134,6 @@ export default {
       this.showReplyModal = true;
       this.$emit("show-reply-modal");
     },
-    getTweets() {
-      console.log("dispatch tweets vue");
-      this.$store.dispatch(`${this.filterType.setter}`);
-    },
-  },
-  computed: {
-    ...mapGetters({
-      tweets: GET_FILLTERED_TWEETS,
-    }),
   },
 };
 </script>
