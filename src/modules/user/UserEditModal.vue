@@ -1,5 +1,5 @@
 ﻿<template>
-  <div class="user-edit-modal">
+  <form class="user-edit-modal" @submit.stop.prevent="handleSubmit">
     <div class="user-edit-box">
       <div class="header-btn">
         <img
@@ -8,35 +8,70 @@
           @click="handleShowModalClick"
         />
         <p class="header-text">編輯個人資料</p>
-        <button class="save-btn">儲存</button>
+        <button type="submit" class="save-btn" :disabled="isProcessing">
+          {{ isProcessing ? "處理中..." : "儲存" }}
+        </button>
       </div>
       <div class="background-pic">
-        <img :src="getCurrentUser.cover | emptyImage" alt="" />
-        <div class="pic-btn-control">
+        <img :src="userCover" alt="" />
+        <!-- <div class="pic-btn-control">
           <img
             src="./../../assets/images/icon_uploadPhoto.png"
             alt=""
             id="upload-btn"
-          /><img
+          />
+          
+          <img
             src="./../../assets/images/icon_delete.png"
             alt=""
             id="delete-btn"
+            @click="deleteCover"
+          />
+        </div> -->
+
+        <div class="pic-btn-control">
+          <label for="cover">
+            <img
+              src="./../../assets/images/icon_uploadPhoto.png"
+              alt=""
+              id="upload-btn"
+            />
+          </label>
+          <input
+            type="file"
+            id="cover"
+            name="cover"
+            accept="image/png, image/jpeg"
+            style="width: 0"
+            @change="handleCoverFileChange"
+          />
+          <img
+            src="./../../assets/images/icon_delete.png"
+            alt=""
+            id="delete-btn"
+            @click="deleteCover"
           />
         </div>
       </div>
       <div class="edit-profile-pic">
         <div class="profile-pic">
           <div class="profile-pic-wrapper">
-            <img
-              id="profile-pic"
-              :src="getCurrentUser.avatar | emptyImage"
-              alt=""
-              class=""
-            />
-            <img
-              src="./../../assets/images/icon_uploadPhoto.png"
-              alt=""
-              class="asd"
+            <!-- <img :src="fetchCurrentUser.avatar" alt="" class="" /> -->
+            <label for="avatar">
+              <img :src="userAvatar" alt="" class="" />
+              <img
+                src="./../../assets/images/icon_uploadPhoto.png"
+                alt=""
+                class="asd"
+              />
+            </label>
+            <input
+              type="file"
+              id="avatar"
+              name="avatar"
+              accept="image/png, image/jpeg"
+              style="width: 0"
+              @change="handleAvatarFileChange"
             />
           </div>
         </div>
@@ -44,13 +79,7 @@
       <div class="form__groups">
         <div class="form__group">
           <label for="name">名稱</label>
-          <input
-            type="name"
-            id="name"
-            name="name"
-            maxlength="50"
-            v-model="this.newName"
-          />
+          <input type="name" id="name" name="name" v-model="username" />
           <div class="limit-error">
             <!-- todo error message -->
             <p>8/50</p>
@@ -62,9 +91,8 @@
           <input
             type="bio"
             id="bio"
-            name="bio"
-            maxlength="160"
-            :value="this.newIntro"
+            name="introduction"
+            v-model="userIntroduction"
           />
           <div class="limit-error">
             <!-- todo error message -->
@@ -74,12 +102,16 @@
         </div>
       </div>
     </div>
-  </div>
+  </form>
 </template>
 <script>
-import { mapGetters } from "vuex";
-import { GET_CURRENT_USER } from "../../store/store-types";
-import { mixinEmptyImage } from "../../utils/mixin";
+// import { mixinEmptyImage } from "../../utils/mixin";
+import { mapActions, mapGetters } from "vuex";
+import {
+  FETCH_CURRENT_USER,
+  PUT_CURRENT_USER_PROFILE,
+  GET_IS_PROCESSING,
+} from "../../store/store-types";
 export default {
   props: {
     mixins: [mixinEmptyImage],
@@ -90,6 +122,10 @@ export default {
   },
   data() {
     return {
+      username: "",
+      userCover: "",
+      userAvatar: "",
+      userIntroduction: "",
       showEditModal: false,
       limit: -1,
       newName: "",
@@ -97,9 +133,53 @@ export default {
     };
   },
   created() {
+    this.username = this.fetchCurrentUser.name;
+    this.userCover = this.fetchCurrentUser.cover;
+    this.userAvatar = this.fetchCurrentUser.avatar;
+    this.userIntroduction = this.fetchCurrentUser.introduction;
     this.fetchData();
   },
   methods: {
+    handleSubmit(e) {
+      const form = e.target; // <form></form>
+
+      const formData = new FormData(form);
+      this.putCurrentUserProfile(formData);
+      // 測試用
+      for (let [name, value] of formData.entries()) {
+        console.log(name + ": " + value);
+      }
+    },
+    handleAvatarFileChange(e) {
+      const { files } = e.target;
+
+      if (files.length === 0) {
+        // this.userAvatar = "";
+        return;
+      } else {
+        // 產生預覽圖
+        const imageURL = window.URL.createObjectURL(files[0]);
+        this.userAvatar = imageURL;
+      }
+    },
+    handleCoverFileChange(e) {
+      const { files } = e.target;
+
+      if (files.length === 0) {
+        // this.userCover = "";
+        return;
+      } else {
+        // 產生預覽圖
+        const imageURL = window.URL.createObjectURL(files[0]);
+        this.userCover = imageURL;
+      }
+    },
+    deleteCover() {
+      this.userCover = "";
+    },
+    ...mapActions({
+      putCurrentUserProfile: PUT_CURRENT_USER_PROFILE,
+    }),
     fetchData() {
       this.showEditModal = this.initialEditModal;
       this.newName = this.getCurrentUser.name;
@@ -112,14 +192,9 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getCurrentUser: GET_CURRENT_USER,
+      fetchCurrentUser: FETCH_CURRENT_USER,
+      isProcessing: GET_IS_PROCESSING,
     }),
-    // charactersLeft() {
-    //   let char = this.newName;
-    //   this.limit = 50;
-
-    //   return this.limit - char.length + " / " + this.limit + "剩餘字數";
-    // },
   },
 };
 </script>

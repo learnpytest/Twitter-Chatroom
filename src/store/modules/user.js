@@ -13,6 +13,8 @@ import {
 
 const state = {
   currentUser: {},
+
+  token: "",
   isAuthenticated: false,
   topUsers: [],
   currentUserFollowers: [],
@@ -30,6 +32,7 @@ const actions = {
       message: "成功登出",
     });
   },
+<<<<<<< HEAD
   [SET_CURRENT_USER]: async ({ commit }, currentUser) => {
     // 取得使用者權限，希望使用者每一次切換頁面路由都可以取一次currentUser，需要設定router 在router的beforeEach
     // try{
@@ -51,6 +54,11 @@ const actions = {
     // commit(SET_CURRENT_USER, {id, name, email, image, isAdmin});
     // end
 
+=======
+  [SET_CURRENT_USER]: async ({
+    commit
+  }, currentUser) => {
+>>>>>>> 733725f8b18df67170375b9961a707ea897d1374
     commit(SET_CURRENT_USER, currentUser);
   },
   [SET_TOP_USERS]: async ({ commit }) => {
@@ -75,21 +83,12 @@ const mutations = {
     //測試是否還能取得資料，在此階段，期待結果將是，能進入其他頁面但不能取得資料，此步驟保護api。下一步驟為若使用者沒有登入，直接再網址輸入api，將使用者導回登入頁而不是顯示其他頁面。如果使用者已經login，若使用者還想進入登入頁，將使用者直接導向抵達頁。
     vm.$router.push("/admin/login");
   },
-  // 將使用SET_CURRENT_USER來驗證每一次轉址使用者是否仍有權限。需要設定router的beforeEach來監聽每一個轉址token有無變化
   [SET_CURRENT_USER]: async (state, currentUser) => {
-    try {
-      state.currentUser = {
-        ...currentUser,
-      };
-      state.isAuthenticated = true;
-
-      return true;
-    } catch (err) {
-      console.log(
-        "SET_CURRENT_USER cannot get success result, this is not authenticated user"
-      );
-      return false;
-    }
+    state.currentUser = {
+      ...currentUser,
+    };
+    state.token = localStorage.getItem("token");
+    state.isAuthenticated = true;
   },
   [SET_TOP_USERS]: async (state, topUsers) => {
     state.topUsers = [...topUsers];

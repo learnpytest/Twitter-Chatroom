@@ -8,7 +8,11 @@ import adminUsers from "./modules/adminUsers";
 import adminTweets from "./modules/adminTweets";
 
 import userAccount from "./modules/userAccount";
+import userProfile from "./modules/userProfile";
+
 import notification from "./modules/notification";
+import processing from "./modules/processing";
+
 import followship from "./modules/followship";
 import likeship from "./modules/likeship";
 
@@ -24,7 +28,9 @@ export default new Vuex.Store({
     tweet,
     adminUsers,
     userAccount,
+    userProfile,
     notification,
+    processing,
     followship,
     likeship,
     adminTweets,

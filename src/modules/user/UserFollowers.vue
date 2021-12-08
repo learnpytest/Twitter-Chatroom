@@ -1,21 +1,24 @@
 <template>
   <div class="popular-wrapper">
-    <div class="popular-header">Popular</div>
-    <!-- <div class="popular-card" v-for="user in getTopUsers" :key="user.id"> -->
-    <!-- 沒有上傳照片產生空圖 -->
-    <!-- <img :src="user.avatar | emptyImage" alt="user avatar" />
+    <div
+      class="popular-card"
+      v-for="follower in getCurrentUserFollowers"
+      :key="follower.followerId"
+    >
+      <!-- 沒有上傳照片產生空圖 -->
+      <img :src="follower.avatar | emptyImage" alt="user avatar" />
       <div class="popular-card_info">
-        <p class="user-name">{{ user.name }}</p>
-        <p class="user-info">@{{ user.account }}</p>
-        <p>{{ user.introduction }}</p>
+        <p class="user-name">{{ follower.name }}</p>
+        <p class="user-info">@{{ follower.account }}</p>
+        <p>{{ follower.introduction }}</p>
       </div>
-      <div class="follow-btn" v-if="user.isFollowed">
+      <div class="follow-btn" v-if="follower.isFollowed">
         <button class="following-btn">正在跟隨</button>
       </div>
       <div class="follow-btn" v-else>
         <button class="follower-btn">跟隨</button>
-      </div> -->
-    <!-- </div> -->
+      </div>
+    </div>
   </div>
 </template>
 <script>

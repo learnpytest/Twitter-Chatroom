@@ -2,35 +2,62 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "../store";
 
-const authenticateIsAdmin = (to, from, next) => {
-  const currentUser = store.state.user.currentUser;
-  if (currentUser && currentUser.account !== "admin") {
-    alert("PERSSION DENIED");
-    // next("PERSSION DENIED");
-    next("/admin/login");
-  }
-  next();
-};
+import {
+  // ADD_NOTIFICATION,
+  RESET_CURRENT_USER_PROFILE,
+} from "../store/store-types";
 
-// const authenticateIsLoggedinUser = (to, from, next) => {
-//   const currentUser = store.state.user.currentUser;
-//   if (currentUser && currentUser.account === "admin") {
+// const authenticateIsAdmin = async (to, from, next) => {
+//   const tokenInLocalStorage = localStorage.getItem("token");
+//   const tokenInStore = store.state.token;
+//   let isAuthenticated = store.state.isAuthenticated;
+//   if (tokenInLocalStorage && tokenInLocalStorage !== tokenInStore) {
+//     isAuthenticated = await store.dispatch(RESET_CURRENT_USER_PROFILE);
+//   }
+
+//   const currentUserProfile = store.state.userProfile.currentUserProfile;
+//   if (isAuthenticated && currentUserProfile.role !== "admin") {
+//     store.dispatch(ADD_NOTIFICATION, {
+//       type: "error",
+//       message: "無瀏覽權限",
+//     });
+//     next("/admin/login");
+//   } else if (!isAuthenticated) {
+//     store.dispatch(ADD_NOTIFICATION, {
+//       type: "error",
+//       message: "尚未登入，請登入管理員帳號",
+//     });
+//     next("/admin/login");
+//   }
+//   next();
+// };
+
+// const authenticateIsLoggedinUser = async (to, from, next) => {
+//   const tokenInLocalStorage = localStorage.getItem("token");
+//   const tokenInStore = store.state.token;
+//   let isAuthenticated = store.state.isAuthenticated;
+//   if (tokenInLocalStorage && tokenInLocalStorage !== tokenInStore) {
+//     isAuthenticated = await store.dispatch(RESET_CURRENT_USER_PROFILE);
+//   }
+
+//   const currentUserProfile = store.state.userProfile.currentUserProfile;
+
+//   if (isAuthenticated && currentUserProfile.role === "admin") {
 //     alert("YOU ARE NOT LOGGEDIN YET");
 //     // next("PERSSION DENIED");
 //     next("/login");
-//   } else if (currentUser && store.state.user.isAuthenticated) {
-//     next();
+//   } else if (!isAuthenticated) {
+//     alert("YOU ARE NOT LOGGEDIN YET");
+//     // next("PERSSION DENIED");
+//     next("/login");
 //   } else {
-//     alert("YOU ARE NOT LOGGEDIN YET");
-//     // next("PERSSION DENIED");
-//     next("/login");
+//     next();
 //   }
 // };
 
 Vue.use(VueRouter);
 
-const routes = [
-  {
+const routes = [{
     path: "/user",
     name: "user",
     component: () => import("@/views/User"),
@@ -60,20 +87,19 @@ const routes = [
     path: "/admin/users",
     name: "admin-users-list",
     component: () => import("@/views/Admin/AdminUsers"),
-    beforeEnter: authenticateIsAdmin,
+    // beforeEnter: authenticateIsAdmin,
   },
   {
     path: "/admin/tweets",
     name: "admin-tweet-list",
     component: () => import("@/views/Admin/AdminMain"),
-    beforeEnter: authenticateIsAdmin,
+    // beforeEnter: authenticateIsAdmin,
   },
   {
     path: "/usermain",
     name: "UserMain",
     component: () => import("@/views/UserMain"),
     //要移回來
-    // beforeEnter: authenticateIsLoggedinUser,
   },
 
   {
@@ -112,29 +138,24 @@ const router = new VueRouter({
 
 router.beforeEach(async (to, from, next) => {
   const tokenInLocalStorage = localStorage.getItem("token");
-  // const tokenInStore = store.state.token
-
-  // if (tokenInLocalStorage & tokenInLocalStorage !== tokenInStore) {
-  //   isAuthenticated = await store.dispatch('getCurrentUser')
-  // }
-  let isAuthenticated = false;
-  if (tokenInLocalStorage) {
-    isAuthenticated = store.state.user.isAuthenticated;
+  const tokenInStore = store.state.token;
+  let isAuthenticated = store.state.isAuthenticated;
+  if (tokenInLocalStorage && tokenInLocalStorage !== tokenInStore) {
+    isAuthenticated = await store.dispatch(RESET_CURRENT_USER_PROFILE);
   }
-  // const pathsWithoutAuthentication = ['admin/login', 'login']
-  const pathsWithoutAuthentication = ["user-login"];
+  const pathsWithoutAuthentication = ["user-login", "register"];
   const adminPathsWithoutAuthentication = ["admin-login"];
 
-  // if (!isAuthenticated && !pathsWithoutAuthentication.includes(to.name)) {
-  //   next("/login");
-  //   return;
-  // }
-  console.log(to.name, isAuthenticated);
+  if (!isAuthenticated && !pathsWithoutAuthentication.includes(to.name)) {
+    next("/login");
+    return;
+  }
+
   if (isAuthenticated && pathsWithoutAuthentication.includes(to.name)) {
     next("/usermain");
     return;
   }
-  console.log(to.name, isAuthenticated);
+
   if (
     store.state.user.currentUser.account === "admin" &&
     adminPathsWithoutAuthentication.includes(to.name)
@@ -142,6 +163,7 @@ router.beforeEach(async (to, from, next) => {
     next("/admin/tweets");
     return;
   }
+
   next();
 });
 

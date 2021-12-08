@@ -1,8 +1,12 @@
-// import axios from "axios";
-// import api
 import tweets from "../../apis/tweets";
 
 import {
+  vm
+} from "../../main";
+
+import {
+  SET_IS_PROCESSING,
+  ADD_NOTIFICATION,
   GET_ALL_TWEETS,
   SET_ALL_TWEETS,
   GET_FILLTERED_TWEETS,
@@ -30,14 +34,33 @@ const getters = {
 };
 const actions = {
   [SET_ALL_TWEETS]: async ({
-    commit
+    commit,
+    dispatch
   }) => {
-    const res = await tweets.all();
-    // send api to get reponse of unFiltered tweets and pass tweets to mutation to change state unFiltered the tweets
-    // start
-    const { data, statusText } = res;
-    if (statusText !== "OK") throw new Error("statusText");
-    commit(SET_ALL_TWEETS, data);
+    try {
+      dispatch(SET_IS_PROCESSING, true);
+      const res = await tweets.all();
+      // send api to get reponse of unFiltered tweets and pass tweets to mutation to change state unFiltered the tweets
+      // start
+      const {
+        data,
+        statusText
+      } = res;
+      if (statusText !== "OK") throw new Error("statusText");
+      commit(SET_ALL_TWEETS, data);
+      dispatch(SET_IS_PROCESSING, false);
+    } catch (err) {
+      setTimeout(() => {
+        setTimeout(() => {
+          dispatch(ADD_NOTIFICATION, {
+            type: "error",
+            message: "載入資料失敗，請重新登入",
+          });
+          vm.$router.push("/login");
+          dispatch(SET_IS_PROCESSING, false);
+        }, 3000);
+      }, 5000);
+    }
   },
   [SET_ONE_USER_TWEETS]: async ({
     commit
@@ -97,27 +120,27 @@ const actions = {
 };
 const mutations = {
   [SET_ALL_TWEETS]: (state, allTweets) => {
-    state.allTweets = [...state.allTweets, ...allTweets];
+    // state.allTweets = [...state.allTweets, ...allTweets];
     state.filteredTweets = [...allTweets];
   },
   [SET_ONE_USER_TWEETS]: (state, oneUserTweets) => {
-    state.oneUserTweets = [...oneUserTweets];
+    // state.oneUserTweets = [...oneUserTweets];
     state.filteredTweets = [...oneUserTweets];
   },
   [SET_ONE_USER_REPLIES]: (state, oneUserReplies) => {
-    state.oneUserReplies = [...oneUserReplies];
+    // state.oneUserReplies = [...oneUserReplies];
     state.filteredTweets = [...oneUserReplies];
   },
   [SET_ONE_USER_LIKES]: (state, oneUserLikes) => {
-    state.oneUserLikes = [...oneUserLikes];
+    // state.oneUserLikes = [...oneUserLikes];
     state.filteredTweets = [...oneUserLikes];
   },
   [SET_ONE_USER_REPLIES]: (state, oneUserReplies) => {
-    state.oneUserReplies = [...oneUserReplies];
+    // state.oneUserReplies = [...oneUserReplies];
     state.filteredTweets = [...oneUserReplies];
   },
   [SET_ONE_USER_LIKES]: (state, oneUserLikes) => {
-    state.oneUserLikes = [...oneUserLikes];
+    // state.oneUserLikes = [...oneUserLikes];
     state.filteredTweets = [...oneUserLikes];
   },
 };

@@ -22,110 +22,14 @@
         </div>
       </div>
     </div>
-    <!-- <div class="comment">
-      <div class="user-pic">
-        <img src="./../../assets/images/Photo_user1.png" alt="" />
-      </div>
-
-      <div class="tweet-info">
-        <div class="info">
-          <p class="user-name">
-            apple
-            <span class="user-id">@apple • </span
-            ><span class="time">3 小時</span>
-          </p>
-        </div>
-        <p Class="reply-to">回覆 <span>@ Daniel</span></p>
-        <div class="tweet-text">
-          dfsgsdfgsdfgsdfgsdfgsfgsdfgsdfgsdfgsdfgsdfgs
-        </div>
-      </div>
-    </div>
-    <div class="comment">
-      <div class="user-pic">
-        <img src="./../../assets/images/Photo_user1.png" alt="" />
-      </div>
-
-      <div class="tweet-info">
-        <div class="info">
-          <p class="user-name">
-            apple
-            <span class="user-id">@apple • </span
-            ><span class="time">3 小時</span>
-          </p>
-        </div>
-        <p Class="reply-to">回覆 <span>@ Daniel</span></p>
-        <div class="tweet-text">
-          dfsgsdfgsdfgsdfgsdfgsfgsdfgsdfgsdfgsdfgsdfgs
-        </div>
-      </div>
-    </div>
-    <div class="comment">
-      <div class="user-pic">
-        <img src="./../../assets/images/Photo_user1.png" alt="" />
-      </div>
-
-      <div class="tweet-info">
-        <div class="info">
-          <p class="user-name">
-            apple
-            <span class="user-id">@apple • </span
-            ><span class="time">3 小時</span>
-          </p>
-        </div>
-        <p Class="reply-to">回覆 <span>@ Daniel</span></p>
-        <div class="tweet-text">
-          dfsgsdfgsdfgsdfgsdfgsfgsdfgsdfgsdfgsdfgsdfgs
-        </div>
-      </div>
-    </div>
-    <div class="comment">
-      <div class="user-pic">
-        <img src="./../../assets/images/Photo_user1.png" alt="" />
-      </div>
-
-      <div class="tweet-info">
-        <div class="info">
-          <p class="user-name">
-            apple
-            <span class="user-id">@apple • </span
-            ><span class="time">3 小時</span>
-          </p>
-        </div>
-        <p Class="reply-to">回覆 <span>@ Daniel</span></p>
-        <div class="tweet-text">
-          dfsgsdfgsdfgsdfgsdfgsfgsdfgsdfgsdfgsdfgsdfgs
-        </div>
-      </div>
-    </div>
-    <div class="comment">
-      <div class="user-pic">
-        <img src="./../../assets/images/Photo_user1.png" alt="" />
-      </div>
-
-      <div class="tweet-info">
-        <div class="info">
-          <p class="user-name">
-            apple
-            <span class="user-id">@apple • </span
-            ><span class="time">3 小時</span>
-          </p>
-        </div>
-        <p Class="reply-to">回覆 <span>@ Daniel</span></p>
-        <div class="tweet-text">
-          dfsgsdfgsdfgsdfgsdfgsfgsdfgsdfgsdfgsdfgsdfgs
-        </div>
-      </div>
-    </div> -->
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import { GET_FILLTERED_TWEETS } from "../../store/store-types";
-import { mixinEmptyImage } from "../../utils/mixin";
 
-import { mixinFromNowFilters } from "../../utils/mixin";
+import { mixinEmptyImage, mixinFromNowFilters } from "../../utils/mixin";
 
 export default {
   name: "Comments",
