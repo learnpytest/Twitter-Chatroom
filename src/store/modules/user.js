@@ -1,15 +1,10 @@
 import usersAPI from "../../apis/usersAPI";
-import currentUserAPI from "../../apis/currentUserAPI";
 
-import {
-  vm
-} from "../../main";
+import { vm } from "../../main";
 
 import {
   GET_CURRENT_USER,
   SET_CURRENT_USER,
-  FETCH_CURRENT_USER,
-  SET_CURRENT_USER_PROFILE,
   REVOKE_AUTHENTICATION,
   ADD_NOTIFICATION,
   GET_TOP_USERS,
@@ -27,29 +22,16 @@ const state = {
 const getters = {
   [GET_CURRENT_USER]: (state) => state.currentUser,
   [GET_TOP_USERS]: (state) => state.topUsers,
-  [FETCH_CURRENT_USER]: (state) => state.currentUserProfile,
 };
 const actions = {
-  [SET_CURRENT_USER_PROFILE]: async ({
-    commit
-  }) => {
-    const res = await currentUserAPI.getCurrentUser();
-
-    commit(SET_CURRENT_USER_PROFILE, res.data);
-  },
-  [REVOKE_AUTHENTICATION]: async ({
-    commit,
-    dispatch
-  }) => {
+  [REVOKE_AUTHENTICATION]: async ({ commit, dispatch }) => {
     commit(REVOKE_AUTHENTICATION);
     dispatch(ADD_NOTIFICATION, {
       type: "success",
       message: "成功登出",
     });
   },
-  [SET_CURRENT_USER]: async ({
-    commit
-  }, currentUser) => {
+  [SET_CURRENT_USER]: async ({ commit }, currentUser) => {
     // 取得使用者權限，希望使用者每一次切換頁面路由都可以取一次currentUser，需要設定router 在router的beforeEach
     // try{
     //   const {
@@ -72,16 +54,11 @@ const actions = {
 
     commit(SET_CURRENT_USER, currentUser);
   },
-  [SET_TOP_USERS]: async ({
-    commit
-  }) => {
+  [SET_TOP_USERS]: async ({ commit }) => {
     // send api
     try {
       const res = await usersAPI.getTop();
-      const {
-        data,
-        statusText
-      } = res;
+      const { data, statusText } = res;
       if (statusText !== "OK") {
         throw new Error(statusText);
       }
@@ -92,12 +69,6 @@ const actions = {
   },
 };
 const mutations = {
-  [SET_CURRENT_USER_PROFILE]: async (state, currentUserProfile) => {
-    state.currentUserProfile = {
-      ...currentUserProfile,
-    };
-  },
-
   [REVOKE_AUTHENTICATION]: async (state) => {
     state.currentUser = {};
     state.isAuthenticated = false;
