@@ -1,7 +1,6 @@
 ﻿<template>
   <div class="comment-wrapper">
     <div class="comment" v-for="tweet in tweets" :key="tweet.ReplyID">
-      {{ tweet }}
       <div class="user-pic">
         <!-- 沒有上傳照片產生空圖 -->
         <img :src="tweet.User.avatar | emptyImage" alt="" />
