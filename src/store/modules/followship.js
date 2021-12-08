@@ -68,11 +68,8 @@ const actions = {
   [POST_FOLLOWSHIP]: async ({
     dispatch
   }, targetedUserId) => {
-    // send api
-    console.log("POST_FOLLOWSHIP", targetedUserId);
     try {
       const res = await followshipAPI.postFollowships(targetedUserId);
-
       const {
         data,
         statusText
@@ -84,8 +81,7 @@ const actions = {
         type: "success",
         message: "跟隨成功",
       });
-      // console.log(res);
-      // check
+
       dispatch(SET_CURRENT_USER_FOLLOWINGS);
     } catch (err) {
       dispatch(ADD_NOTIFICATION, {
@@ -98,7 +94,7 @@ const actions = {
     dispatch
   }, targetedUserId) => {
     // send api
-    console.log(targetedUserId);
+
     const res = await followshipAPI.deleteFollowship(targetedUserId);
     console.log(res);
     const {
@@ -121,7 +117,7 @@ const mutations = {
   },
   [SET_CURRENT_USER_FOLLOWINGS]: async (state, currentUserFollowings) => {
     state.currentUserFollowings = [...currentUserFollowings];
-    console.log("setcurrentUserFollowings mutation");
+    console.log("setcurrentUserFollowings mutation", currentUserFollowings);
   },
 };
 

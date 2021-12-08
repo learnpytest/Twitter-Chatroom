@@ -22,13 +22,9 @@ export default {
   // },
 
   // 追蹤使用者 input userId
-  postFollowships(followingId) {
+  postFollowships(id) {
     return apiHelper.post(`/followships`, {
-      headers: {
-        data: {
-          followingId: `${followingId}`,
-        },
-      },
+      id
     });
   },
 };
