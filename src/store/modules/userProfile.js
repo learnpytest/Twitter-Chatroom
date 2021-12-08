@@ -13,9 +13,12 @@ import {
   FETCH_CURRENT_USER,
   REVOKE_AUTHENTICATION,
   ADD_NOTIFICATION,
+  SET_CURRENT_USER,
 } from "../store-types";
 
-const state = {};
+const state = {
+  currentUserProfile: {},
+};
 const getters = {
   [FETCH_CURRENT_USER]: (state) => state.currentUserProfile,
 };
@@ -31,7 +34,10 @@ const actions = {
         statusText
       } = await currentUserAPI.getCurrentUser();
       if (statusText !== "OK") throw new Error("無法取得現在使用者");
+
       commit(RESET_CURRENT_USER_PROFILE, data);
+      commit(SET_CURRENT_USER, data);
+
       return true;
     } catch (err) {
       dispatch(ADD_NOTIFICATION, {

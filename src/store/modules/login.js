@@ -12,6 +12,7 @@ import {
   POST_LOGIN,
   POST_USER_LOGIN,
   SET_CURRENT_USER,
+  RESET_CURRENT_USER_PROFILE,
   ADD_NOTIFICATION,
 } from "../store-types";
 
@@ -113,6 +114,7 @@ const actions = {
     //  假設成功登入，應該得到使用者資料，先存好token, 將使用者資料放入另一個action，再用mutation修改現在使用者，更新現在使用者，然後轉址
     localStorage.setItem("token", data.token);
     commit(SET_CURRENT_USER, data.user);
+    commit(RESET_CURRENT_USER_PROFILE, data.user);
     vm.$router.push("/admin/tweets");
     dispatch(ADD_NOTIFICATION, {
       type: "success",

@@ -15,7 +15,7 @@ import {
 
 const state = {
   currentUser: {},
-  currentUserProfile: {},
+
   token: "",
   isAuthenticated: false,
   topUsers: [],
@@ -40,7 +40,6 @@ const actions = {
   [SET_CURRENT_USER]: async ({
     commit
   }, currentUser) => {
-    // 取得使用者權限，希望使用者每一次切換頁面路由都可以取一次currentUser，需要設定router 在router的beforeEach
     commit(SET_CURRENT_USER, currentUser);
   },
   [SET_TOP_USERS]: async ({
