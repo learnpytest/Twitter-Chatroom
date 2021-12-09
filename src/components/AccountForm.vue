@@ -167,9 +167,9 @@ export default {
     }),
   },
   computed: {
-    ...mapGetters({
-      getCurrentUser: GET_CURRENT_USER,
-    }),
+    // ...mapGetters({
+    //   getCurrentUser: GET_CURRENT_USER,
+    // }),
     nameCharactersLeft() {
       let char = this.username.length,
         limit = 20;
