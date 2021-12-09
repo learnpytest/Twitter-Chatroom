@@ -86,8 +86,12 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
-import { SET_ACCOUNT_INFO, GET_CURRENT_USER } from "../store/store-types";
+// import { mapActions, mapGetters } from "vuex";
+// import { SET_ACCOUNT_INFO, GET_CURRENT_USER } from "../store/store-types";
+import { SET_ACCOUNT_INFO } from "../store/store-types";
+import { mapActions } from "vuex";
+
+import currentUserAPI from "@/apis/currentUserAPI";
 
 export default {
   name: "AccountForm",
@@ -107,15 +111,37 @@ export default {
     };
   },
   created() {
-    this.account = this.isSettingExistingAccount
-      ? this.getCurrentUser.account
-      : "";
-    this.username = this.isSettingExistingAccount
-      ? this.getCurrentUser.name
-      : "";
-    this.email = this.isSettingExistingAccount ? this.getCurrentUser.email : "";
+    // this.account = this.isSettingExistingAccount
+    //   ? this.getCurrentUser.account
+    //   : "";
+    // this.username = this.isSettingExistingAccount
+    //   ? this.getCurrentUser.name
+    //   : "";
+    // this.email = this.isSettingExistingAccount ? this.getCurrentUser.email : "";
+    this.fetchData();
   },
   methods: {
+    async fetchData() {
+      try {
+        const res = await currentUserAPI.getCurrentUser();
+        const { data, statusText } = res;
+        if (statusText !== "OK") {
+          throw new Error(statusText);
+        }
+        this.currentUser = data;
+        this.account = this.isSettingExistingAccount
+          ? this.currentUser.account
+          : "";
+        this.username = this.isSettingExistingAccount
+          ? this.currentUser.name
+          : "";
+        this.email = this.isSettingExistingAccount
+          ? this.currentUser.email
+          : "";
+      } catch (err) {
+        console.log(err);
+      }
+    },
     updateAccountInfo() {
       this.setAccountInfo({
         account: this.account,
@@ -129,11 +155,12 @@ export default {
       setAccountInfo: SET_ACCOUNT_INFO,
     }),
   },
-  computed: {
-    ...mapGetters({
-      getCurrentUser: GET_CURRENT_USER,
-    }),
-  },
+
+  // beforeRouteUpdate(to, from, next) {
+  //   // 路由改變時重新更新使用者資料
+  //   this.fetchData();
+  //   next();
+  // },
 };
 </script>
 

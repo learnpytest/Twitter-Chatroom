@@ -5,8 +5,13 @@
     <div class="profile-pic">
       <!-- 沒有上傳照片產生空圖 -->
       <img id="avatar" :src="userObj.avatar | emptyImage" alt="" />
-      <button @click="handleShowModalClick">編輯個人資料</button>
-      <div class="other-user-btns">
+      <button
+        @click="handleShowModalClick"
+        v-if="currentUserId === userObj.UserId"
+      >
+        編輯個人資料
+      </button>
+      <div class="other-user-btns" v-if="currentUserId !== userObj.UserId">
         <div class="msg-btn">
           <img
             src="./../../assets/images/btn_messege.svg"
@@ -49,6 +54,7 @@
 </template>
 <script>
 import { mixinEmptyImage } from "@/utils/mixin";
+import currentUserAPI from "@/apis/currentUserAPI";
 
 export default {
   mixins: [mixinEmptyImage],
@@ -67,10 +73,12 @@ export default {
       showEditModal: false,
       text: "",
       userObj: {},
+      currentUserId: "",
     };
   },
   created() {
     this.fetchData();
+    this.getCurrentUser();
   },
   methods: {
     fetchData() {
@@ -82,6 +90,19 @@ export default {
       this.$emit("show-edit-modal");
       // edit
       // this.$router.push(`/users/${this.initialUserObj.UserId}`);
+    },
+    async getCurrentUser() {
+      try {
+        const res = await currentUserAPI.getCurrentUser();
+        const { data, statusText } = res;
+        if (statusText !== "OK") {
+          throw new Error(statusText);
+        }
+
+        this.currentUserId = data.id;
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
 
