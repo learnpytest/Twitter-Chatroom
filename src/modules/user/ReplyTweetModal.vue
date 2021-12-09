@@ -1,5 +1,5 @@
 ﻿<template>
-  <div class="new-tweet-modal">
+  <form class="new-tweet-modal" @click.stop.prevent="handleCommentSubmit">
     <div class="new-text-box">
       <div class="close-btn">
         <button>
@@ -52,15 +52,17 @@
       </div>
 
       <div class="tweet-btn">
-        <button>推文</button>
+        <button type="submit" class="save-btn" :disabled="isProcessing">
+          {{ isProcessing ? "發送中..." : "推文" }}
+        </button>
       </div>
     </div>
-  </div>
+  </form>
 </template>
 <script>
 // need to take targeted user
 import { mapGetters } from "vuex";
-import { GET_CURRENT_USER } from "../../store/store-types";
+import { GET_CURRENT_USER, GET_IS_PROCESSING } from "../../store/store-types";
 import { mixinEmptyImage, mixinFromNowFilters } from "../../utils/mixin";
 import tweetsAPI from "./../../apis/tweets";
 export default {
@@ -101,6 +103,21 @@ export default {
         console.log("error", error);
       }
     },
+    async handleCommentSubmit() {
+      try {
+        const { data } = await tweetsAPI.replyTweet({
+          tweetId: this.tweetId,
+          comment: this.text,
+        });
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+        this.handleShowModalClick();
+      } catch (err) {
+        console.log(err);
+      }
+    },
     handleShowModalClick() {
       this.showReplyModal = false;
       this.$emit("show-reply-modal");
@@ -115,6 +132,7 @@ export default {
     },
     ...mapGetters({
       getCurrentUser: GET_CURRENT_USER,
+      isProcessing: GET_IS_PROCESSING,
     }),
   },
 };
@@ -237,5 +255,11 @@ export default {
 }
 .user-pic {
   border-radius: 50%;
+}
+.save-btn {
+  border-radius: 25px;
+  padding: 3px 12px;
+  color: $white;
+  background-color: $orange-100;
 }
 </style>
