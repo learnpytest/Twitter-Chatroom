@@ -10,7 +10,7 @@
           <div class="tweet__account">
             @{{ tweet.User.account }}<span class="dot">&bull;</span>
           </div>
-          <div class="tweet__created">{{ tweet.createdAt | fromNow }}</div>
+          <div class="tweet__created">{{ tweet.CreatedAt | fromNow }}</div>
         </div>
         <div class="tweet__delete" @click="verifyDeleteTweet(tweet.id)">
           <img

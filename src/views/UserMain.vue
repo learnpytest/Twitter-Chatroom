@@ -1,7 +1,11 @@
 ﻿<template>
   <div class="container" v-if="!isProcessing">
     <div class="new-tweet-modal" v-if="showModal">
-      <NewTweetModal :initialShowModal="showModal" @show-modal="modalToggle" />
+      <NewTweetModal
+        :initialShowModal="showModal"
+        @show-modal="modalToggle"
+        @updateData="updateTweetsData"
+      />
     </div>
     <div class="new-tweet-modal" v-if="showReplyModal">
       <ReplyTweetModal
@@ -44,9 +48,9 @@ import Sidebar from "../modules/user/Sidebar.vue";
 import NewTweetModal from "../modules/user/NewTweetModal.vue";
 import ReplyTweetModal from "../modules/user/ReplyTweetModal.vue";
 
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 
-import { SET_ALL_TWEETS, GET_IS_PROCESSING } from "../store/store-types";
+import { GET_IS_PROCESSING } from "../store/store-types";
 import tweetsApi from "./../apis/tweets";
 export default {
   components: {
@@ -66,12 +70,14 @@ export default {
     };
   },
   created() {
-    // this.setAllTweets();
     this.getTweets();
   },
 
   methods: {
-    ...mapActions({ setAllTweets: SET_ALL_TWEETS }),
+    async updateTweetsData() {
+      console.log("updateData");
+      await this.getTweets();
+    },
     modalToggle() {
       if (!this.showModal) {
         this.showModal = true;
@@ -83,18 +89,15 @@ export default {
       try {
         const response = await tweetsApi.getAllTweet();
         const { data } = response;
-        this.userTweets = data;
+        this.userTweets = [...data];
+        // side effect?
+        this.showModal = false;
       } catch (error) {
         console.log(error);
       }
     },
-    // getTweets() {
-    //   console.log(this.$store.state);
-    //   console.log("dispatch tweets vue");
 
-    //   this.$store.dispatch(`${this.filterType.setter}`);
-    // },
-    replyModalToggle(tweetId) {
+    replyModalToggle() {
       if (!this.showReplyModal) {
         this.replyTweetId = tweetId;
         this.showReplyModal = true;
@@ -109,6 +112,9 @@ export default {
     ...mapGetters({
       isProcessing: GET_IS_PROCESSING,
     }),
+  },
+  watch: {
+    isProcessing: "getTweets",
   },
 };
 </script>

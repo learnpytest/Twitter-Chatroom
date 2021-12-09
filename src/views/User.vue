@@ -1,7 +1,11 @@
 ﻿<template>
   <div class="container">
     <div class="new-tweet-modal" v-if="showModal">
-      <NewTweetModal :initialShowModal="showModal" @show-modal="modalToggle" />
+      <NewTweetModal
+        :initialShowModal="showModal"
+        @show-modal="modalToggle"
+        @updateData="updateTweetsData"
+      />
     </div>
     <div class="user-edit-modal" v-if="showEditModal">
       <UserEditModal
@@ -110,6 +114,10 @@ export default {
     next();
   },
   methods: {
+    updateTweetsData() {
+      this.getUsersTweets(this.userId);
+      // this.showModal = false;
+    },
     async getUserLikes(userId) {
       try {
         const res = await usersAPI.getUserLikes(userId);
@@ -142,6 +150,7 @@ export default {
           throw new Error(statusText);
         }
         this.userObj = { ...data };
+        this.showModal = false;
       } catch (err) {
         console.log(err);
       }
@@ -155,6 +164,7 @@ export default {
           throw new Error(data.message);
         }
         this.userTweets = [...data];
+        this.showModal = false;
       } catch (error) {
         console.log("error", error);
       }

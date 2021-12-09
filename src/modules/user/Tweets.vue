@@ -3,8 +3,8 @@
   <div class="tweets-wrapper">
     <div
       class="tweet"
-      v-for="tweet in tweets"
-      :key="tweet.TweetId"
+      v-for="(tweet, index) in tweets"
+      :key="index"
       @click.stop.prevent="
         () =>
           $router.push({
@@ -21,13 +21,6 @@
       >
         <img :src="tweet.User.avatar | emptyImage" alt="" />
       </div>
-
-      <!-- <router-link
-        class="user-pic"
-        :to="{ name: 'user', params: { id: tweet.User.id } }"
-      >
-        <img :src="tweet.User.avatar | emptyImage" alt="" />
-      </router-link> -->
 
       <div class="tweet-info">
         <div class="info">
@@ -49,13 +42,6 @@
             <p class="reply-num">{{ tweet.RepliesCount }}</p>
           </div>
           <div class="tweet-buttons">
-            <!-- <img
-              id="liked-btn"
-              src="./../../assets/images/icon_like_fill.svg"
-              alt=""
-              @click.stop.prevent="handleLikeButton(tweet.isLiked === 'true')"
-              v-if="tweet.isLiked"
-            /> -->
             <img
               id="liked-btn"
               src="./../../assets/images/icon_like_fill.svg"
@@ -104,10 +90,8 @@ export default {
   },
   watch: {
     initialTweets(newValue) {
-      this.tweets = {
-        ...this.tweets,
-        ...newValue,
-      };
+      console.log("newtweetchange");
+      this.tweets = [...newValue];
     },
   },
 
@@ -125,6 +109,18 @@ export default {
         if (data.status !== "success") {
           throw new Error(data.message);
         }
+
+        this.tweets = this.tweets.map((tweet) => {
+          if (tweet.TweetId === Number(tweetId)) {
+            return {
+              ...tweet,
+              isLiked: true,
+              LikesCount: tweet.LikesCount + 1,
+            };
+          } else {
+            return { ...tweet };
+          }
+        });
       } catch (error) {
         console.log("error", error);
       }
@@ -135,6 +131,18 @@ export default {
         if (data.status !== "success") {
           throw new Error(data.message);
         }
+        this.tweets = this.tweets.map((tweet) => {
+          console.log(tweet);
+          if (tweet.TweetId === Number(tweetId)) {
+            return {
+              ...tweet,
+              isLiked: false,
+              LikesCount: tweet.LikesCount - 1,
+            };
+          } else {
+            return { ...tweet };
+          }
+        });
       } catch (error) {
         console.log("error", error);
       }

@@ -14,14 +14,14 @@
           class="feeds__icon"
           src="@/assets/images/icon_reply.png"
           alt=""
-        /><span class="feeds__count">{{ user.TweetCount }}</span>
+        /><span class="feeds__count">{{ user.RepliesCount }}</span>
       </div>
       <div class="feeds">
         <img
           class="feeds__icon"
           src="@/assets/images/icon_like.png"
           alt=""
-        /><span class="feeds__count">{{ user.likeCounts }}</span>
+        /><span class="feeds__count">{{ user.LikesCount }}</span>
       </div>
     </div>
     <div class="card__interaction card__interaction--follows">

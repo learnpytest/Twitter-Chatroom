@@ -32,21 +32,31 @@
           alt=""
           @click.stop.prevent="handleShowModalClick"
         />
-        <img src="./../../assets/images/icon_like.svg" alt="" />
+
+        <img
+          id="liked-btn"
+          src="./../../assets/images/icon_like_fill.svg"
+          alt=""
+          @click.stop.prevent="unLike(tweet.TweetId)"
+          v-if="tweet.isLiked"
+        />
+
+        <img
+          src="./../../assets/images/icon_like.svg"
+          alt=""
+          @click.stop.prevent="addLike(tweet.TweetId)"
+          v-else
+        />
+        <!-- <img src="./../../assets/images/icon_like.svg" alt="" /> -->
       </div>
     </div>
-    <!-- <Comments :initialTweets="initialTweetReplies" /> -->
   </div>
 </template>
 <script>
+import likeshipAPI from "./../../apis/likeshipAPI";
 import { mixinEmptyImage } from "../../utils/mixin";
 
-// test
-// import Comments from "@/modules/user/Comments.vue";
-
 export default {
-  // test
-
   props: {
     initialShowReplyModal: {
       type: Boolean,
@@ -57,10 +67,6 @@ export default {
       type: Object,
       require: true,
     },
-    // initialTweetReplies: {
-    //   type: Array,
-    //   require: true,
-    // },
   },
   mixins: [mixinEmptyImage],
   data() {
@@ -74,10 +80,51 @@ export default {
     this.fetchData();
   },
   methods: {
+    async addLike(tweetId) {
+      try {
+        const { data } = await likeshipAPI.postLike(tweetId);
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        this.tweets = this.tweets.map((tweet) => {
+          if (tweet.TweetId === Number(tweetId)) {
+            return {
+              ...tweet,
+              isLiked: true,
+            };
+          } else {
+            return { ...tweet };
+          }
+        });
+      } catch (error) {
+        console.log("error", error);
+      }
+    },
+    async unLike(tweetId) {
+      try {
+        const { data } = await likeshipAPI.deleteLike(tweetId);
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+        this.tweets = this.tweets.map((tweet) => {
+          console.log(tweet);
+          if (tweet.TweetId === Number(tweetId)) {
+            return {
+              ...tweet,
+              isLiked: false,
+            };
+          } else {
+            return { ...tweet };
+          }
+        });
+      } catch (error) {
+        console.log("error", error);
+      }
+    },
     fetchData() {
       this.showReplyModal = this.initialShowReplyModal;
       this.tweet = { ...this.initialTweet };
-      // this.tweetReplies = [...this.initialTweetReplies];
     },
     handleShowModalClick() {
       this.showReplyModal = true;
