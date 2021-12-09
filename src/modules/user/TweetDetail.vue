@@ -31,6 +31,7 @@
           src="./../../assets/images/icon_reply.svg"
           alt=""
           @click.stop.prevent="handleShowModalClick(tweet.TweetId)"
+          class="hoverStyle"
         />
 
         <img
@@ -39,6 +40,7 @@
           alt=""
           @click.stop.prevent="unLike(tweet.TweetId)"
           v-if="tweet.isLiked"
+          class="hoverStyle"
         />
 
         <img
@@ -46,6 +48,7 @@
           alt=""
           @click.stop.prevent="addLike(tweet.TweetId)"
           v-else
+          class="hoverStyle"
         />
         <!-- <img src="./../../assets/images/icon_like.svg" alt="" /> -->
       </div>
@@ -80,6 +83,49 @@ export default {
     this.fetchData();
   },
   methods: {
+    // async addLike(tweetId) {
+    //   try {
+    //     const { data } = await likeshipAPI.postLike(tweetId);
+    //     if (data.status !== "success") {
+    //       throw new Error(data.message);
+    //     }
+
+    //     this.tweets = this.tweets.map((tweet) => {
+    //       if (tweet.TweetId === Number(tweetId)) {
+    //         return {
+    //           ...tweet,
+    //           isLiked: true,
+    //         };
+    //       } else {
+    //         return { ...tweet };
+    //       }
+    //     });
+    //   } catch (error) {
+    //     console.log("error", error);
+    //   }
+    // },
+    // async unLike(tweetId) {
+    //   try {
+    //     const { data } = await likeshipAPI.deleteLike(tweetId);
+    //     if (data.status !== "success") {
+    //       throw new Error(data.message);
+    //     }
+    //     this.tweets = this.tweets.map((tweet) => {
+    //       console.log(tweet);
+    //       if (tweet.TweetId === Number(tweetId)) {
+    //         return {
+    //           ...tweet,
+    //           isLiked: false,
+    //         };
+    //       } else {
+    //         return { ...tweet };
+    //       }
+    //     });
+    //   } catch (error) {
+    //     console.log("error", error);
+    //   }
+    // },
+
     async addLike(tweetId) {
       try {
         const { data } = await likeshipAPI.postLike(tweetId);
@@ -87,16 +133,7 @@ export default {
           throw new Error(data.message);
         }
 
-        this.tweets = this.tweets.map((tweet) => {
-          if (tweet.TweetId === Number(tweetId)) {
-            return {
-              ...tweet,
-              isLiked: true,
-            };
-          } else {
-            return { ...tweet };
-          }
-        });
+        this.tweet = { ...this.tweet, isLiked: true };
       } catch (error) {
         console.log("error", error);
       }
@@ -107,17 +144,7 @@ export default {
         if (data.status !== "success") {
           throw new Error(data.message);
         }
-        this.tweets = this.tweets.map((tweet) => {
-          console.log(tweet);
-          if (tweet.TweetId === Number(tweetId)) {
-            return {
-              ...tweet,
-              isLiked: false,
-            };
-          } else {
-            return { ...tweet };
-          }
-        });
+        this.tweet = { ...this.tweet, isLiked: false };
       } catch (error) {
         console.log("error", error);
       }
@@ -216,5 +243,8 @@ export default {
     width: 25px;
     margin-right: 130px;
   }
+}
+.hoverStyle {
+  cursor: pointer;
 }
 </style>
