@@ -1,13 +1,13 @@
 <template>
-  <div class="popular-wrapper">
+  <div class="follow-wrapper">
     <div
-      class="popular-card"
+      class="follow-card"
       v-for="following in getCurrentUserFollowings"
       :key="following.followingId"
     >
       <!-- 沒有上傳照片產生空圖 -->
       <img :src="following.avatar | emptyImage" alt="user avatar" />
-      <div class="popular-card_info">
+      <div class="follow-card_info">
         <p class="user-name">{{ following.name }}</p>
         <p class="user-info">@{{ following.account }}</p>
         <p>{{ following.introduction }}</p>
@@ -56,33 +56,32 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "./../../assets/scss/main.scss";
-.popular-wrapper {
-  background-color: $gray-50;
-  border-radius: 10px;
-  margin-top: 10px;
-  font-weight: var(--fw-bold);
+.follow-wrapper {
   width: 100%;
 }
-.popular-header {
+.follow-header {
   padding: 10px;
 }
 
-.popular-card {
+.follow-card {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
   padding: 15px;
-  border-top: 1px solid $gray-75;
+  border-bottom: 1px solid $gray-75;
 }
 
-.popular-card img {
+.follow-card img {
   width: 50px;
   height: 50px;
+  border-radius: 50%;
+  width: 10%;
 }
 
-.popular-card_info {
+.follow-card_info {
   font-size: 14px;
   margin-left: 10px;
+  width: 70%;
 }
 
 .user-info {
@@ -90,14 +89,13 @@ export default {
 }
 
 .follow-btn {
-  width: 100%;
+  width: 20%;
   text-align: right;
 }
 
 .follow-btn button {
-  font-weight: var(--fw-bold);
   border-radius: 25px;
-  padding: 8px 14px;
+  padding: 4px 10px;
 }
 .following-btn {
   color: $white;
@@ -108,5 +106,8 @@ export default {
   background-color: $gray-50;
   color: $orange-100;
   border: 1.5px solid $orange-100;
+}
+.user-name {
+  font-weight: var(--fw-bold);
 }
 </style>

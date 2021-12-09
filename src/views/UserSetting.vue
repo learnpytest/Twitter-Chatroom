@@ -84,22 +84,28 @@ export default {
   flex-flow: row nowrap;
   justify-content: center;
   height: 100vh;
+  overflow-y: scroll;
 }
 .container {
   height: 100%;
+  overflow: hidden;
 }
 .sidebar {
   width: 18%;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
 }
 .main {
   width: 42%;
   height: 100%;
   margin: 0 30px;
   margin-right: calc(25% + 30px);
-  border: 1px solid $gray-75;
+  border-left: 1px solid $gray-75;
 }
 .form {
   max-width: 642px;
+
   margin: 0;
   &__txt {
     @include grays(color, g-900);

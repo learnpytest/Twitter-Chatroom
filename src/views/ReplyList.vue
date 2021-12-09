@@ -98,12 +98,17 @@ export default {
   flex-flow: row nowrap;
   justify-content: center;
   height: 100%;
+  overflow-y: scroll;
 }
 .container {
   height: 100%;
+  overflow-y: hidden;
 }
 .sidebar {
   width: 18%;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
 }
 .main {
   width: 42%;
@@ -113,5 +118,8 @@ export default {
 }
 .popular {
   width: 25%;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
 }
 </style>

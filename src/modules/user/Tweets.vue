@@ -7,7 +7,10 @@
       :key="tweet.TweetId"
       @click.stop.prevent="
         () =>
-          $router.push({ name: 'reply-list', params: { id: tweet.TweetId } })
+          $router.push({
+            name: 'reply-list',
+            params: { id: tweet.TweetId },
+          })
       "
     >
       <div
@@ -57,7 +60,7 @@
               id="liked-btn"
               src="./../../assets/images/icon_like_fill.svg"
               alt=""
-              @click.stop.prevent="test(tweet.TweetId)"
+              @click.stop.prevent="unLike(tweet.TweetId)"
               v-if="tweet.isLiked"
             />
             <img
@@ -115,6 +118,7 @@ export default {
     fetchData() {
       this.showReplyModal = this.initialShowReplyModal;
       console.log(this.initialTweets);
+      console.log(this.$route.path);
       this.tweets = this.initialTweets;
     },
 
@@ -133,7 +137,7 @@ export default {
     },
     async unLike(tweetId) {
       try {
-        const { data } = await likeshipAPI.deleteLike({ tweetId });
+        const { data } = await likeshipAPI.deleteLike(tweetId);
         console.log(tweetId);
         console.log(data);
         if (data.status !== "success") {

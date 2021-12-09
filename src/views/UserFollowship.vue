@@ -19,10 +19,10 @@
           </div>
         </div>
         <tabs-followship class="tabs">
-          <tab title="跟隨者"
+          <tab class="follow-tab" title="跟隨者"
             ><UserFollowers :initialShowReplyModal="showReplyModal"
           /></tab>
-          <tab class="comments" title="正在跟隨"
+          <tab class="follow-tab" title="正在跟隨"
             ><UserFollowings :initialShowReplyModal="showReplyModal"
           /></tab>
         </tabs-followship>
@@ -101,13 +101,18 @@ export default {
   z-index: 1;
   height: 100%;
 }
+.tabs {
+  border-left: 1px solid $gray-75;
+  border-right: 1px solid $gray-75;
+}
 .header {
   display: flex;
   align-items: center;
   height: 50px;
-  border-bottom: 1px solid $gray-75;
   padding-left: 15px;
   font-weight: var(--fw-bolder);
+  border-left: 1px solid $gray-75;
+  border-right: 1px solid $gray-75;
   .header-info {
     :nth-child(2) {
       font-size: 13px;
@@ -130,19 +135,33 @@ export default {
   flex-flow: row nowrap;
   justify-content: center;
   height: 100vh;
+  overflow-y: scroll;
+}
+.container {
+  overflow: hidden;
 }
 .main {
   width: 42%;
   height: 100%;
   margin: 0 30px;
-  border: 1px solid $gray-75;
 }
 
 .popular {
   width: 25%;
   height: 100%;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
 }
 .sidebar {
   width: 18%;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+}
+
+.follow-tab {
+
+  height: 100vh;
 }
 </style>

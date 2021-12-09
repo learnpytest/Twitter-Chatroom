@@ -18,24 +18,17 @@ const getters = {
   [IS_NOTIFICATION_CONFIRM]: (state) => state.isNotificationConfirm,
 };
 const actions = {
-  [ADD_NOTIFICATION_CONFIRM]: ({
-    commit,
-    state
-  }, notification) => {
+  [ADD_NOTIFICATION_CONFIRM]: ({ commit, state }, notification) => {
     state.isNotificationConfirm = true;
     commit("ADD_NOTIFICATION", notification);
   },
-  [ADD_NOTIFICATION]: ({
-    commit
-  }, notification) => {
+  [ADD_NOTIFICATION]: ({ commit }, notification) => {
     commit("ADD_NOTIFICATION", notification);
     setTimeout(() => {
       commit("REMOVE_NOTIFICATION");
     }, 3000);
   },
-  [REMOVE_NOTIFICATION]: ({
-    commit
-  }) => {
+  [REMOVE_NOTIFICATION]: ({ commit }) => {
     commit("REMOVE_NOTIFICATION");
   },
 };

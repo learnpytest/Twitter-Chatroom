@@ -33,11 +33,15 @@
           />
         </div>
         <tabs class="tabs">
-          <tab title="推文"><Tweets :initialTweets="userTweets" /></tab>
+          <tab title="推文" class="user-tweets"
+            ><Tweets :initialTweets="userTweets"
+          /></tab>
           <tab class="comments" title="推文與回覆"
             ><Comments :initialTweets="userRepliesTweets"
           /></tab>
-          <tab title="喜歡的內容"><Tweets :initialTweets="userLikes" /></tab>
+          <tab title="喜歡的內容" class="liked-tweets"
+            ><Tweets :initialTweets="userLikes"
+          /></tab>
         </tabs>
       </div>
       <div class="popular"><Popular /></div>
@@ -239,6 +243,7 @@ export default {
   border-bottom: 1px solid $gray-75;
   padding-left: 15px;
   font-weight: var(--fw-bolder);
+  background-color: $white;
   .header-info {
     :nth-child(2) {
       font-size: 13px;
@@ -261,19 +266,42 @@ export default {
   flex-flow: row nowrap;
   justify-content: center;
   height: 100vh;
+  overflow-y: scroll;
 }
+
+.container {
+  overflow: hidden;
+}
+
 .main {
   width: 42%;
   height: 100%;
   margin: 0 30px;
-  border: 1px solid $gray-75;
+}
+.header,
+.user-profile,
+.tabs {
+  border-left: 1px solid $gray-75;
+  border-right: 1px solid $gray-75;
 }
 
 .popular {
   width: 25%;
   height: 100%;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
 }
 .sidebar {
   width: 18%;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
 }
+
+// .liked-tweets,
+// .user-tweets,
+// .comments {
+//   border: 1px solid $gray-75;
+// }
 </style>
