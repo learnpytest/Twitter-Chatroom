@@ -103,11 +103,11 @@ const routes = [{
 
     component: () => import("@/views/UserFollowship.vue"),
     children: [{
-        path: "followers",
+        path: ":id/followers",
         name: "user-followers",
       },
       {
-        path: "followings",
+        path: ":id/followings",
         name: "user-followings",
       },
     ],

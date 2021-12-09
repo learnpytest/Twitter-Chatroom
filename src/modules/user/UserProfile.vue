@@ -43,11 +43,15 @@
         {{ userObj.introduction }}
       </p>
       <!-- todo api 沒有跟隨者與跟隨中使用者 -->
-      <router-link :to="{ name: 'user-followers' }" class="profile-follow"
+      <router-link
+        :to="{ name: 'user-followings', params: { id: userObj.UserId } }"
+        class="profile-follow"
         >{{ userObj.FollowingsCount }}個<span>跟隨中</span></router-link
       >
-      <router-link :to="{ name: 'user-followings' }" class="profile-follow"
-        >{{ userObj.TweetCount }}位<span>跟隨者</span></router-link
+      <router-link
+        :to="{ name: 'user-followers', params: { id: userObj.UserId } }"
+        class="profile-follow"
+        >{{ userObj.FollowersCount }}位<span>跟隨者</span></router-link
       >
     </div>
   </div>
