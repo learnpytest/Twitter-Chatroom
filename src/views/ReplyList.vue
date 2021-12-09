@@ -22,7 +22,7 @@
           />
         </div>
         <div class="tweets">
-          <Comments :initialTweets="initialTweetReplies" />
+          <Comments :initialTweets="initialTweetReplies" :parentTweet="tweet" />
         </div>
       </div>
       <div class="popular"><Popular /></div>
