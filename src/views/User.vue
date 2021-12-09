@@ -1,5 +1,8 @@
 ﻿<template>
   <div class="container">
+    <!-- <div v-if="isLoading" class="container" style="text-align: center">
+      <i class="fas fa-spinner fa-spin fa-2x"></i>
+    </div> -->
     <div class="new-tweet-modal" v-if="showModal">
       <NewTweetModal
         :initialShowModal="showModal"
@@ -114,6 +117,7 @@ export default {
       userRepliesTweets: [],
       userLikes: [],
       replyTweetId: "",
+      isLoading: false,
     };
   },
   created() {
@@ -146,17 +150,23 @@ export default {
 
     async getUserLikes(userId) {
       try {
+        this.isLoading = true;
         const res = await usersAPI.getUserLikes(userId);
         const { data, statusText } = res;
         if (statusText !== "OK") {
           throw new Error(statusText);
         }
         this.userLikes = [...data];
+        this.isLoading = false;
       } catch (err) {
+        this.isLoading = false;
+
         console.log(err);
       }
     },
     async getUserRepliesTweets(userId) {
+      this.isLoading = true;
+
       try {
         const res = await usersAPI.getUserRepliesTweets(userId);
         const { data, statusText } = res;
@@ -164,12 +174,17 @@ export default {
           throw new Error(statusText);
         }
         this.userRepliesTweets = [...data];
+        this.isLoading = false;
       } catch (err) {
+        this.isLoading = false;
+
         console.log(err);
       }
     },
     async fetchUser(userId) {
       try {
+        this.isLoading = true;
+
         const res = await usersAPI.getUser(userId);
         const { data, statusText } = res;
         if (statusText !== "OK") {
@@ -177,21 +192,29 @@ export default {
         }
         this.userObj = { ...data };
         this.showModal = false;
+        this.isLoading = false;
       } catch (err) {
+        this.isLoading = false;
+
         console.log(err);
       }
     },
     async getUsersTweets(userId) {
       try {
+        this.isLoading = true;
+
         const response = await tweetsApi.getOneUserTweet(userId);
         const { data, statusText } = response;
-        console.log("userId", userId, "userdata", data, "response", response);
+
         if (statusText !== "OK") {
           throw new Error(data.message);
         }
         this.userTweets = [...data];
         this.showModal = false;
+        this.isLoading = false;
       } catch (error) {
+        this.isLoading = false;
+
         console.log("error", error);
       }
     },

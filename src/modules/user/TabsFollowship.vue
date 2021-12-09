@@ -40,6 +40,11 @@ export default {
       this.tabs.forEach((tab, index) => {
         tab.isActive = index === i;
       });
+      if (this.selectedIndex === 0) {
+        this.$router.push("/users/followings");
+      } else {
+        this.$router.push("/users/followers");
+      }
     },
   },
 };

@@ -4,6 +4,8 @@ import followshipAPI from "../../apis/followshipAPI";
 //   vm
 // } from "../../main";
 
+import currentUserAPI from "../../apis/currentUserAPI";
+
 import {
   GET_CURRENT_USER_FOLLOWERS,
   SET_CURRENT_USER_FOLLOWERS,
@@ -25,12 +27,14 @@ const getters = {
 };
 const actions = {
   [SET_CURRENT_USER_FOLLOWERS]: async ({
-    commit,
-    rootState
+    commit
   }) => {
-    // send api
-    const userId = rootState.user.currentUser.id;
+    console.log("checkfollowers");
 
+    // send api
+
+    const res = await currentUserAPI.getCurrentUser();
+    const userId = res.data.id;
     try {
       const res = await followshipAPI.getFollowers(userId);
       const {
@@ -46,12 +50,12 @@ const actions = {
     }
   },
   [SET_CURRENT_USER_FOLLOWINGS]: async ({
-    commit,
-    rootState
+    commit
   }) => {
     // send api
-    const userId = rootState.user.currentUser.id;
 
+    const res = await currentUserAPI.getCurrentUser();
+    const userId = res.data.id;
     try {
       const res = await followshipAPI.getFollowings(userId);
       const {
