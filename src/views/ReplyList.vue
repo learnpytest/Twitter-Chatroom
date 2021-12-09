@@ -23,7 +23,10 @@
             @show-reply-modal="replyModalToggle"
           />
         </div>
-        <div class="tweets"></div>
+
+        <div class="tweets">
+          <Comments :initialTweets="initialTweetReplies" :parentTweet="tweet" />
+        </div>
       </div>
       <div class="popular"><Popular /></div>
     </div>
@@ -36,6 +39,8 @@ import TweetDetail from "../modules/user/TweetDetail.vue";
 import NewTweetModal from "../modules/user/NewTweetModal.vue";
 import tweetsAPI from "./../apis/tweets";
 import ReplyTweetModal from "../modules/user/ReplyTweetModal.vue";
+import Comments from "@/modules/user/Comments.vue";
+
 export default {
   components: {
     Popular,
@@ -43,23 +48,22 @@ export default {
     TweetDetail,
     NewTweetModal,
     ReplyTweetModal,
+    Comments,
   },
   data() {
     return {
       showModal: false,
       showReplyModal: false,
       tweet: {},
+      initialTweetReplies: [],
     };
   },
   created() {
     let tweetId = this.$route.params.id;
-
     this.fetchTweet(tweetId);
+    this.fetchTweetReplies(tweetId);
   },
   methods: {
-    childrenShowReplyModal() {
-      this.showReplyModal = true;
-    },
     async fetchTweet(tweetId) {
       try {
         const response = await tweetsAPI.getTweet(tweetId);
@@ -71,11 +75,9 @@ export default {
     },
     async fetchTweetReplies(tweetId) {
       try {
-        const response = await tweetsAPI.getTweet({
-          tweetId,
-        });
+        const response = await tweetsAPI.getTweetReplies(tweetId);
         const { data } = response;
-        console.log(data);
+        this.initialTweetReplies = [...data];
       } catch (error) {
         console.log("error", error);
       }
