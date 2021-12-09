@@ -1,5 +1,8 @@
 ﻿<template>
-  <form class="new-tweet-modal" @click.stop.prevent="handleCommentSubmit">
+  <form
+    class="new-tweet-modal"
+    @click.stop.prevent="handleCommentSubmit(tweet.TweetId)"
+  >
     <div class="new-text-box">
       <div class="close-btn">
         <button>
@@ -103,7 +106,7 @@ export default {
         console.log("error", error);
       }
     },
-    async handleCommentSubmit() {
+    async handleCommentSubmit(tweetId) {
       try {
         const { data } = await tweetsAPI.replyTweet({
           tweetId: this.tweetId,
@@ -114,6 +117,7 @@ export default {
           throw new Error(data.message);
         }
         this.handleShowModalClick();
+        this.$router.push(`/reply/${tweetId}`);
       } catch (err) {
         console.log(err);
       }
