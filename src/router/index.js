@@ -1,11 +1,11 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import store from "../store";
+// import store from "../store";
 
-import {
-  // ADD_NOTIFICATION,
-  RESET_CURRENT_USER_PROFILE,
-} from "../store/store-types";
+// import {
+//   // ADD_NOTIFICATION,
+//   RESET_CURRENT_USER_PROFILE,
+// } from "../store/store-types";
 
 // const authenticateIsAdmin = async (to, from, next) => {
 //   const tokenInLocalStorage = localStorage.getItem("token");
@@ -142,35 +142,35 @@ const router = new VueRouter({
   routes,
 });
 
-router.beforeEach(async (to, from, next) => {
-  const tokenInLocalStorage = localStorage.getItem("token");
-  const tokenInStore = store.state.token;
-  let isAuthenticated = store.state.isAuthenticated;
-  if (tokenInLocalStorage && tokenInLocalStorage !== tokenInStore) {
-    isAuthenticated = await store.dispatch(RESET_CURRENT_USER_PROFILE);
-  }
-  const pathsWithoutAuthentication = ["user-login", "register", "admin-login"];
-  const adminPathsWithoutAuthentication = ["admin-login"];
+// router.beforeEach(async (to, from, next) => {
+//   const tokenInLocalStorage = localStorage.getItem("token");
+//   const tokenInStore = store.state.token;
+//   let isAuthenticated = store.state.isAuthenticated;
+//   if (tokenInLocalStorage && tokenInLocalStorage !== tokenInStore) {
+//     isAuthenticated = await store.dispatch(RESET_CURRENT_USER_PROFILE);
+//   }
+//   const pathsWithoutAuthentication = ["user-login", "register", "admin-login"];
+//   const adminPathsWithoutAuthentication = ["admin-login"];
 
-  if (!isAuthenticated && !pathsWithoutAuthentication.includes(to.name)) {
-    next("/login");
-    return;
-  }
+//   if (!isAuthenticated && !pathsWithoutAuthentication.includes(to.name)) {
+//     next("/login");
+//     return;
+//   }
 
-  if (isAuthenticated && pathsWithoutAuthentication.includes(to.name)) {
-    next("/usermain");
-    return;
-  }
+//   if (isAuthenticated && pathsWithoutAuthentication.includes(to.name)) {
+//     next("/usermain");
+//     return;
+//   }
 
-  if (
-    store.state.user.currentUser.account === "admin" &&
-    adminPathsWithoutAuthentication.includes(to.name)
-  ) {
-    next("/admin/tweets");
-    return;
-  }
+//   if (
+//     store.state.user.currentUser.account === "admin" &&
+//     adminPathsWithoutAuthentication.includes(to.name)
+//   ) {
+//     next("/admin/tweets");
+//     return;
+//   }
 
-  next();
-});
+//   next();
+// });
 
 export default router;
