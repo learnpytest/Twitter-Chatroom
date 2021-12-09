@@ -36,11 +36,7 @@
 
       <div class="text-box">
         <div class="user-info">
-          <img
-            class="user-pic"
-            :src="getCurrentUser.avatar | emptyImage"
-            alt=""
-          />
+          <img class="user-pic" :src="currentUser.avatar | emptyImage" alt="" />
         </div>
         <div class="text-area">
           <textarea
@@ -49,12 +45,14 @@
             v-model="text"
             maxlength="140"
             placeholder="推你的回覆"
-            @submit.stop.prevent="handleTweetSubmit"
+            @click.stop.prevent="resetEmpty"
           /><span class="limiter">{{ charactersLeft }}</span>
         </div>
       </div>
 
       <div class="tweet-btn">
+        <p class="error-txt" v-if="text.length >= 140">字數不可超過 140 字</p>
+        <p class="error-txt" v-if="submitEmptyField">內容不可空白</p>
         <button type="submit" class="save-btn" :disabled="isProcessing">
           {{ isProcessing ? "發送中..." : "推文" }}
         </button>
@@ -65,9 +63,11 @@
 <script>
 // need to take targeted user
 import { mapGetters } from "vuex";
-import { GET_CURRENT_USER, GET_IS_PROCESSING } from "../../store/store-types";
+// import { GET_CURRENT_USER, GET_IS_PROCESSING } from "../../store/store-types";
+import { GET_IS_PROCESSING } from "../../store/store-types";
 import { mixinEmptyImage, mixinFromNowFilters } from "../../utils/mixin";
 import tweetsAPI from "./../../apis/tweets";
+import currentUserAPI from "@/apis/currentUserAPI";
 export default {
   props: {
     mixins: [mixinEmptyImage, mixinFromNowFilters],
@@ -86,10 +86,13 @@ export default {
       text: "",
       tweetId: "",
       tweet: {},
+      submitEmptyField: false,
+      currentUser: {},
     };
   },
   created() {
     this.fetchData();
+    this.getCurrentUser();
   },
   methods: {
     fetchData() {
@@ -107,6 +110,14 @@ export default {
       }
     },
     async handleCommentSubmit(tweetId) {
+      if (!this.text.length) {
+        this.submitEmptyField = true;
+        // todo validation
+
+        // test
+        return;
+      }
+
       try {
         const { data } = await tweetsAPI.replyTweet({
           tweetId: this.tweetId,
@@ -122,9 +133,25 @@ export default {
         console.log(err);
       }
     },
+    async getCurrentUser() {
+      try {
+        const res = await currentUserAPI.getCurrentUser();
+        const { data, statusText } = res;
+        if (statusText !== "OK") {
+          throw new Error(statusText);
+        }
+
+        this.currentUser = data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
     handleShowModalClick() {
       this.showReplyModal = false;
       this.$emit("show-reply-modal");
+    },
+    resetEmpty() {
+      this.submitEmptyField = false;
     },
   },
   computed: {
@@ -135,7 +162,7 @@ export default {
       return limit - char + " / " + limit + "剩餘字數";
     },
     ...mapGetters({
-      getCurrentUser: GET_CURRENT_USER,
+      // getCurrentUser: GET_CURRENT_USER,
       isProcessing: GET_IS_PROCESSING,
     }),
   },
@@ -143,6 +170,13 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "./src/assets/scss/main.scss";
+.error-txt {
+  display: inline-block;
+  margin-right: 20px;
+  color: $red;
+  font-size: 13px;
+}
+
 .limiter {
   color: $gray-700;
   font-size: 12px;
@@ -176,6 +210,7 @@ export default {
 }
 .to-reply-user-tweet_text {
   font-weight: var(--fw-thin);
+  word-break: break-all;
 }
 
 .to-reply-user {

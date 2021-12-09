@@ -167,6 +167,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "./../../assets/scss/main.scss";
+.user-pic {
+  border-radius: 50%;
+}
 .tweet-detail-wrapper {
   border-bottom: 1px solid $gray-75;
 }
@@ -213,6 +216,7 @@ export default {
   width: 85%;
   font-size: 19px;
   line-height: 28px;
+  word-break: break-all;
   .tweet-detail-box_created-detail {
     font-size: 15px;
     color: $gray-600;

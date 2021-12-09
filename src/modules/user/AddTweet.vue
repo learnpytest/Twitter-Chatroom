@@ -3,11 +3,7 @@
     <div class="header">首頁</div>
     <div class="text-box">
       <div class="user-info">
-        <img
-          class="user-pic"
-          :src="getCurrentUser.avatar | emptyImage"
-          alt=""
-        />
+        <img class="user-pic" :src="currentUser.avatar | emptyImage" alt="" />
       </div>
       <div class="text-area" @click="handleShowModalClick">
         <textarea
@@ -25,9 +21,10 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { GET_CURRENT_USER } from "../../store/store-types";
+// import { mapGetters } from "vuex";
+// import { GET_CURRENT_USER } from "../../store/store-types";
 import { mixinEmptyImage } from "../../utils/mixin";
+import currentUserAPI from "@/apis/currentUserAPI";
 export default {
   mixins: [mixinEmptyImage],
   props: {
@@ -40,10 +37,12 @@ export default {
     return {
       showModal: "",
       text: "",
+      currentUser: {},
     };
   },
   created() {
     this.fetchData();
+    this.getCurrentUser();
   },
   methods: {
     fetchData() {
@@ -53,12 +52,25 @@ export default {
       this.showModal = false;
       this.$emit("show-modal");
     },
+    async getCurrentUser() {
+      try {
+        const res = await currentUserAPI.getCurrentUser();
+        const { data, statusText } = res;
+        if (statusText !== "OK") {
+          throw new Error(statusText);
+        }
+
+        this.currentUser = data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
-  computed: {
-    ...mapGetters({
-      getCurrentUser: GET_CURRENT_USER,
-    }),
-  },
+  // computed: {
+  //   ...mapGetters({
+  //     getCurrentUser: GET_CURRENT_USER,
+  //   }),
+  // },
 };
 </script>
 

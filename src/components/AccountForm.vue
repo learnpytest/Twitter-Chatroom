@@ -22,7 +22,7 @@
       <div class="limit-error">
         <!-- todo error message -->
         <span class="warning-text" v-if="account.length >= 20"
-          >名稱字數不可超過 20 字</span
+          >賬號字數不可超過 20 字</span
         >
         <p>{{ accountCharactersLeft }}</p>
       </div>
@@ -34,14 +34,14 @@
         id="username"
         name="username"
         :class="['form__input']"
-        maxlength="20"
+        maxlength="50"
         v-model="username"
         @input="updateAccountInfo"
       />
       <div class="limit-error">
         <!-- todo error message -->
-        <span class="warning-text" v-if="username.length >= 20"
-          >名稱字數不可超過 20 字</span
+        <span class="warning-text" v-if="username.length >= 50"
+          >名稱字數不可超過 50 字</span
         >
         <p>{{ nameCharactersLeft }}</p>
       </div>
@@ -171,7 +171,7 @@ export default {
     // }),
     nameCharactersLeft() {
       let char = this.username.length,
-        limit = 20;
+        limit = 50;
 
       return limit - char + " / " + limit;
     },
