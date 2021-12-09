@@ -46,9 +46,8 @@ export default {
   name: "UserFollowers",
   mixins: [mixinEmptyImage],
   created() {
-    // this.setCurrentUserFollowers();
     const userId = this.$route.params.id;
-    console.log("userId", userId);
+
     this.$store.dispatch(SET_CURRENT_USER_FOLLOWERS, userId);
   },
   methods: {

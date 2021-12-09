@@ -43,9 +43,9 @@ export default {
       const userId = this.$route.params.id;
 
       if (this.selectedIndex === 0) {
-        this.$router.push(`/users/${userId}/followings`);
-      } else {
         this.$router.push(`/users/${userId}/followers`);
+      } else {
+        this.$router.push(`/users/${userId}/followings`);
       }
     },
   },
