@@ -81,29 +81,33 @@ export default {
     handleShowModalClick() {
       if (!this.showModal) {
         this.showModal = true;
+
         this.$emit("show-modal");
       } else {
-        this.showModal = true;
+        this.showModal = false;
         this.$emit("show-modal");
       }
     },
     async handleTweetSubmit() {
       if (!this.text.length) {
         this.submitEmptyField = true;
-        console.log("Empty");
+        // todo validation
+
+        // test
         return;
       }
+
       try {
         const { data } = await tweetsAPI.postOneUserTweet({
           description: this.text,
         });
-        this.handleShowModalClick();
-        console.log(data);
+
         if (data.status !== "success") {
           throw new Error(data.message);
         }
-        // const { id } = response.data;
-        // this.currentUserId = id;
+        this.$emit("updateData");
+
+        // this.handleShowModalClick();
       } catch (error) {
         console.log("error", error);
       }

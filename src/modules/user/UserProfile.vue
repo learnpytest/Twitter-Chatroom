@@ -64,7 +64,6 @@ export default {
   watch: {
     initialUserObj(newValue) {
       this.userObj = {
-        ...this.userObj,
         ...newValue,
       };
     },

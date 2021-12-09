@@ -179,7 +179,8 @@ export default {
       }
     },
     deleteCover() {
-      this.userCover = "";
+      // this.userCover = "";
+      this.userCover = "empty";
     },
     ...mapActions({
       putCurrentUserProfile: PUT_CURRENT_USER_PROFILE,
