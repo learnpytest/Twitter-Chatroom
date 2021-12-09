@@ -20,7 +20,7 @@
             alt=""
             id="upload-btn"
           />
-          
+
           <img
             src="./../../assets/images/icon_delete.png"
             alt=""
@@ -79,11 +79,11 @@
       <div class="form__groups">
         <div class="form__group">
           <label for="name">名稱</label>
-          <input type="name" id="name" name="name" v-model="username" />
+          <input type="name" id="name" name="name" v-model="userName" />
           <div class="limit-error">
             <!-- todo error message -->
             <p>8/50</p>
-            <span class="limiter">{{ charactersLeft() }}</span>
+            <!-- <span class="limiter">{{ charactersLeft() }}</span> -->
           </div>
         </div>
         <div class="form__group">
@@ -106,9 +106,8 @@
 </template>
 <script>
 import { mixinEmptyImage } from "../../utils/mixin";
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import {
-  FETCH_CURRENT_USER,
   PUT_CURRENT_USER_PROFILE,
   GET_IS_PROCESSING,
 } from "../../store/store-types";
@@ -119,10 +118,15 @@ export default {
       type: Boolean,
       required: true,
     },
+    initialUserObj: {
+      type: Object,
+      required: true,
+    },
   },
   data() {
     return {
-      username: "",
+      userId: "",
+      userName: "",
       userCover: "",
       userAvatar: "",
       userIntroduction: "",
@@ -133,22 +137,19 @@ export default {
     };
   },
   created() {
-    this.username = this.fetchCurrentUser.name;
-    this.userCover = this.fetchCurrentUser.cover;
-    this.userAvatar = this.fetchCurrentUser.avatar;
-    this.userIntroduction = this.fetchCurrentUser.introduction;
     this.fetchData();
   },
   methods: {
     handleSubmit(e) {
       const form = e.target; // <form></form>
-
       const formData = new FormData(form);
       this.putCurrentUserProfile(formData);
       // 測試用
       for (let [name, value] of formData.entries()) {
         console.log(name + ": " + value);
       }
+      this.$router.push(`/users/${this.userId}`);
+      this.handleShowModalClick();
     },
     handleAvatarFileChange(e) {
       const { files } = e.target;
@@ -182,8 +183,14 @@ export default {
     }),
     fetchData() {
       this.showEditModal = this.initialEditModal;
-      this.newName = this.getCurrentUser.name;
-      this.newIntro = this.getCurrentUser.introduction;
+      const { UserId, name, cover, avatar, introduction } = this.initialUserObj;
+      [
+        this.userId,
+        this.userName,
+        this.userCover,
+        this.userAvatar,
+        this.userIntroduction,
+      ] = [UserId, name, cover, avatar, introduction];
     },
     handleShowModalClick() {
       this.showEditModal = false;
@@ -192,7 +199,6 @@ export default {
   },
   computed: {
     ...mapGetters({
-      fetchCurrentUser: FETCH_CURRENT_USER,
       isProcessing: GET_IS_PROCESSING,
     }),
   },

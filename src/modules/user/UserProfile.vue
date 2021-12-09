@@ -56,8 +56,11 @@ export default {
     handleShowModalClick() {
       this.showEditModal = false;
       this.$emit("show-edit-modal");
+      // edit
+      // this.$router.push(`/users/${this.initialUserObj.UserId}`);
     },
   },
+
   watch: {
     initialUserObj(newValue) {
       this.userObj = {

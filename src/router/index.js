@@ -57,17 +57,11 @@ import {
 
 Vue.use(VueRouter);
 
-const routes = [
-  // {
-  //   path: "/usermain/reply/:id",
-  //   name: "usermain-reply-list",
-  //   redirect: "/reply-list",
-  // },
-  // {
-  //   path: "/user/reply/:id",
-  //   name: "user-reply-list",
-  //   redirect: "/reply-list",
-  // },
+const routes = [{
+    path: "/users/:id",
+    name: "user",
+    component: () => import("@/views/User"),
+  },
   {
     path: "/reply/:id",
     name: "reply-list",
@@ -109,12 +103,11 @@ const routes = [
   },
 
   {
-    path: "/user",
+    path: "/users",
     name: "user-followship",
 
     component: () => import("@/views/UserFollowship.vue"),
-    children: [
-      {
+    children: [{
         path: "followers",
         name: "user-followers",
       },

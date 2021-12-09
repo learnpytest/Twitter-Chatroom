@@ -5,6 +5,7 @@
     </div>
     <div class="user-edit-modal" v-if="showEditModal">
       <UserEditModal
+        :initialUserObj="userObj"
         :initialEditModal="showEditModal"
         @show-edit-modal="editModalToggle"
       />
@@ -60,8 +61,15 @@ import UserEditModal from "../modules/user/UserEditModal.vue";
 import NewTweetModal from "../modules/user/NewTweetModal.vue";
 
 import usersAPI from "./../apis/usersAPI";
-
 import tweetsApi from "./../apis/tweets";
+
+// 必須監聽使用者跟隨被跟隨的變動，改變跟隨與被跟隨數字
+// import { mapGetters } from "@/utils/mixin";
+// import {
+//   // GET_CURRENT_USER_FOLLOWERS,
+//   GET_CURRENT_USER_FOLLOWINGS,
+// } from "../store/store-types";
+
 export default {
   components: {
     Popular,
@@ -93,6 +101,12 @@ export default {
     this.fetchUser(this.userId);
     this.getUserRepliesTweets(this.userId);
     this.getUserLikes(this.userId);
+  },
+  beforeRouteUpdate(to, from, next) {
+    // 路由改變時重新更新使用者資料
+    const { id } = to.params;
+    this.fetchUser(id);
+    next();
   },
   methods: {
     async getUserLikes(userId) {
@@ -199,19 +213,17 @@ export default {
       }
     },
   },
-  // computed: {
-  //   ...mapGetters({
-  //     getCurrentUser: GET_CURRENT_USER,
-  //   }),
-  // },
-  // created() {
-  //   this.setTweetsFilterType({
-  //     getter: GET_ONE_USER_TWEETS,
-  //     setter: SET_ONE_USER_TWEETS,
-  //   });
-  // },
-  // methods: {
-  //   ...mapActions({ setTweetsFilterType: SET_TWEETS_FILTER_TYPE }),
+
+  // 必須監聽使用者跟隨被跟隨的變動，改變跟隨與被跟隨數字
+  // computed {
+  //   ...mapGetter({
+  //     currentUserFollowers: GET_CURRENT_USER_FOLLOWINS,
+  //   ),
+  //},
+  // watch: {
+  //   currentUserFollowers() {
+  //     this.fetchUser(this.userId);
+  //   },
   // },
 };
 </script>
