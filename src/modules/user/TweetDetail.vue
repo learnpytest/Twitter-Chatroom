@@ -1,6 +1,5 @@
 ﻿<template>
   <div class="tweet-detail-wrapper">
-    {{ tweetReplies }}
     <div class="header">
       <img
         src="./../../assets/images/icon_back.png"
