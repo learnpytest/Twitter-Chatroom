@@ -117,6 +117,13 @@ const actions = {
     });
     const { data, statusText } = res;
     if (data.status !== "success" || statusText !== "OK") {
+      // if (res.data.message === " account 已重覆註冊!") {
+      //   dispatch(ADD_NOTIFICATION, {
+      //     type: "error",
+      //     message: "account 已重覆註冊!",
+      //   });
+      //   return;
+      // }
       if (res.data.message === "密碼確認不符") {
         dispatch(ADD_NOTIFICATION, {
           type: "error",
@@ -124,14 +131,8 @@ const actions = {
         });
         return;
       }
-      if (res.data.message === "account 已重覆註冊!") {
-        dispatch(ADD_NOTIFICATION, {
-          type: "error",
-          message: "account 已重覆註冊!",
-        });
-        return;
-      }
-      if (res.data.message === "email 已重覆註冊!") {
+
+      if (res.data.message === " email 已重覆註冊!") {
         dispatch(ADD_NOTIFICATION, {
           type: "error",
           message: "email 已重覆註冊!",
@@ -146,6 +147,10 @@ const actions = {
         return;
       }
 
+      dispatch(ADD_NOTIFICATION, {
+        type: "error",
+        message: data.message,
+      });
       throw new Error(data.message);
     }
 
