@@ -155,6 +155,7 @@ export default {
   &__title {
     width: 100%;
     padding: 0.8rem 0 0 0;
+    padding: 10px;
   }
   &__header {
     display: flex;

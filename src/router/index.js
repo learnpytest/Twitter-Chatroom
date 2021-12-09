@@ -58,11 +58,16 @@ import {
 Vue.use(VueRouter);
 
 const routes = [
-  {
-    path: "/user/:id",
-    name: "user",
-    component: () => import("@/views/User"),
-  },
+  // {
+  //   path: "/usermain/reply/:id",
+  //   name: "usermain-reply-list",
+  //   redirect: "/reply-list",
+  // },
+  // {
+  //   path: "/user/reply/:id",
+  //   name: "user-reply-list",
+  //   redirect: "/reply-list",
+  // },
   {
     path: "/reply/:id",
     name: "reply-list",
@@ -120,6 +125,12 @@ const routes = [
     ],
     //要移回來
     // beforeEnter: authenticateIsLoggedinUser,
+  },
+
+  {
+    path: "/user/:id",
+    name: "user",
+    component: () => import("@/views/User"),
   },
   {
     path: "/user/setting",

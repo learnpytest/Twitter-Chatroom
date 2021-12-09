@@ -13,6 +13,7 @@
       <div class="sidebar">
         <Sidebar :initialShowModal="showModal" @show-modal="modalToggle" />
       </div>
+
       <div class="main">
         <div class="addtweet">
           <AddTweet :initialShowModal="showModal" @show-modal="modalToggle" />
@@ -109,6 +110,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "./src/assets/scss/main.scss";
+
 .new-tweet-modal {
   position: fixed;
   top: 0;
@@ -122,22 +124,35 @@ export default {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
-  height: 100vh;
+  height: 100%;
+  overflow-y: scroll;
 }
 .container {
-  height: 100%;
+  height: 100vh;
+  overflow-y: hidden;
 }
 .sidebar {
   width: 18%;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
 }
 .main {
   width: 42%;
   height: 100%;
   margin: 0 30px;
+}
+
+.addtweet,
+.tweets {
   border: 1px solid $gray-75;
 }
+
 .popular {
   width: 25%;
   height: 100%;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
 }
 </style>
