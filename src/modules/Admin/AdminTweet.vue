@@ -12,7 +12,7 @@
           </div>
           <div class="tweet__created">{{ tweet.CreatedAt | fromNow }}</div>
         </div>
-        <div class="tweet__delete" @click="verifyDeleteTweet(tweet.id)">
+        <div class="tweet__delete" @click="verifyDeleteTweet(tweet.TweetId)">
           <img
             class="filter-orange"
             src="@/assets/images/icon_close_gray.svg"
