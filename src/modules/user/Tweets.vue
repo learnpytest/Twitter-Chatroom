@@ -112,7 +112,6 @@ export default {
   },
 
   created() {
-    // this.getTweets();
     this.fetchData();
   },
   methods: {
@@ -122,20 +121,13 @@ export default {
       console.log(this.$route.path);
       this.tweets = this.initialTweets;
     },
-    // handleLikeButton(isLiked) {
-    //   // this.tweet = {
-    //   //   ...this.tweet,
-    //   //   isLiked: true,
-    //   // };
-    // },
+
     test(tweetId) {
       console.log(tweetId);
     },
     async addLike(tweetId) {
       try {
         const { data } = await likeshipAPI.postLike(tweetId);
-        console.log(tweetId);
-        console.log(data);
         if (data.status !== "success") {
           throw new Error(data.message);
         }

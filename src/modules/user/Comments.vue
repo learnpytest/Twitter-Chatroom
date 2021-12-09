@@ -1,7 +1,12 @@
 ﻿<template>
   <div class="comment-wrapper">
     <div class="comment" v-for="tweet in tweets" :key="tweet.ReplyID">
-      <div class="user-pic">
+      <div
+        class="user-pic"
+        @click.stop.prevent="
+          () => $router.push({ name: 'user', params: { id: tweet.User.id } })
+        "
+      >
         <!-- 沒有上傳照片產生空圖 -->
         <img :src="tweet.User.avatar | emptyImage" alt="" />
       </div>
@@ -26,9 +31,6 @@
 </template>
 
 <script>
-// import { mapGetters } from "vuex";
-// import { GET_FILLTERED_TWEETS } from "../../store/store-types";
-
 import { mixinEmptyImage, mixinFromNowFilters } from "../../utils/mixin";
 
 export default {

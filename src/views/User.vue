@@ -21,8 +21,6 @@
             @click="$router.back()"
           />
           <div class="header-info">
-            <!-- <p>John Doe</p>
-            <p>25 <span>推文</span></p> -->
             <p>{{ userObj.name }}</p>
             <p>{{ userObj.TweetCount }} <span>推文</span></p>
           </div>
@@ -31,6 +29,7 @@
           <UserProfile
             :initialEditModal="showEditModal"
             @show-edit-modal="editModalToggle"
+            :initialUserObj="userObj"
           />
         </div>
         <tabs class="tabs">
