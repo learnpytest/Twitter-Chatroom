@@ -166,7 +166,6 @@ export default {
       setAccountInfo: SET_ACCOUNT_INFO,
     }),
   },
-<<<<<<< HEAD
   computed: {
     ...mapGetters({
       getCurrentUser: GET_CURRENT_USER,
@@ -184,14 +183,6 @@ export default {
       return limit - char + " / " + limit;
     },
   },
-=======
-
-  // beforeRouteUpdate(to, from, next) {
-  //   // 路由改變時重新更新使用者資料
-  //   this.fetchData();
-  //   next();
-  // },
->>>>>>> bd3ed6eb5748dcf13f14f8a49b3d597fa3abcd53
 };
 </script>
 
