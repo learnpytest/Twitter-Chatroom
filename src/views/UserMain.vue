@@ -35,9 +35,10 @@
       <div class="popular"><Popular /></div>
     </div>
   </div>
-  <div v-else class="container" style="text-align: center">
-    <div>取得資料中...</div>
-  </div>
+
+  <!-- <div v-else-if="isProcessing" class="container" style="text-align: center">
+    <i class="fas fa-spinner fa-spin fa-2x"></i>
+  </div> -->
 </template>
 
 <script>
@@ -75,7 +76,6 @@ export default {
 
   methods: {
     async updateTweetsData() {
-      console.log("updateData");
       await this.getTweets();
     },
     modalToggle() {

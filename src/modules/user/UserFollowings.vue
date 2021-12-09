@@ -36,7 +36,7 @@ import {
   DELETE_FOLLOWSHIP,
 } from "../../store/store-types";
 export default {
-  name: "Popular",
+  name: "UserFollowings",
   mixins: [mixinEmptyImage],
   created() {
     this.setCurrentUserFollowings();

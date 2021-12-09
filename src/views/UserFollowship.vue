@@ -1,4 +1,7 @@
 <template>
+  <!-- <div v-if="isLoading" class="container" style="text-align: center">
+      <i class="fas fa-spinner fa-spin fa-2x"></i>
+    </div> -->
   <div class="container">
     <div class="user">
       <div class="sidebar"><Sidebar /></div>
@@ -18,11 +21,14 @@
             <p>25 <span>推文</span></p> -->
           </div>
         </div>
-        <tabs-followship class="tabs">
+        <tabs-followship class="tabs" :initialIndex="parentSelectedIndex">
           <tab class="follow-tab" title="跟隨者"
             ><UserFollowers :initialShowReplyModal="showReplyModal"
           /></tab>
-          <tab class="follow-tab" title="正在跟隨"
+          <tab
+            class="follow-tab"
+            title="正在跟隨"
+            :initialIndex="parentSelectedIndex"
             ><UserFollowings :initialShowReplyModal="showReplyModal"
           /></tab>
         </tabs-followship>
@@ -60,6 +66,7 @@ export default {
     return {
       showEditModal: false,
       showReplyModal: false,
+      parentSelectedIndex: 0,
     };
   },
   methods: {
@@ -77,15 +84,11 @@ export default {
       getCurrentUser: GET_CURRENT_USER,
     }),
   },
-  // created() {
-  //   this.setTweetsFilterType({
-  //     getter: GET_ONE_USER_TWEETS,
-  //     setter: SET_ONE_USER_TWEETS,
-  //   });
-  // },
-  // methods: {
-  //   ...mapActions({ setTweetsFilterType: SET_TWEETS_FILTER_TYPE }),
-  // },
+  beforeRouteUpdate(to, from, next) {
+    this.$store.dispatch("SET_CURRENT_USER_FOLLOWINGS");
+
+    next();
+  },
 };
 </script>
 
@@ -161,7 +164,6 @@ export default {
 }
 
 .follow-tab {
-
   height: 100vh;
 }
 </style>
