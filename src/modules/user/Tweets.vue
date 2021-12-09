@@ -104,10 +104,7 @@ export default {
   },
   watch: {
     initialTweets(newValue) {
-      this.tweets = {
-        ...this.tweets,
-        ...newValue,
-      };
+      this.tweets = [...this.tweets, ...newValue];
     },
   },
 
@@ -125,6 +122,18 @@ export default {
         if (data.status !== "success") {
           throw new Error(data.message);
         }
+
+        this.tweets = this.tweets.map((tweet) => {
+          if (tweet.TweetId === Number(tweetId)) {
+            return {
+              ...tweet,
+              isLiked: true,
+              LikesCount: tweet.LikesCount + 1,
+            };
+          } else {
+            return { ...tweet };
+          }
+        });
       } catch (error) {
         console.log("error", error);
       }
@@ -135,6 +144,18 @@ export default {
         if (data.status !== "success") {
           throw new Error(data.message);
         }
+        this.tweets = this.tweets.map((tweet) => {
+          console.log(tweet);
+          if (tweet.TweetId === Number(tweetId)) {
+            return {
+              ...tweet,
+              isLiked: false,
+              LikesCount: tweet.LikesCount - 1,
+            };
+          } else {
+            return { ...tweet };
+          }
+        });
       } catch (error) {
         console.log("error", error);
       }
