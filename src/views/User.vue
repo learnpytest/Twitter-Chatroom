@@ -8,6 +8,7 @@
         :initialUserObj="userObj"
         :initialEditModal="showEditModal"
         @show-edit-modal="editModalToggle"
+        @afterUpdateUserProfile="fetchUser(userId)"
       />
     </div>
     <div class="user">

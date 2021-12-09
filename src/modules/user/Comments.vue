@@ -20,7 +20,7 @@
           </p>
         </div>
         <p Class="reply-to">
-          回覆 <span>@ {{ tweet.Tweet.User.account }}</span>
+          <!-- 回覆 <span>@ {{ tweet.Tweet.User.account }}</span> -->
         </p>
         <div class="tweet-text">
           {{ tweet.comment }}
@@ -50,10 +50,7 @@ export default {
   },
   watch: {
     initialTweets(newValue) {
-      this.tweets = {
-        ...this.tweets,
-        ...newValue,
-      };
+      this.tweets = [...this.tweets, ...newValue];
     },
   },
   methods: {

@@ -1,5 +1,6 @@
 ﻿<template>
   <div class="tweet-detail-wrapper">
+    {{ tweetReplies }}
     <div class="header">
       <img
         src="./../../assets/images/icon_back.png"
@@ -10,27 +11,21 @@
     </div>
     <div class="tweet-detail-box">
       <div class="tweet-detail-box_user-info">
-        <img
-          class="user-pic"
-          src="./../../assets/images/Photo_user1.png"
-          alt=""
-        />
+        <img class="user-pic" :src="tweet.User.avatar | emptyImage" alt="" />
         <div class="nameId">
-          <p>Apple</p>
-          <p>@apple</p>
+          <p>{{ tweet.User && tweet.User.name }}</p>
+          <p>@{{ tweet.User && tweet.User.account }}</p>
         </div>
       </div>
       <div class="tweet-detail-box_text">
         <p>
-          Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco
-          cillum dolor. Voluptate exercitation incididunt aliquip deserunt
-          reprehenderit elit laborum.
+          {{ tweet.description }}
         </p>
         <p class="tweet-detail-box_created-detail">上午 10:05・2020年6月10日</p>
       </div>
       <div class="tweet-detail-box_numbers">
-        <p>12<span>回覆</span></p>
-        <p>808<span>喜歡次數</span></p>
+        <p>{{ tweet.RepliesCount }}<span>回覆</span></p>
+        <p>{{ tweet.LikesCount }}<span>喜歡次數</span></p>
       </div>
       <div class="tweet-detail-box_btn-control">
         <img
@@ -41,10 +36,18 @@
         <img src="./../../assets/images/icon_like.svg" alt="" />
       </div>
     </div>
+    <!-- <Comments :initialTweets="initialTweetReplies" /> -->
   </div>
 </template>
 <script>
+import { mixinEmptyImage } from "../../utils/mixin";
+
+// test
+// import Comments from "@/modules/user/Comments.vue";
+
 export default {
+  // test
+
   props: {
     initialShowReplyModal: {
       type: Boolean,
@@ -55,11 +58,17 @@ export default {
       type: Object,
       require: true,
     },
+    // initialTweetReplies: {
+    //   type: Array,
+    //   require: true,
+    // },
   },
+  mixins: [mixinEmptyImage],
   data() {
     return {
       showReplyModal: false,
       tweet: {},
+      tweetReplies: [],
     };
   },
   created() {
@@ -68,11 +77,17 @@ export default {
   methods: {
     fetchData() {
       this.showReplyModal = this.initialShowReplyModal;
-      this.tweet = this.initialTweet;
+      this.tweet = { ...this.initialTweet };
+      // this.tweetReplies = [...this.initialTweetReplies];
     },
     handleShowModalClick() {
       this.showReplyModal = true;
       this.$emit("show-reply-modal");
+    },
+  },
+  watch: {
+    initialTweet() {
+      this.fetchData();
     },
   },
 };

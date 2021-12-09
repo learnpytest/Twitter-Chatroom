@@ -117,13 +117,7 @@ export default {
   methods: {
     fetchData() {
       this.showReplyModal = this.initialShowReplyModal;
-      console.log(this.initialTweets);
-      console.log(this.$route.path);
       this.tweets = this.initialTweets;
-    },
-
-    test(tweetId) {
-      console.log(tweetId);
     },
     async addLike(tweetId) {
       try {
@@ -138,8 +132,6 @@ export default {
     async unLike(tweetId) {
       try {
         const { data } = await likeshipAPI.deleteLike(tweetId);
-        console.log(tweetId);
-        console.log(data);
         if (data.status !== "success") {
           throw new Error(data.message);
         }

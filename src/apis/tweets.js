@@ -1,5 +1,7 @@
 // this will be merged into usersAPI
-import { apiHelper } from "../apis/apiHelper";
+import {
+  apiHelper
+} from "../apis/apiHelper";
 
 export default {
   all() {
@@ -20,6 +22,9 @@ export default {
   getTweet(tweetId) {
     return apiHelper.get(`/tweets/${tweetId}`);
   },
+  getTweetReplies(tweetId) {
+    return apiHelper.get(`/tweets/${tweetId}/replies`);
+  },
   getOneUserTweet(userId) {
     return apiHelper.get(`/users/${userId}/tweets`);
   },
@@ -29,7 +34,11 @@ export default {
   getOneUserLikes(userId) {
     return apiHelper.get(`/users/${userId}/likes`);
   },
-  postOneUserTweet({ description }) {
-    return apiHelper.post(`/tweets/`, { description });
+  postOneUserTweet({
+    description
+  }) {
+    return apiHelper.post(`/tweets/`, {
+      description,
+    });
   },
 };

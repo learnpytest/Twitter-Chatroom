@@ -148,9 +148,12 @@ export default {
       for (let [name, value] of formData.entries()) {
         console.log(name + ": " + value);
       }
-      this.$router.push(`/users/${this.userId}`);
-      this.handleShowModalClick();
+      this.$emit("afterUpdateUserProfile", this.userId);
+      setTimeout(() => {
+        this.handleShowModalClick();
+      }, 1000);
     },
+
     handleAvatarFileChange(e) {
       const { files } = e.target;
 
@@ -201,6 +204,11 @@ export default {
     ...mapGetters({
       isProcessing: GET_IS_PROCESSING,
     }),
+  },
+  watch: {
+    initialUserObj() {
+      this.fetchData();
+    },
   },
 };
 </script>

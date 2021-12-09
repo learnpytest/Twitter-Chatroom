@@ -58,11 +58,6 @@ import {
 Vue.use(VueRouter);
 
 const routes = [{
-    path: "/users/:id",
-    name: "user",
-    component: () => import("@/views/User"),
-  },
-  {
     path: "/reply/:id",
     name: "reply-list",
     component: () => import("@/views/ReplyList"),
@@ -121,15 +116,20 @@ const routes = [{
   },
 
   {
-    path: "/user/:id",
-    name: "user",
-    component: () => import("@/views/User"),
-  },
-  {
     path: "/user/setting",
     name: "user-setting",
     component: () => import("@/views/UserSetting"),
   },
+  {
+    path: "/users/:id",
+    name: "user",
+    component: () => import("@/views/User"),
+  },
+  // {
+  //   path: "/user/:id",
+  //   name: "user",
+  //   component: () => import("@/views/User"),
+  // },
   {
     path: "/",
     name: "root",
