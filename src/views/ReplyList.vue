@@ -53,7 +53,8 @@ export default {
   },
   created() {
     let tweetId = this.$route.params.id;
-    this.fetchTweet({ tweetId });
+
+    this.fetchTweet(tweetId);
   },
   methods: {
     childrenShowReplyModal() {

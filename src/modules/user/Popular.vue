@@ -3,7 +3,12 @@
     <div class="popular-header">Popular</div>
     <div class="popular-card" v-for="user in getTopUsers" :key="user.UserId">
       <!-- 沒有上傳照片產生空圖 -->
-      <img :src="user.avatar | emptyImage" alt="user avatar" />
+      <img
+        :src="user.avatar | emptyImage"
+        alt="user avatar"
+        @click.stop.prevent="redirectToUser(user.UserId)"
+        class="hoverStyle"
+      />
       <div class="popular-card_info">
         <p class="user-name">{{ user.name }}</p>
         <p class="user-info">@{{ user.account }}</p>
@@ -11,7 +16,9 @@
       <div class="follow-btn" v-if="user.isFollowed">
         <button
           class="following-btn"
+          :class="{ disabled: currentUserId === user.UserId }"
           @click.stop.prevent="cancelFollow(user.UserId)"
+          :disabled="currentUserId === user.UserId"
         >
           正在跟隨
         </button>
@@ -19,7 +26,9 @@
       <div class="follow-btn" v-else>
         <button
           class="follower-btn"
+          :class="{ disabled: currentUserId === user.UserId }"
           @click.stop.prevent="postFollowship(user.UserId)"
+          :disabled="currentUserId === user.UserId"
         >
           跟隨
         </button>
@@ -30,6 +39,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import { mixinEmptyImage } from "../../utils/mixin";
+import currentUserAPI from "@/apis/currentUserAPI";
 
 import {
   GET_TOP_USERS,
@@ -40,8 +50,14 @@ import {
 export default {
   name: "Popular",
   mixins: [mixinEmptyImage],
+  data() {
+    return {
+      currentUserId: "",
+    };
+  },
   created() {
     this.setTopUsers();
+    this.getCurrentUser();
   },
   methods: {
     ...mapActions({
@@ -49,6 +65,24 @@ export default {
       postFollowship: POST_FOLLOWSHIP,
       cancelFollow: DELETE_FOLLOWSHIP,
     }),
+
+    async getCurrentUser() {
+      try {
+        const res = await currentUserAPI.getCurrentUser();
+        const { data, statusText } = res;
+        if (statusText !== "OK") {
+          throw new Error(statusText);
+        }
+
+        this.currentUserId = data.id;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    redirectToUser(userId) {
+      this.$router.push({ name: "user", params: { id: userId } });
+    },
   },
   computed: {
     ...mapGetters({
@@ -112,5 +146,13 @@ export default {
   background-color: $gray-50;
   color: $orange-100;
   border: 1.5px solid $orange-100;
+}
+.disabled {
+  border-color: $disabled-second;
+  color: $white;
+  background-color: $disabled-second;
+}
+.hoverStyle {
+  cursor: pointer;
 }
 </style>

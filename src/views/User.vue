@@ -76,7 +76,7 @@ import Tab from "../modules/user/Tab.vue";
 import Comments from "../modules/user/Comments.vue";
 import UserEditModal from "../modules/user/UserEditModal.vue";
 import NewTweetModal from "../modules/user/NewTweetModal.vue";
-import currentUserAPI from "./../apis/currentUserAPI";
+
 import ReplyTweetModal from "../modules/user/ReplyTweetModal.vue";
 
 import usersAPI from "./../apis/usersAPI";
@@ -107,7 +107,7 @@ export default {
       showModal: false,
       showEditModal: false,
       showReplyModal: false,
-      currentUserId: {},
+      // currentUserId: {},
       userTweets: [],
       userId: "",
       userObj: {},
@@ -143,19 +143,7 @@ export default {
       this.getUsersTweets(this.userId);
       // this.showModal = false;
     },
-    async getCurrentUser() {
-      try {
-        const res = await currentUserAPI.getCurrentUser();
-        const { data, statusText } = res;
-        if (statusText !== "OK") {
-          throw new Error(statusText);
-        }
-        console.log(data);
-        this.currentUserId = data;
-      } catch (err) {
-        console.log(err);
-      }
-    },
+
     async getUserLikes(userId) {
       try {
         const res = await usersAPI.getUserLikes(userId);
@@ -223,18 +211,6 @@ export default {
       }
     },
   },
-
-  // 必須監聽使用者跟隨被跟隨的變動，改變跟隨與被跟隨數字
-  // computed {
-  //   ...mapGetter({
-  //     currentUserFollowers: GET_CURRENT_USER_FOLLOWINS,
-  //   ),
-  //},
-  // watch: {
-  //   currentUserFollowers() {
-  //     this.fetchUser(this.userId);
-  //   },
-  // },
 };
 </script>
 
