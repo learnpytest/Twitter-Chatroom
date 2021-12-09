@@ -55,7 +55,6 @@
         :class="['form__input']"
         v-model="email"
         @input="updateAccountInfo"
-        @blur="validateEmail"
       />
       <div>
         <!-- todo error message -->
