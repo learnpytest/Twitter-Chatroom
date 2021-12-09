@@ -31,7 +31,7 @@
         </div>
       </div>
       <div class="tweet-btn">
-        <p v-if="text.length >= 140">字數不可超過140字</p>
+        <p v-if="text.length >= 140">字數不可超過 140 字</p>
         <p v-if="submitEmptyField">內容不可空白</p>
         <button>推文</button>
       </div>

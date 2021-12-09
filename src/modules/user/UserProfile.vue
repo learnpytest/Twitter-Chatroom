@@ -175,6 +175,7 @@ export default {
     display: inline-block;
     font-size: 14px;
     margin-right: 20px;
+    color: $black;
     span {
       color: $gray-600;
       margin-left: 2px;
