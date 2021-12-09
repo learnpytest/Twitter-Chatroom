@@ -14,11 +14,9 @@
           />
           <div class="header-info">
             <!-- <p>John Doe</p> -->
-            <p>{{ getCurrentUser.name }}</p>
+            <p>{{ userObj.name }}</p>
 
-            <p>25 <span>推文</span></p>
-            <!-- <p>{{ getCurrentUser.name }}</p>
-            <p>25 <span>推文</span></p> -->
+            <p>{{ userObj.TweetCount }} <span>推文</span></p>
           </div>
         </div>
         <tabs-followship class="tabs" :initialIndex="parentSelectedIndex">
@@ -49,6 +47,8 @@ import Tab from "../modules/user/Tab.vue";
 
 import { mapGetters } from "vuex";
 
+import usersAPI from "./../apis/usersAPI";
+
 import {
   GET_CURRENT_USER,
   // SET_ONE_USER_TWEETS,
@@ -66,10 +66,34 @@ export default {
     return {
       showEditModal: false,
       showReplyModal: false,
-      parentSelectedIndex: 0,
+
+      userId: "",
+      userObj: {},
     };
   },
+  created() {
+    this.userId = this.$route.params.id;
+    this.fetchUser(this.userId);
+  },
   methods: {
+    async fetchUser(userId) {
+      try {
+        this.isLoading = true;
+
+        const res = await usersAPI.getUser(userId);
+        const { data, statusText } = res;
+        if (statusText !== "OK") {
+          throw new Error(statusText);
+        }
+        this.userObj = { ...data };
+
+        this.isLoading = false;
+      } catch (err) {
+        this.isLoading = false;
+
+        console.log(err);
+      }
+    },
     editModalToggle() {
       if (!this.showEditModal) {
         this.showEditModal = true;

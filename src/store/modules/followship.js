@@ -1,16 +1,27 @@
 // import currentUserAPI from "../../apis/currentUserAPI";
+// import {
+//   vm
+// } from "../../main";
+
 import followshipAPI from "../../apis/followshipAPI";
 // import {
 //   vm
 // } from "../../main";
 
-import currentUserAPI from "../../apis/currentUserAPI";
+// import currentUserAPI from "../../apis/currentUserAPI";
 
 import {
   GET_CURRENT_USER_FOLLOWERS,
   SET_CURRENT_USER_FOLLOWERS,
   GET_CURRENT_USER_FOLLOWINGS,
   SET_CURRENT_USER_FOLLOWINGS,
+  //
+
+  // GET_FOLLOWERS,
+  // SET_FOLLOWERS,
+  // GET_FOLLOWEING,
+  // SET_FOLLOWEING,
+  //
   SET_TOP_USERS,
   POST_FOLLOWSHIP,
   DELETE_FOLLOWSHIP,
@@ -20,6 +31,9 @@ import {
 const state = {
   currentUserFollowers: [],
   currentUserFollowings: [],
+
+  // followers: [],
+  //   followings: [],
 };
 const getters = {
   [GET_CURRENT_USER_FOLLOWERS]: (state) => state.currentUserFollowers,
@@ -28,13 +42,14 @@ const getters = {
 const actions = {
   [SET_CURRENT_USER_FOLLOWERS]: async ({
     commit
-  }) => {
-    console.log("checkfollowers");
+  }, userId) => {
+    // console.log("checkfollowers", vm.$router.params.id);
 
     // send api
 
-    const res = await currentUserAPI.getCurrentUser();
-    const userId = res.data.id;
+    // const res = await currentUserAPI.getCurrentUser();
+    // const userId = res.data.id;
+    // const userId = vm.$route.params.id;
     try {
       const res = await followshipAPI.getFollowers(userId);
       const {
@@ -51,11 +66,11 @@ const actions = {
   },
   [SET_CURRENT_USER_FOLLOWINGS]: async ({
     commit
-  }) => {
+  }, userId) => {
     // send api
 
-    const res = await currentUserAPI.getCurrentUser();
-    const userId = res.data.id;
+    // const res = await currentUserAPI.getCurrentUser();
+    // const userId = res.data.id;
     try {
       const res = await followshipAPI.getFollowings(userId);
       const {
@@ -72,9 +87,12 @@ const actions = {
   },
   [POST_FOLLOWSHIP]: async ({
     dispatch
-  }, targetedUserId) => {
+  }, {
+    followingId,
+    userId
+  }) => {
     try {
-      const res = await followshipAPI.postFollowships(targetedUserId);
+      const res = await followshipAPI.postFollowships(followingId);
       const {
         data,
         statusText
@@ -82,8 +100,8 @@ const actions = {
       if (data.status !== "success" || statusText !== "OK") {
         throw new Error(data.message);
       }
-      dispatch(SET_CURRENT_USER_FOLLOWINGS);
-      dispatch(SET_CURRENT_USER_FOLLOWERS);
+      dispatch(SET_CURRENT_USER_FOLLOWINGS, userId);
+      dispatch(SET_CURRENT_USER_FOLLOWERS, userId);
       dispatch(SET_TOP_USERS);
 
       setTimeout(() => {
@@ -101,8 +119,11 @@ const actions = {
   },
   [DELETE_FOLLOWSHIP]: async ({
     dispatch
-  }, targetedUserId) => {
-    const res = await followshipAPI.deleteFollowship(targetedUserId);
+  }, {
+    followingId,
+    userId
+  }) => {
+    const res = await followshipAPI.deleteFollowship(followingId);
     const {
       data,
       statusText
@@ -111,8 +132,8 @@ const actions = {
       throw new Error(data.message);
     }
 
-    dispatch(SET_CURRENT_USER_FOLLOWINGS);
-    dispatch(SET_CURRENT_USER_FOLLOWERS);
+    dispatch(SET_CURRENT_USER_FOLLOWINGS, userId);
+    dispatch(SET_CURRENT_USER_FOLLOWERS, userId);
     dispatch(SET_TOP_USERS);
 
     setTimeout(() => {
