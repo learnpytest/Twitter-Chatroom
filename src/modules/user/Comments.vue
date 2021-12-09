@@ -20,7 +20,10 @@
           </p>
         </div>
         <p Class="reply-to">
-          <!-- 回覆 <span>@ {{ tweet.Tweet.User.account }}</span> -->
+          回覆
+          <span
+            >@ {{ tweet.Tweet ? tweet.Tweet.User.account : tweet.UserId }}</span
+          >
         </p>
         <div class="tweet-text">
           {{ tweet.comment }}
