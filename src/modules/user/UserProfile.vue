@@ -4,8 +4,32 @@
     <img :src="userObj.cover | emptyImage" alt="" class="background-pic" />
     <div class="profile-pic">
       <!-- 沒有上傳照片產生空圖 -->
-      <img :src="userObj.avatar | emptyImage" alt="" />
+      <img id="avatar" :src="userObj.avatar | emptyImage" alt="" />
       <button @click="handleShowModalClick">編輯個人資料</button>
+      <div class="other-user-btns">
+        <div class="msg-btn">
+          <img
+            src="./../../assets/images/btn_messege.svg"
+            alt=""
+            class="msg-icon"
+          />
+        </div>
+        <div class="noti-btn">
+          <img
+            src="./../../assets/images/btn_noti.svg"
+            alt=""
+            class="msg-icon"
+          />
+        </div>
+        <div class="followship-btn">
+          <div class="follow-btn" v-if="userObj.isFollowed">
+            <button class="following-btn">正在跟隨</button>
+          </div>
+          <div class="follow-btn" v-else>
+            <button class="follower-btn">跟隨</button>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="profile-details">
       <p class="profile-name">{{ userObj.name }}</p>
@@ -72,6 +96,18 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "./src/assets/scss/main.scss";
+.other-user-btns {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: right;
+  .following-btn {
+    color: $white;
+    background-color: $orange-100;
+  }
+  .noti-btn {
+    margin: 0 10px;
+  }
+}
 .background-pic {
   max-width: auto;
   height: 170px;
@@ -83,7 +119,7 @@ export default {
   text-align: right;
   padding: 10px;
 
-  img {
+  #avatar {
     position: absolute;
     width: 140px;
     height: 140px;

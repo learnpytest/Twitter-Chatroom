@@ -76,6 +76,7 @@ import Tab from "../modules/user/Tab.vue";
 import Comments from "../modules/user/Comments.vue";
 import UserEditModal from "../modules/user/UserEditModal.vue";
 import NewTweetModal from "../modules/user/NewTweetModal.vue";
+import currentUserAPI from "./../apis/currentUserAPI";
 import ReplyTweetModal from "../modules/user/ReplyTweetModal.vue";
 
 import usersAPI from "./../apis/usersAPI";
@@ -106,7 +107,7 @@ export default {
       showModal: false,
       showEditModal: false,
       showReplyModal: false,
-      currentUserId: -1,
+      currentUserId: {},
       userTweets: [],
       userId: "",
       userObj: {},
@@ -141,6 +142,19 @@ export default {
     updateTweetsData() {
       this.getUsersTweets(this.userId);
       // this.showModal = false;
+    },
+    async getCurrentUser() {
+      try {
+        const res = await currentUserAPI.getCurrentUser();
+        const { data, statusText } = res;
+        if (statusText !== "OK") {
+          throw new Error(statusText);
+        }
+        console.log(data);
+        this.currentUserId = data;
+      } catch (err) {
+        console.log(err);
+      }
     },
     async getUserLikes(userId) {
       try {
@@ -193,45 +207,6 @@ export default {
         console.log("error", error);
       }
     },
-    // async getTweets(userId) {
-    //   try {
-    //     const { data } = await tweetsAPI.getOneUserTweet({ userId });
-    //     console.log(data);
-    //     console.log(this.getCurrentUser);
-
-    //     // // STEP 5: 透過 restaurantsAPI 取得餐廳資訊
-    //     // const { restaurant, isFavorited, isLiked } = data;
-    //     // const {
-    //     //   id,
-    //     //   name,
-    //     //   Category,
-    //     //   image,
-    //     //   opening_hours: openingHours,
-    //     //   tel,
-    //     //   address,
-    //     //   description,
-    //     //   Comments,
-    //     // } = restaurant;
-
-    //     // this.restaurant = {
-    //     //   id,
-    //     //   name,
-    //     //   categoryName: Category ? Category.name : "未分類",
-    //     //   image,
-    //     //   openingHours,
-    //     //   tel,
-    //     //   address,
-    //     //   description,
-    //     //   isFavorited,
-    //     //   isLiked,
-    //     // };
-
-    //     // this.restaurantComments = Comments;
-    //   } catch (error) {
-    //     // STEP 6: 透過 restaurantsAPI 取得餐廳資訊
-    //     console.log(error);
-    //   }
-    // },
 
     editModalToggle() {
       if (!this.showEditModal) {
