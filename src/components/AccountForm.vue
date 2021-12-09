@@ -15,11 +15,16 @@
         name="account"
         :class="['form__input']"
         v-model="account"
+        maxlength="20"
         @input="updateAccountInfo"
       />
 
-      <div>
+      <div class="limit-error">
         <!-- todo error message -->
+        <span class="warning-text" v-if="account.length >= 20"
+          >名稱字數不可超過 20 字</span
+        >
+        <p>{{ accountCharactersLeft }}</p>
       </div>
     </div>
     <div class="form__group">
@@ -29,11 +34,16 @@
         id="username"
         name="username"
         :class="['form__input']"
+        maxlength="20"
         v-model="username"
         @input="updateAccountInfo"
       />
-      <div>
+      <div class="limit-error">
         <!-- todo error message -->
+        <span class="warning-text" v-if="username.length >= 20"
+          >名稱字數不可超過 20 字</span
+        >
+        <p>{{ nameCharactersLeft }}</p>
       </div>
     </div>
     <div class="form__group">
@@ -45,6 +55,7 @@
         :class="['form__input']"
         v-model="email"
         @input="updateAccountInfo"
+        @blur="validateEmail"
       />
       <div>
         <!-- todo error message -->
@@ -116,6 +127,7 @@ export default {
     this.email = this.isSettingExistingAccount ? this.getCurrentUser.email : "";
   },
   methods: {
+
     updateAccountInfo() {
       this.setAccountInfo({
         account: this.account,
@@ -133,6 +145,18 @@ export default {
     ...mapGetters({
       getCurrentUser: GET_CURRENT_USER,
     }),
+    nameCharactersLeft() {
+      let char = this.username.length,
+        limit = 20;
+
+      return limit - char + " / " + limit;
+    },
+    accountCharactersLeft() {
+      let char = this.account.length,
+        limit = 20;
+
+      return limit - char + " / " + limit;
+    },
   },
 };
 </script>
@@ -210,5 +234,20 @@ export default {
 .form__input:focus,
 .form__input:hover {
   border-bottom: 1.5px solid $blue-800;
+}
+.limit-error {
+  text-align: right;
+  background-color: $white;
+  color: $gray-600;
+  padding: 5px;
+  font-size: 13px;
+  p {
+    display: inline-block;
+  }
+  .warning-text {
+    display: inline-block;
+    color: $red;
+    margin-right: 10px;
+  }
 }
 </style>

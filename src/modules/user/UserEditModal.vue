@@ -79,10 +79,22 @@
       <div class="form__groups">
         <div class="form__group">
           <label for="name">名稱</label>
-          <input type="name" id="name" name="name" v-model="userName" />
+          <input
+            type="name"
+            id="name"
+            name="name"
+            v-model="userName"
+            maxlength="50"
+          />
           <div class="limit-error">
             <!-- todo error message -->
-            <p>8/50</p>
+            <span class="warning-text" v-if="userName.length >= 50"
+              >名稱字數不可超過 50 字</span
+            >
+            <span v-if="submitEmptyField" class="warning-text"
+              >內容不可空白</span
+            >
+            <p>{{ nameCharactersLeft }}</p>
             <!-- <span class="limiter">{{ charactersLeft() }}</span> -->
           </div>
         </div>
@@ -92,12 +104,16 @@
             type="bio"
             id="bio"
             name="introduction"
+            row="2"
             v-model="userIntroduction"
+            maxlength="160"
           />
           <div class="limit-error">
             <!-- todo error message -->
-
-            <p>8/50</p>
+            <span class="warning-text" v-if="userIntroduction.length >= 160"
+              >自我介紹字數不可超過 160 字</span
+            >
+            <p>{{ introCharactersLeft }}</p>
           </div>
         </div>
       </div>
@@ -134,6 +150,7 @@ export default {
       limit: -1,
       newName: "",
       newIntro: "",
+      submitEmptyField: false,
     };
   },
   created() {
@@ -141,6 +158,13 @@ export default {
   },
   methods: {
     handleSubmit(e) {
+      if (!this.userName.length) {
+        this.submitEmptyField = true;
+        // todo validation
+
+        // test
+        return;
+      }
       const form = e.target; // <form></form>
       const formData = new FormData(form);
       this.putCurrentUserProfile(formData);
@@ -200,11 +224,26 @@ export default {
       this.showEditModal = false;
       this.$emit("show-edit-modal");
     },
+    resetEmpty() {
+      this.submitEmptyField = false;
+    },
   },
   computed: {
     ...mapGetters({
       isProcessing: GET_IS_PROCESSING,
     }),
+    nameCharactersLeft() {
+      let char = this.userName.length,
+        limit = 50;
+
+      return limit - char + " / " + limit;
+    },
+    introCharactersLeft() {
+      let char = this.userIntroduction.length,
+        limit = 160;
+
+      return limit - char + " / " + limit;
+    },
   },
   watch: {
     initialUserObj() {
@@ -216,6 +255,7 @@ export default {
 <style lang="scss" scoped>
 @import "./src/assets/scss/main.scss";
 @import "@/assets/scss/utils/_variables.scss";
+
 .userAvatar {
   border-radius: 50%;
 }
@@ -337,6 +377,14 @@ export default {
   color: $gray-600;
   padding: 5px;
   font-size: 13px;
+  p {
+    display: inline-block;
+  }
+  .warning-text {
+    display: inline-block;
+    color: $red;
+    margin-right: 10px;
+  }
 }
 .form__groups {
   padding-bottom: 2rem;
