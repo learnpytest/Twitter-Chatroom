@@ -97,11 +97,10 @@ export default {
       }
     },
 
-    replyModalToggle() {
+    replyModalToggle(tweetId) {
       if (!this.showReplyModal) {
         this.replyTweetId = tweetId;
         this.showReplyModal = true;
-        console.log(this.replyTweetId);
       } else {
         this.replyTweetId = "";
         this.showReplyModal = false;
