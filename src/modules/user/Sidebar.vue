@@ -20,7 +20,7 @@
         </router-link>
       </li>
       <li>
-        <router-link :to="{ name: 'user', params: { id: currentUser.id } }">
+        <router-link :to="{ name: 'user', params: { id: currentUserId } }">
           <div class="nav-link">
             <img
               class="filter-orange"
@@ -63,8 +63,9 @@
   </div>
 </template>
 <script>
-import { mapActions, mapGetters } from "vuex";
-import { REVOKE_AUTHENTICATION, GET_CURRENT_USER } from "@/store/store-types";
+import { mapActions } from "vuex";
+import { REVOKE_AUTHENTICATION } from "@/store/store-types";
+import currentUserAPI from "@/apis/currentUserAPI";
 
 export default {
   name: "Sidebar",
@@ -77,7 +78,11 @@ export default {
   data() {
     return {
       showModal: "",
+      currentUserId: "",
     };
+  },
+  created() {
+    this.getCurrentUser();
   },
 
   methods: {
@@ -93,11 +98,18 @@ export default {
       this.showModal = true;
       this.$emit("show-modal");
     },
-  },
-  computed: {
-    ...mapGetters({
-      currentUser: GET_CURRENT_USER,
-    }),
+    async getCurrentUser() {
+      try {
+        const res = await currentUserAPI.getCurrentUser();
+        const { data, statusText } = res;
+        if (statusText !== "OK") {
+          throw new Error(statusText);
+        }
+        this.currentUserId = data.id;
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
 };
 </script>
