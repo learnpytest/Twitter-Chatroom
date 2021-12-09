@@ -40,10 +40,12 @@ export default {
       this.tabs.forEach((tab, index) => {
         tab.isActive = index === i;
       });
+      const userId = this.$route.params.id;
+
       if (this.selectedIndex === 0) {
-        this.$router.push("/users/followings");
+        this.$router.push(`/users/${userId}/followers`);
       } else {
-        this.$router.push("/users/followers");
+        this.$router.push(`/users/${userId}/followings`);
       }
     },
   },

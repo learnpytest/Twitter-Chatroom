@@ -15,7 +15,7 @@
       <div class="follow-btn" v-if="following.isFollowed">
         <button
           class="following-btn"
-          @click.stop.prevent="cancelFollow(following.followingId)"
+          @click.stop.prevent="cancel(following.followingId)"
         >
           正在跟隨
         </button>
@@ -39,11 +39,19 @@ export default {
   name: "UserFollowings",
   mixins: [mixinEmptyImage],
   created() {
-    this.setCurrentUserFollowings();
+    const userId = this.$route.params.id;
+    this.$store.dispatch(SET_CURRENT_USER_FOLLOWINGS, userId);
+
+    // this.setCurrentUserFollowings();
   },
   methods: {
+    cancel(followingId) {
+      const userId = this.$route.params.id;
+      this.cancelFollow({ followingId, userId });
+      // this.$store.dispatch(SET_CURRENT_USER_FOLLOWINGS, userId);
+    },
     ...mapActions({
-      setCurrentUserFollowings: SET_CURRENT_USER_FOLLOWINGS,
+      // setCurrentUserFollowings: SET_CURRENT_USER_FOLLOWINGS,
       cancelFollow: DELETE_FOLLOWSHIP,
     }),
   },

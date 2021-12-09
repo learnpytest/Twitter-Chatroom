@@ -15,7 +15,7 @@
       <div class="follow-btn" v-if="follower.isFollowed">
         <button
           class="following-btn"
-          @click.stop.prevent="cancelFollow(follower.followerId)"
+          @click.stop.prevent="cancel(follower.followerId)"
         >
           正在跟隨
         </button>
@@ -23,7 +23,7 @@
       <div class="follow-btn" v-else>
         <button
           class="follower-btn"
-          @click.stop.prevent="postFollowship(follower.followerId)"
+          @click.stop.prevent="post(follower.followerId)"
         >
           跟隨
         </button>
@@ -38,6 +38,7 @@ import { mixinEmptyImage } from "../../utils/mixin";
 import {
   GET_CURRENT_USER_FOLLOWERS,
   SET_CURRENT_USER_FOLLOWERS,
+  // SET_CURRENT_USER_FOLLOWINGS,
   POST_FOLLOWSHIP,
   DELETE_FOLLOWSHIP,
 } from "../../store/store-types";
@@ -45,11 +46,23 @@ export default {
   name: "UserFollowers",
   mixins: [mixinEmptyImage],
   created() {
-    this.setCurrentUserFollowers();
+    const userId = this.$route.params.id;
+
+    this.$store.dispatch(SET_CURRENT_USER_FOLLOWERS, userId);
   },
   methods: {
+    cancel(followingId) {
+      const userId = this.$route.params.id;
+      this.cancelFollow({ followingId, userId });
+      // this.$store.dispatch(SET_CURRENT_USER_FOLLOWERS, userId);
+    },
+    post(followingId) {
+      const userId = this.$route.params.id;
+      this.postFollowship({ followingId, userId });
+      // this.$store.dispatch(SET_CURRENT_USER_FOLLOWINGS, userId);
+    },
     ...mapActions({
-      setCurrentUserFollowers: SET_CURRENT_USER_FOLLOWERS,
+      // setCurrentUserFollowers: SET_CURRENT_USER_FOLLOWERS,
       postFollowship: POST_FOLLOWSHIP,
       cancelFollow: DELETE_FOLLOWSHIP,
     }),

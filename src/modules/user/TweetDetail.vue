@@ -133,7 +133,11 @@ export default {
           throw new Error(data.message);
         }
 
-        this.tweet = { ...this.tweet, isLiked: true };
+        this.tweet = {
+          ...this.tweet,
+          isLiked: true,
+          LikesCount: this.tweet.LikesCount + 1,
+        };
       } catch (error) {
         console.log("error", error);
       }
@@ -144,7 +148,11 @@ export default {
         if (data.status !== "success") {
           throw new Error(data.message);
         }
-        this.tweet = { ...this.tweet, isLiked: false };
+        this.tweet = {
+          ...this.tweet,
+          isLiked: false,
+          LikesCount: this.tweet.LikesCount - 1,
+        };
       } catch (error) {
         console.log("error", error);
       }

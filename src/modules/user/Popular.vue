@@ -17,7 +17,7 @@
         <button
           class="following-btn"
           :class="{ disabled: currentUserId === user.UserId }"
-          @click.stop.prevent="cancelFollow(user.UserId)"
+          @click.stop.prevent="cancel(user.UserId)"
           :disabled="currentUserId === user.UserId"
         >
           正在跟隨
@@ -27,7 +27,7 @@
         <button
           class="follower-btn"
           :class="{ disabled: currentUserId === user.UserId }"
-          @click.stop.prevent="postFollowship(user.UserId)"
+          @click.stop.prevent="post(user.UserId)"
           :disabled="currentUserId === user.UserId"
         >
           跟隨
@@ -60,6 +60,16 @@ export default {
     this.getCurrentUser();
   },
   methods: {
+    cancel(followingId) {
+      const userId = this.$route.params.id;
+      this.cancelFollow({ followingId, userId });
+      // this.$store.dispatch(SET_CURRENT_USER_FOLLOWERS, userId);
+    },
+    post(followingId) {
+      const userId = this.$route.params.id;
+      this.postFollowship({ followingId, userId });
+      // this.$store.dispatch(SET_CURRENT_USER_FOLLOWINGS, userId);
+    },
     ...mapActions({
       setTopUsers: SET_TOP_USERS,
       postFollowship: POST_FOLLOWSHIP,
