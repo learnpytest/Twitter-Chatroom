@@ -58,7 +58,7 @@
           <div class="profile-pic-wrapper">
             <!-- <img :src="fetchCurrentUser.avatar" alt="" class="" /> -->
             <label for="avatar">
-              <img :src="userAvatar" alt="" class="" />
+              <img :src="userAvatar" alt="" class="userAvatar" />
               <img
                 src="./../../assets/images/icon_uploadPhoto.png"
                 alt=""
@@ -216,6 +216,9 @@ export default {
 <style lang="scss" scoped>
 @import "./src/assets/scss/main.scss";
 @import "@/assets/scss/utils/_variables.scss";
+.userAvatar {
+  border-radius: 50%;
+}
 .header-text {
   position: absolute;
   left: 70px;

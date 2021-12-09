@@ -10,7 +10,8 @@
     <div class="new-tweet-modal" v-if="showReplyModal">
       <ReplyTweetModal
         :initialShowReplyModal="showReplyModal"
-        @show-reply-modal="replyModalToggle"
+        :initialTweetId="replyTweetId"
+        @show-reply-modal="replyModalToggle(tweetId)"
       />
     </div>
     <div class="usermain">
@@ -65,6 +66,7 @@ export default {
       showModal: false,
       showReplyModal: false,
       userTweets: [],
+      replyTweetId: "",
     };
   },
   created() {
@@ -97,8 +99,11 @@ export default {
 
     replyModalToggle() {
       if (!this.showReplyModal) {
+        this.replyTweetId = tweetId;
         this.showReplyModal = true;
+        console.log(this.replyTweetId);
       } else {
+        this.replyTweetId = "";
         this.showReplyModal = false;
       }
     },

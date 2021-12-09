@@ -61,7 +61,7 @@ export default {
     initialShowReplyModal: {
       type: Boolean,
       //test need to set required on true
-      // required: true,
+      required: true,
     },
     initialTweet: {
       type: Object,
