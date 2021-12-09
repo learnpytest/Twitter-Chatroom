@@ -6,8 +6,10 @@
     <div class="new-tweet-modal" v-if="showReplyModal">
       <ReplyTweetModal
         :initialShowReplyModal="showReplyModal"
-        @show-reply-modal="replyModalToggle"
+        :initialTweetId="replyTweetId"
+        @show-reply-modal="replyModalToggle(tweetId)"
       />
+      <!-- @show-reply-modal="replyModalToggle" -->
     </div>
     <div class="reply-modal"></div>
     <div class="reply-list">
@@ -54,7 +56,19 @@ export default {
     this.fetchTweet({ tweetId });
   },
   methods: {
-    async fetchTweet({ tweetId }) {
+    childrenShowReplyModal() {
+      this.showReplyModal = true;
+    },
+    async fetchTweet(tweetId) {
+      try {
+        const response = await tweetsAPI.getTweet(tweetId);
+        const { data } = response;
+        this.tweet = { ...data };
+      } catch (error) {
+        console.log("error", error);
+      }
+    },
+    async fetchTweetReplies(tweetId) {
       try {
         const response = await tweetsAPI.getTweet({
           tweetId,
@@ -72,10 +86,13 @@ export default {
         this.showModal = false;
       }
     },
-    replyModalToggle() {
+
+    replyModalToggle(tweetId) {
       if (!this.showReplyModal) {
+        this.replyTweetId = tweetId;
         this.showReplyModal = true;
       } else {
+        this.replyTweetId = "";
         this.showReplyModal = false;
       }
     },

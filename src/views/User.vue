@@ -7,6 +7,15 @@
         @updateData="updateTweetsData"
       />
     </div>
+
+    <div class="new-tweet-modal" v-if="showReplyModal">
+      <ReplyTweetModal
+        :initialShowReplyModal="showReplyModal"
+        :initialTweetId="replyTweetId"
+        @show-reply-modal="replyModalToggle(tweetId)"
+      />
+    </div>
+
     <div class="user-edit-modal" v-if="showEditModal">
       <UserEditModal
         :initialUserObj="userObj"
@@ -40,7 +49,10 @@
         </div>
         <tabs class="tabs">
           <tab title="推文" class="user-tweets"
-            ><Tweets :initialTweets="userTweets"
+            ><Tweets
+              :initialTweets="userTweets"
+              :initialShowReplyModal="showReplyModal"
+              @show-reply-modal="replyModalToggle"
           /></tab>
           <tab class="comments" title="推文與回覆"
             ><Comments :initialTweets="userRepliesTweets"
@@ -65,6 +77,8 @@ import Comments from "../modules/user/Comments.vue";
 import UserEditModal from "../modules/user/UserEditModal.vue";
 import NewTweetModal from "../modules/user/NewTweetModal.vue";
 import currentUserAPI from "./../apis/currentUserAPI";
+import ReplyTweetModal from "../modules/user/ReplyTweetModal.vue";
+
 import usersAPI from "./../apis/usersAPI";
 import tweetsApi from "./../apis/tweets";
 
@@ -86,6 +100,7 @@ export default {
     Comments,
     UserEditModal,
     NewTweetModal,
+    ReplyTweetModal,
   },
   data() {
     return {
@@ -98,6 +113,7 @@ export default {
       userObj: {},
       userRepliesTweets: [],
       userLikes: [],
+      replyTweetId: "",
     };
   },
   created() {
@@ -114,6 +130,15 @@ export default {
     next();
   },
   methods: {
+    replyModalToggle(tweetId) {
+      if (!this.showReplyModal) {
+        this.replyTweetId = tweetId;
+        this.showReplyModal = true;
+      } else {
+        this.replyTweetId = "";
+        this.showReplyModal = false;
+      }
+    },
     updateTweetsData() {
       this.getUsersTweets(this.userId);
       // this.showModal = false;

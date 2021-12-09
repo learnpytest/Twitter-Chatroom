@@ -30,7 +30,7 @@
         <img
           src="./../../assets/images/icon_reply.svg"
           alt=""
-          @click.stop.prevent="handleShowModalClick"
+          @click.stop.prevent="handleShowModalClick(tweet.TweetId)"
         />
 
         <img
@@ -58,11 +58,11 @@ import { mixinEmptyImage } from "../../utils/mixin";
 
 export default {
   props: {
-    initialShowReplyModal: {
-      type: Boolean,
-      //test need to set required on true
-      required: true,
-    },
+    // initialShowReplyModal: {
+    //   type: Boolean,
+    //   //test need to set required on true
+    //   required: true,
+    // },
     initialTweet: {
       type: Object,
       require: true,
@@ -123,12 +123,12 @@ export default {
       }
     },
     fetchData() {
-      this.showReplyModal = this.initialShowReplyModal;
+      // this.showReplyModal = this.initialShowReplyModal;
       this.tweet = { ...this.initialTweet };
     },
-    handleShowModalClick() {
-      this.showReplyModal = true;
-      this.$emit("show-reply-modal");
+    handleShowModalClick(tweetId) {
+      // this.showReplyModal = true;
+      this.$emit("show-reply-modal", tweetId);
     },
   },
   watch: {
