@@ -12,25 +12,22 @@
       </div>
       <div class="to-reply-user">
         <div class="to-reply-user_pic">
-          <img
-            class="user-pic"
-            src="./../../assets/images/Photo_user1.png"
-            alt=""
-          />
+          <img class="user-pic" :src="tweet.User.avatar | emptyImage" alt="" />
           <div class="connecting-line"></div>
         </div>
         <div class="to-reply-user-info">
           <div class="to-reply-user-info_info">
             <p class="to-reply-user-name">
-              Apple <span>@apple • </span><span>3 小時</span>
+              {{ tweet.User.name }} <span>@{{ tweet.User.account }} • </span
+              ><span>{{ tweet.createdAt | fromNow }}</span>
             </p>
           </div>
           <div class="to-reply-user-tweet_text">
-            Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco
-            cillum dolor. Voluptate exercitation incididunt aliquip deserunt
-            reprehenderit elit laborum.
+            {{ tweet.description }}
           </div>
-          <p class="reply-to">回覆給 <span>@apple</span></p>
+          <p class="reply-to">
+            回覆給 <span>@{{ tweet.User.account }}</span>
+          </p>
         </div>
       </div>
 
@@ -64,19 +61,26 @@
 // need to take targeted user
 import { mapGetters } from "vuex";
 import { GET_CURRENT_USER } from "../../store/store-types";
-import { mixinEmptyImage } from "../../utils/mixin";
+import { mixinEmptyImage, mixinFromNowFilters } from "../../utils/mixin";
+import tweetsAPI from "./../../apis/tweets";
 export default {
   props: {
-    mixins: [mixinEmptyImage],
+    mixins: [mixinEmptyImage, mixinFromNowFilters],
     initialShowReplyModal: {
       type: Boolean,
       required: true,
+    },
+    initialTweetId: {
+      type: Number,
+      require: true,
     },
   },
   data() {
     return {
       showReplyModal: false,
       text: "",
+      tweetId: "",
+      tweet: {},
     };
   },
   created() {
@@ -85,6 +89,17 @@ export default {
   methods: {
     fetchData() {
       this.showReplyModal = this.initialShowReplyModal;
+      this.tweetId = this.initialTweetId;
+      this.fetchTweet(this.tweetId);
+    },
+    async fetchTweet(tweetId) {
+      try {
+        const response = await tweetsAPI.getTweet(tweetId);
+        const { data } = response;
+        this.tweet = { ...data };
+      } catch (error) {
+        console.log("error", error);
+      }
     },
     handleShowModalClick() {
       this.showReplyModal = false;

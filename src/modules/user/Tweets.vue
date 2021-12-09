@@ -43,7 +43,7 @@
             <img
               src="./../../assets/images/icon_reply.svg"
               alt=""
-              @click.stop.prevent="handleShowModalClick"
+              @click.stop.prevent="handleShowModalClick(tweet.TweetId)"
             />
 
             <p class="reply-num">{{ tweet.RepliesCount }}</p>
@@ -139,9 +139,9 @@ export default {
         console.log("error", error);
       }
     },
-    handleShowModalClick() {
+    handleShowModalClick(tweetId) {
       this.showReplyModal = true;
-      this.$emit("show-reply-modal");
+      this.$emit("show-reply-modal", tweetId);
     },
   },
 };
