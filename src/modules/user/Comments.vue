@@ -98,4 +98,7 @@ export default {
     color: $orange-100;
   }
 }
+.tweet-text{
+   word-break: break-all;
+}
 </style>

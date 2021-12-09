@@ -163,6 +163,6 @@ export default {
   height: 100%;
   position: sticky;
   position: -webkit-sticky;
-  top: 0;
+  bottom: 0;
 }
 </style>

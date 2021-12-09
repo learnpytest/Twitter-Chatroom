@@ -13,11 +13,7 @@
       <div class="text-box">
         <div class="user-info">
           <!-- 沒有上傳照片產生空圖 -->
-          <img
-            class="user-pic"
-            :src="getCurrentUser.avatar | emptyImage"
-            alt=""
-          />
+          <img class="user-pic" :src="currentUserPic | emptyImage" alt="" />
         </div>
         <div class="text-area">
           <textarea
@@ -59,6 +55,7 @@ export default {
       text: "",
       currentUserId: "",
       submitEmptyField: false,
+      currentUserPic: {},
     };
   },
   created() {
@@ -72,8 +69,9 @@ export default {
     async fetchCurrentUser() {
       try {
         const response = await currentUserAPi.getCurrentUser();
-        const { id } = response.data;
+        const { avatar, id } = response.data;
         this.currentUserId = id;
+        this.currentUserPic = avatar;
       } catch (error) {
         console.log("error", error);
       }
@@ -108,6 +106,7 @@ export default {
         this.$emit("updateData");
 
         // this.handleShowModalClick();
+        this.$router.push({ name: "UserMain" });
       } catch (error) {
         console.log("error", error);
       }

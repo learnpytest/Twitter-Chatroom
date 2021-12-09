@@ -168,4 +168,8 @@ export default {
   border-bottom: 1px solid $gray-75;
   cursor: pointer;
 }
+
+.tweet-text {
+  word-break: break-all;
+}
 </style>
