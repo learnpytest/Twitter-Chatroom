@@ -59,4 +59,10 @@ export default {
 .form__btn {
   max-width: 540px;
 }
+.link--login {
+  color: #0099ff;
+}
+a {
+  color: #0099ff;
+}
 </style>
