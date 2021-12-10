@@ -7,10 +7,12 @@
       <div class="sidebar"><Sidebar /></div>
       <div class="main">
         <div class="header">
+          <!-- @click="$router.back()" -->
+
           <img
             src="./../assets/images/icon_back.png"
             alt=""
-            @click="$router.back()"
+            @click="redirect"
           />
           <div class="header-info">
             <!-- <p>John Doe</p> -->
@@ -76,6 +78,9 @@ export default {
     this.fetchUser(this.userId);
   },
   methods: {
+    redirect() {
+      this.$router.push("/usermain");
+    },
     async fetchUser(userId) {
       try {
         this.isLoading = true;
@@ -178,7 +183,7 @@ export default {
   height: 100%;
   position: sticky;
   position: -webkit-sticky;
-  top: 0;
+  // top: 0;
 }
 .sidebar {
   width: 18%;

@@ -28,10 +28,20 @@
         </div>
         <div class="followship-btn">
           <div class="follow-btn" v-if="userObj.isFollowed">
-            <button class="following-btn">正在跟隨</button>
+            <button
+              class="following-btn"
+              @click.stop.prevent="cancel(userObj.UserId)"
+            >
+              正在跟隨
+            </button>
           </div>
           <div class="follow-btn" v-else>
-            <button class="follower-btn">跟隨</button>
+            <button
+              class="follower-btn"
+              @click.stop.prevent="post(userObj.UserId)"
+            >
+              跟隨
+            </button>
           </div>
         </div>
       </div>
@@ -59,6 +69,10 @@
 <script>
 import { mixinEmptyImage } from "@/utils/mixin";
 import currentUserAPI from "@/apis/currentUserAPI";
+
+import { mapActions } from "vuex";
+
+import { POST_FOLLOWSHIP, DELETE_FOLLOWSHIP } from "@/store/store-types";
 
 export default {
   mixins: [mixinEmptyImage],
@@ -89,6 +103,22 @@ export default {
       this.showEditModal = this.initialEditModal;
       this.userObj = this.initialUserObj;
     },
+    cancel(followingId) {
+      this.cancelFollow({ followingId, userId: this.userObj.UserId });
+
+      this.userObj.FollowingsCount = this.userObj.FollowingsCount - 1;
+      this.userObj.isFollowed = false;
+    },
+    post(followingId) {
+      this.postFollowship({ followingId, userId: this.userObj.UserId });
+
+      this.userObj.FollowingsCount = this.userObj.FollowingsCount + 1;
+      this.userObj.isFollowed = true;
+    },
+    ...mapActions({
+      cancelFollow: DELETE_FOLLOWSHIP,
+      postFollowship: POST_FOLLOWSHIP,
+    }),
     handleShowModalClick() {
       this.showEditModal = false;
       this.$emit("show-edit-modal");
@@ -111,10 +141,13 @@ export default {
   },
 
   watch: {
-    initialUserObj(newValue) {
-      this.userObj = {
-        ...newValue,
-      };
+    initialUserObj: {
+      handler(newValue) {
+        this.userObj = {
+          ...newValue,
+        };
+      },
+      deep: true,
     },
   },
 };

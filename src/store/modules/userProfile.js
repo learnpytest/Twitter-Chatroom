@@ -51,14 +51,17 @@ const actions = {
   [PUT_CURRENT_USER_PROFILE]: async ({
     rootState,
     dispatch
-  }, formData) => {
+  }, payload) => {
     const userId = rootState.user.currentUser.id;
     try {
+      // // 測試用
+      // for (let [name, value] of formData.entries()) {
+      //   console.log(name + ": " + value);
+      // }
+
       dispatch(SET_IS_PROCESSING, true);
-      const res = await usersAPI.putUserProfile({
-        userId,
-        formData,
-      });
+      const res = await usersAPI.putUserProfile(payload);
+      // console.log(res);
       const {
         data,
         statusText

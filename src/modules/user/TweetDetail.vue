@@ -50,7 +50,6 @@
           v-else
           class="hoverStyle"
         />
-        <!-- <img src="./../../assets/images/icon_like.svg" alt="" /> -->
       </div>
     </div>
   </div>
@@ -83,49 +82,6 @@ export default {
     this.fetchData();
   },
   methods: {
-    // async addLike(tweetId) {
-    //   try {
-    //     const { data } = await likeshipAPI.postLike(tweetId);
-    //     if (data.status !== "success") {
-    //       throw new Error(data.message);
-    //     }
-
-    //     this.tweets = this.tweets.map((tweet) => {
-    //       if (tweet.TweetId === Number(tweetId)) {
-    //         return {
-    //           ...tweet,
-    //           isLiked: true,
-    //         };
-    //       } else {
-    //         return { ...tweet };
-    //       }
-    //     });
-    //   } catch (error) {
-    //     console.log("error", error);
-    //   }
-    // },
-    // async unLike(tweetId) {
-    //   try {
-    //     const { data } = await likeshipAPI.deleteLike(tweetId);
-    //     if (data.status !== "success") {
-    //       throw new Error(data.message);
-    //     }
-    //     this.tweets = this.tweets.map((tweet) => {
-    //       console.log(tweet);
-    //       if (tweet.TweetId === Number(tweetId)) {
-    //         return {
-    //           ...tweet,
-    //           isLiked: false,
-    //         };
-    //       } else {
-    //         return { ...tweet };
-    //       }
-    //     });
-    //   } catch (error) {
-    //     console.log("error", error);
-    //   }
-    // },
-
     async addLike(tweetId) {
       try {
         const { data } = await likeshipAPI.postLike(tweetId);

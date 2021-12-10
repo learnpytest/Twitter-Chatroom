@@ -83,7 +83,7 @@ export default {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  width: 10%;
+  // width: 10%;
 }
 
 .follow-card_info {

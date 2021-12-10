@@ -1,7 +1,9 @@
 // need to use this for real sign in
 import userAccountAPI from "../../apis/userAccountAPI";
 
-import { vm } from "../../main";
+import {
+  vm
+} from "../../main";
 
 import {
   GET_ACCOUNT_INFO,
@@ -24,10 +26,15 @@ const getters = {
   [GET_ACCOUNT_INFO]: (state) => state.accountInfo,
 };
 const actions = {
-  [SET_ACCOUNT_INFO]: async ({ commit }, accountInfo) => {
+  [SET_ACCOUNT_INFO]: async ({
+    commit
+  }, accountInfo) => {
     commit(SET_ACCOUNT_INFO, accountInfo);
   },
-  [POST_ACCOUNT]: async ({ state, dispatch }) => {
+  [POST_ACCOUNT]: async ({
+    state,
+    dispatch
+  }) => {
     // todo 必填欄位與密碼確認的提示
     const {
       account,
@@ -36,6 +43,7 @@ const actions = {
       password,
       checkPassword,
     } = state.accountInfo;
+    let regex = new RegExp("[a-z0-9]+@[a-z]+.[a-z]{2,3}");
     if (name.length > 50) {
       dispatch(ADD_NOTIFICATION, {
         type: "error",
@@ -57,6 +65,14 @@ const actions = {
       });
       return;
     }
+    if (!regex.test(email)) {
+      dispatch(ADD_NOTIFICATION, {
+        type: "error",
+        message: "請輸入完整email",
+      });
+      return;
+    }
+
     try {
       //  request api
       const res = await userAccountAPI.signUp({
@@ -93,7 +109,11 @@ const actions = {
       throw new Error(err);
     }
   },
-  [PUT_ACCOUNT]: async ({ rootState, state, dispatch }) => {
+  [PUT_ACCOUNT]: async ({
+    rootState,
+    state,
+    dispatch
+  }) => {
     // todo 必填欄位與密碼確認的提示
     const {
       account,
@@ -103,10 +123,14 @@ const actions = {
       checkPassword,
     } = state.accountInfo;
 
-    // if (!account || !name || !email || password !== checkPassword) {
-    //   throw new Error("欄位填寫不正確");
-    // }
-    //  request api
+    let regex = new RegExp("[a-z0-9]+@[a-z]+.[a-z]{2,3}");
+    if (!regex.test(email)) {
+      dispatch(ADD_NOTIFICATION, {
+        type: "error",
+        message: "請輸入完整email",
+      });
+      return;
+    }
     const id = rootState.user.currentUser.id;
     const res = await userAccountAPI.update(id, {
       account,
@@ -115,15 +139,11 @@ const actions = {
       password,
       checkPassword,
     });
-    const { data, statusText } = res;
+    const {
+      data,
+      statusText
+    } = res;
     if (data.status !== "success" || statusText !== "OK") {
-      // if (res.data.message === " account 已重覆註冊!") {
-      //   dispatch(ADD_NOTIFICATION, {
-      //     type: "error",
-      //     message: "account 已重覆註冊!",
-      //   });
-      //   return;
-      // }
       if (res.data.message === "密碼確認不符") {
         dispatch(ADD_NOTIFICATION, {
           type: "error",

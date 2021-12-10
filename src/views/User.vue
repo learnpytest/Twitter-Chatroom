@@ -21,7 +21,6 @@
 
     <div class="user-edit-modal" v-if="showEditModal">
       <UserEditModal
-        :initialUserObj="userObj"
         :initialEditModal="showEditModal"
         @show-edit-modal="editModalToggle"
         @afterUpdateUserProfile="fetchUser(userId)"
@@ -65,7 +64,12 @@
           /></tab>
         </tabs>
       </div>
-      <div class="popular"><Popular /></div>
+      <div class="popular">
+        <Popular
+          @updateCancelView="updateCancel"
+          @updateFollowView="updateFollow"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -84,13 +88,6 @@ import ReplyTweetModal from "../modules/user/ReplyTweetModal.vue";
 
 import usersAPI from "./../apis/usersAPI";
 import tweetsApi from "./../apis/tweets";
-
-// 必須監聽使用者跟隨被跟隨的變動，改變跟隨與被跟隨數字
-// import { mapGetters } from "@/utils/mixin";
-// import {
-//   // GET_CURRENT_USER_FOLLOWERS,
-//   GET_CURRENT_USER_FOLLOWINGS,
-// } from "../store/store-types";
 
 export default {
   components: {
@@ -134,6 +131,21 @@ export default {
     next();
   },
   methods: {
+    updateFollow() {
+      console.log("updateFollow");
+      this.userObj = {
+        ...this.useObj,
+        FollowingsCount: this.userObj.FollowingsCount + 1,
+      };
+    },
+    updateCancel() {
+      console.log("updateCancel");
+      this.userObj = {
+        ...this.useObj,
+        FollowingsCount: this.userObj.FollowingsCount - 1,
+      };
+    },
+
     replyModalToggle(tweetId) {
       if (!this.showReplyModal) {
         this.replyTweetId = tweetId;
@@ -145,7 +157,6 @@ export default {
     },
     updateTweetsData() {
       this.getUsersTweets(this.userId);
-      // this.showModal = false;
     },
 
     async getUserLikes(userId) {
@@ -191,6 +202,7 @@ export default {
           throw new Error(statusText);
         }
         this.userObj = { ...data };
+
         this.showModal = false;
         this.isLoading = false;
       } catch (err) {
@@ -311,7 +323,7 @@ export default {
   height: 100%;
   position: sticky;
   position: -webkit-sticky;
-  top: 0;
+  // top: 0;
 }
 .sidebar {
   width: 18%;
