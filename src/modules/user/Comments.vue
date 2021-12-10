@@ -8,15 +8,16 @@
         "
       >
         <!-- 沒有上傳照片產生空圖 -->
-        <img :src="tweet.User.avatar | emptyImage" alt="" />
+        <img :src="tweet.User && tweet.User.avatar | emptyImage" alt="" />
       </div>
 
       <div class="tweet-info">
         <div class="info">
           <p class="user-name">
-            {{ tweet.User.name }}
-            <span class="user-id">@{{ tweet.User.account }} • </span
-            ><span class="time">{{ tweet.createdAt | fromNow }}</span>
+            {{ tweet.User && tweet.User.name }}
+            <span class="user-id"
+              >@{{ tweet.User && tweet.User.account }} • </span
+            ><span class="time">{{ tweet && tweet.createdAt | fromNow }}</span>
           </p>
         </div>
         <p Class="reply-to">
@@ -25,12 +26,13 @@
           <span
             >@
             {{
-              tweet.Tweet ? tweet.Tweet.User.account : parentTweet.User.name
+              (tweet.Tweet && tweet.Tweet.User.account) ||
+              (parentTweet.User && parentTweet.User.name)
             }}</span
           >
         </p>
         <div class="tweet-text">
-          {{ tweet.comment }}
+          {{ tweet && tweet.comment }}
         </div>
       </div>
     </div>
@@ -98,7 +100,7 @@ export default {
     color: $orange-100;
   }
 }
-.tweet-text{
-   word-break: break-all;
+.tweet-text {
+  word-break: break-all;
 }
 </style>

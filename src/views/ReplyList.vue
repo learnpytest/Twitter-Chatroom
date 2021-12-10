@@ -7,9 +7,8 @@
       <ReplyTweetModal
         :initialShowReplyModal="showReplyModal"
         :initialTweetId="replyTweetId"
-        @show-reply-modal="replyModalToggle(tweetId)"
+        @show-reply-modal="replyModalToggle"
       />
-      <!-- @show-reply-modal="replyModalToggle" -->
     </div>
     <div class="reply-modal"></div>
     <div class="reply-list">

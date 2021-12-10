@@ -10,7 +10,11 @@
     </div>
     <div class="tweet-detail-box">
       <div class="tweet-detail-box_user-info">
-        <img class="user-pic" :src="tweet.User.avatar | emptyImage" alt="" />
+        <img
+          class="user-pic"
+          :src="tweet.User && tweet.User.avatar | emptyImage"
+          alt=""
+        />
         <div class="nameId">
           <p>{{ tweet.User && tweet.User.name }}</p>
           <p>@{{ tweet.User && tweet.User.account }}</p>
@@ -18,13 +22,13 @@
       </div>
       <div class="tweet-detail-box_text">
         <p>
-          {{ tweet.description }}
+          {{ tweet && tweet.description }}
         </p>
         <p class="tweet-detail-box_created-detail">上午 10:05・2020年6月10日</p>
       </div>
       <div class="tweet-detail-box_numbers">
-        <p>{{ tweet.RepliesCount }}<span>回覆</span></p>
-        <p>{{ tweet.LikesCount }}<span>喜歡次數</span></p>
+        <p>{{ tweet && tweet.RepliesCount }}<span>回覆</span></p>
+        <p>{{ tweet && tweet.LikesCount }}<span>喜歡次數</span></p>
       </div>
       <div class="tweet-detail-box_btn-control">
         <img

@@ -104,9 +104,6 @@ export default {
           throw new Error(data.message);
         }
         this.$emit("updateData");
-
-        // this.handleShowModalClick();
-        this.$router.push({ name: "UserMain" });
       } catch (error) {
         console.log("error", error);
       }

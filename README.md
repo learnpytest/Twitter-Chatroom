@@ -8,27 +8,28 @@
 account: user1
 password: 12345678
 後台管理者登入 info：
-account: admin
+account: root
 password: 12345678
 
 # 網頁主要功能
 
-##一般使用者：
+## 一般使用者：
 
 1. 註冊頁/登入頁/登出頁 - 使用者註冊帳號及編輯自己的基本資料
-2. 抵達頁 - 使用者登入以後抵達使用者首頁，可以瀏覽所有推文清單、點擊貼文可以瀏覽貼文詳細資料與所有回覆。使用者可以透過左邊側邊欄前往個人資料、設定頁面與回到首頁
-3. 個人資料頁 - 使用者可以檢視自己的詳細資料與所有推文、回覆、喜歡的內容
-4. 貼文留言 - 使用者可以瀏覽、發送以及回覆帖文
-5. 使用者互動 - 使用者互相追踪/取消追踪，按贊/取消按贊
-6. 設定頁 - 使用者可以修改自己的帳號、名稱、信箱與密碼
+2. 抵達頁 - 使用者登入以後抵達使用者首頁，可以瀏覽所有推文清單、點擊貼文可以瀏覽貼文詳細資料與所有回覆。
+3. 側邊欄 - 使用者可以透過左邊側邊欄前往個人資料、設定頁面與回到首頁
+4. 個人資料頁 - 使用者可以檢視自己的詳細資料與所有推文、回覆、喜歡的內容
+5. 貼文留言 - 使用者可以瀏覽、發送以及回覆帖文
+6. 使用者互動 - 使用者互相追踪/取消追踪，按贊/取消按贊
+7. 設定頁 - 使用者可以修改自己的帳號、名稱、信箱與密碼
 
-##後台管理者：
+## 後台管理者：
 
 1. 管理者可以瀏覽全站的 Tweet 清單
 2. 管理者可以瀏覽站內所有的使用者清單及使用者基本資料
 3. 管理者可以刪除 任一則 Tweet 貼文
 
-##使用技術：
+## 使用技術：
 
 1. Vue.js 2.0, Vuex, Javascript, Node.js, Express.js
 2. 使用元件分別為頁面元件以及共用元件
@@ -49,8 +50,10 @@ $ npm install
 Make sure you've got all prerequisites, then initializing project by node using npm scripts:
 
 $ git clone https://github.com/learnpytest/Front_End_Vue_Simple_Twitter.git
+
 $ cd Front_End_Vue_Simple_Twitter
-$ npm run start
+
+$ npm run serve
 
 ```
 ### Compiles and hot-reloads for development
