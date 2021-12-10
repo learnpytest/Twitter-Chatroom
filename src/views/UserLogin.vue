@@ -58,4 +58,10 @@ export default {
   text-align: center;
   color: var(--b-1000);
 }
+.link--login {
+  color: #0099ff;
+}
+a {
+  color: #0099ff;
+}
 </style>

@@ -40,7 +40,10 @@ export default {
 @import "@/assets/scss/utils/mixins/_colors.scss";
 @import "@/assets/scss/utils/_variables.scss";
 
+.link--login {
+  color: #0099ff;
+}
 a {
-  @include grays(color, g-600);
+  color: #0099ff;
 }
 </style>
