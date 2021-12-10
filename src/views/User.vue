@@ -21,7 +21,6 @@
 
     <div class="user-edit-modal" v-if="showEditModal">
       <UserEditModal
-        :initialUserObj="userObj"
         :initialEditModal="showEditModal"
         @show-edit-modal="editModalToggle"
         @afterUpdateUserProfile="fetchUser(userId)"
@@ -324,7 +323,7 @@ export default {
   height: 100%;
   position: sticky;
   position: -webkit-sticky;
-  top: 0;
+  // top: 0;
 }
 .sidebar {
   width: 18%;

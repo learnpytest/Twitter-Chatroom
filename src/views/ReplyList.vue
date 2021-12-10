@@ -140,6 +140,6 @@ export default {
   width: 25%;
   position: sticky;
   position: -webkit-sticky;
-  top: 0;
+  // top: 0;
 }
 </style>

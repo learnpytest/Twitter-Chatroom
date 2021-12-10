@@ -14,20 +14,6 @@
       </div>
       <div class="background-pic">
         <img :src="userCover" alt="" />
-        <!-- <div class="pic-btn-control">
-          <img
-            src="./../../assets/images/icon_uploadPhoto.png"
-            alt=""
-            id="upload-btn"
-          />
-
-          <img
-            src="./../../assets/images/icon_delete.png"
-            alt=""
-            id="delete-btn"
-            @click="deleteCover"
-          />
-        </div> -->
 
         <div class="pic-btn-control">
           <label for="cover">
@@ -123,6 +109,8 @@
 <script>
 import { mixinEmptyImage } from "../../utils/mixin";
 import { mapGetters, mapActions } from "vuex";
+import currentUserAPI from "@/apis/currentUserAPI";
+
 import {
   PUT_CURRENT_USER_PROFILE,
   GET_IS_PROCESSING,
@@ -134,10 +122,10 @@ export default {
       type: Boolean,
       required: true,
     },
-    initialUserObj: {
-      type: Object,
-      required: true,
-    },
+    // initialUserObj: {
+    //   type: Object,
+    //   required: true,
+    // },
   },
   data() {
     return {
@@ -148,31 +136,35 @@ export default {
       userIntroduction: "",
       showEditModal: false,
       limit: -1,
-      newName: "",
-      newIntro: "",
+      // newName: "",
+      // newIntro: "",
       submitEmptyField: false,
+      // currentUserId: "",
+      userObj: {},
     };
   },
   created() {
     this.fetchData();
   },
   methods: {
-    handleSubmit(e) {
+    async handleSubmit(e) {
       if (!this.userName.length) {
         this.submitEmptyField = true;
-        // todo validation
-
-        // test
         return;
       }
+
       const form = e.target; // <form></form>
+
       const formData = new FormData(form);
-      this.putCurrentUserProfile(formData);
-      // 測試用
-      for (let [name, value] of formData.entries()) {
-        console.log(name + ": " + value);
-      }
+      const payload = { formData, userId: this.userId };
+      this.putCurrentUserProfile(payload);
+      // // 測試用
+      // for (let [name, value] of formData.entries()) {
+      //   console.log(name + ": " + value);
+      // }
+
       this.$emit("afterUpdateUserProfile", this.userId);
+
       setTimeout(() => {
         this.handleShowModalClick();
       }, 1000);
@@ -194,7 +186,6 @@ export default {
       const { files } = e.target;
 
       if (files.length === 0) {
-        // this.userCover = "";
         return;
       } else {
         // 產生預覽圖
@@ -203,22 +194,33 @@ export default {
       }
     },
     deleteCover() {
-      // this.userCover = "";
       this.userCover = "empty";
     },
     ...mapActions({
       putCurrentUserProfile: PUT_CURRENT_USER_PROFILE,
     }),
-    fetchData() {
+    async fetchData() {
+      try {
+        const res = await currentUserAPI.getCurrentUser();
+        const { data, statusText } = res;
+        if (statusText !== "OK") {
+          throw new Error(statusText);
+        }
+
+        this.userObj = data;
+        const { id, name, cover, avatar, introduction } = this.userObj;
+        [
+          this.userId,
+          this.userName,
+          this.userCover,
+          this.userAvatar,
+          this.userIntroduction,
+        ] = [id, name, cover, avatar, introduction];
+      } catch (err) {
+        console.log(err);
+      }
+
       this.showEditModal = this.initialEditModal;
-      const { UserId, name, cover, avatar, introduction } = this.initialUserObj;
-      [
-        this.userId,
-        this.userName,
-        this.userCover,
-        this.userAvatar,
-        this.userIntroduction,
-      ] = [UserId, name, cover, avatar, introduction];
     },
     handleShowModalClick() {
       this.showEditModal = false;
@@ -245,11 +247,11 @@ export default {
       return limit - char + " / " + limit;
     },
   },
-  watch: {
-    initialUserObj() {
-      this.fetchData();
-    },
-  },
+  // watch: {
+  //   initialUserObj() {
+  //     this.fetchData();
+  //   },
+  // },
 };
 </script>
 <style lang="scss" scoped>
