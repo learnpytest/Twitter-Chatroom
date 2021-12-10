@@ -4,12 +4,15 @@
 
 ###
 
-前台一般使用者登入 info：
-account: user1
-password: 12345678
-後台管理者登入 info：
-account: root
-password: 12345678
+#### 前台一般使用者登入 info：
+
+- account: user1
+- password: 12345678
+
+#### 後台管理者登入 info：
+
+- account: root
+- password: 12345678
 
 # 網頁主要功能
 
