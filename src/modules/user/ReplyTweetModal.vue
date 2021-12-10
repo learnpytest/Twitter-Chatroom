@@ -15,28 +15,37 @@
       </div>
       <div class="to-reply-user">
         <div class="to-reply-user_pic">
-          <img class="user-pic" :src="tweet.User.avatar | emptyImage" alt="" />
+          <img
+            class="user-pic"
+            :src="tweet.User && tweet.User.avatar | emptyImage"
+            alt=""
+          />
           <div class="connecting-line"></div>
         </div>
         <div class="to-reply-user-info">
           <div class="to-reply-user-info_info">
             <p class="to-reply-user-name">
-              {{ tweet.User.name }} <span>@{{ tweet.User.account }} • </span
-              ><span>{{ tweet.createdAt | fromNow }}</span>
+              {{ tweet.User && tweet.User.name }}
+              <span>@{{ tweet.User && tweet.User.account }} • </span
+              ><span>{{ tweet && tweet.createdAt | fromNow }}</span>
             </p>
           </div>
           <div class="to-reply-user-tweet_text">
-            {{ tweet.description }}
+            {{ tweet && tweet.description }}
           </div>
           <p class="reply-to">
-            回覆給 <span>@{{ tweet.User.account }}</span>
+            回覆給 <span>@{{ tweet.User && tweet.User.account }}</span>
           </p>
         </div>
       </div>
 
       <div class="text-box">
         <div class="user-info">
-          <img class="user-pic" :src="currentUser.avatar | emptyImage" alt="" />
+          <img
+            class="user-pic"
+            :src="currentUser && currentUser.avatar | emptyImage"
+            alt=""
+          />
         </div>
         <div class="text-area">
           <textarea
@@ -63,14 +72,14 @@
 <script>
 // need to take targeted user
 import { mapGetters } from "vuex";
-// import { GET_CURRENT_USER, GET_IS_PROCESSING } from "../../store/store-types";
 import { GET_IS_PROCESSING } from "../../store/store-types";
 import { mixinEmptyImage, mixinFromNowFilters } from "../../utils/mixin";
 import tweetsAPI from "./../../apis/tweets";
 import currentUserAPI from "@/apis/currentUserAPI";
 export default {
+  name: "ReplyTweetModal",
+  mixins: [mixinEmptyImage, mixinFromNowFilters],
   props: {
-    mixins: [mixinEmptyImage, mixinFromNowFilters],
     initialShowReplyModal: {
       type: Boolean,
       required: true,
@@ -112,9 +121,7 @@ export default {
     async handleCommentSubmit(tweetId) {
       if (!this.text.length) {
         this.submitEmptyField = true;
-        // todo validation
 
-        // test
         return;
       }
 
@@ -128,6 +135,11 @@ export default {
           throw new Error(data.message);
         }
         this.handleShowModalClick();
+
+        if (this.$route.path.startsWith("/reply")) {
+          this.$router.push(`/usermain`);
+          return;
+        }
         this.$router.push(`/reply/${tweetId}`);
       } catch (err) {
         console.log(err);
@@ -162,7 +174,6 @@ export default {
       return limit - char + " / " + limit + "剩餘字數";
     },
     ...mapGetters({
-      // getCurrentUser: GET_CURRENT_USER,
       isProcessing: GET_IS_PROCESSING,
     }),
   },

@@ -15,7 +15,7 @@
       <ReplyTweetModal
         :initialShowReplyModal="showReplyModal"
         :initialTweetId="replyTweetId"
-        @show-reply-modal="replyModalToggle(tweetId)"
+        @show-reply-modal="replyModalToggle"
       />
     </div>
 
@@ -23,7 +23,7 @@
       <UserEditModal
         :initialEditModal="showEditModal"
         @show-edit-modal="editModalToggle"
-        @afterUpdateUserProfile="fetchUser(userId)"
+        @afterUpdateUserProfile="fetchUser"
       />
     </div>
     <div class="user">
@@ -107,7 +107,7 @@ export default {
       showModal: false,
       showEditModal: false,
       showReplyModal: false,
-      // currentUserId: {},
+
       userTweets: [],
       userId: "",
       userObj: {},
@@ -132,14 +132,12 @@ export default {
   },
   methods: {
     updateFollow() {
-      console.log("updateFollow");
       this.userObj = {
         ...this.useObj,
         FollowingsCount: this.userObj.FollowingsCount + 1,
       };
     },
     updateCancel() {
-      console.log("updateCancel");
       this.userObj = {
         ...this.useObj,
         FollowingsCount: this.userObj.FollowingsCount - 1,
@@ -331,10 +329,4 @@ export default {
   position: -webkit-sticky;
   top: 0;
 }
-
-// .liked-tweets,
-// .user-tweets,
-// .comments {
-//   border: 1px solid $gray-75;
-// }
 </style>

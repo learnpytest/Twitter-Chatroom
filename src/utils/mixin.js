@@ -59,13 +59,9 @@ export const mixinFromNowFilters = {
       if (nowTime - pastTime < 86400000) {
         return Moment(datetime).fromNow();
       } else {
-        // return Moment().format(datetime);
-
         return Moment(datetime.toString().split("T")[0])
           .locale("zh-tw")
           .format("LL");
-
-        // return Moment(datetime).locale("zh-tw").format("LLLL");
       }
     },
   },

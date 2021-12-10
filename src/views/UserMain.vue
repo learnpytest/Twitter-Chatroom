@@ -11,7 +11,7 @@
       <ReplyTweetModal
         :initialShowReplyModal="showReplyModal"
         :initialTweetId="replyTweetId"
-        @show-reply-modal="replyModalToggle(tweetId)"
+        @show-reply-modal="replyModalToggle"
       />
     </div>
     <div class="usermain">
@@ -90,7 +90,7 @@ export default {
         const response = await tweetsApi.getAllTweet();
         const { data } = response;
         this.userTweets = [...data];
-        // side effect?
+
         this.showModal = false;
       } catch (error) {
         console.log(error);

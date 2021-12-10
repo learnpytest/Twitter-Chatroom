@@ -16,8 +16,6 @@ const actions = {
     commit,
     dispatch
   }) => {
-    // 取得使用者權限，希望使用者每一次切換頁面路由都可以取一次currentUser，需要設定router 在router的beforeEach
-    console.log("setallusers");
     try {
       const {
         data,

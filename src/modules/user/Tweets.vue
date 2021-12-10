@@ -90,7 +90,6 @@ export default {
   },
   watch: {
     initialTweets(newValue) {
-      console.log("newtweetchange");
       this.tweets = [...newValue];
     },
   },
@@ -132,7 +131,6 @@ export default {
           throw new Error(data.message);
         }
         this.tweets = this.tweets.map((tweet) => {
-          console.log(tweet);
           if (tweet.TweetId === Number(tweetId)) {
             return {
               ...tweet,

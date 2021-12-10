@@ -78,19 +78,16 @@ const routes = [{
     path: "/admin/users",
     name: "admin-users-list",
     component: () => import("@/views/Admin/AdminUsers"),
-    // beforeEnter: authenticateIsAdmin,
   },
   {
     path: "/admin/tweets",
     name: "admin-tweet-list",
     component: () => import("@/views/Admin/AdminMain"),
-    // beforeEnter: authenticateIsAdmin,
   },
   {
     path: "/usermain",
     name: "UserMain",
     component: () => import("@/views/UserMain"),
-    //要移回來
   },
 
   {
@@ -107,8 +104,6 @@ const routes = [{
         name: "user-followings",
       },
     ],
-    //要移回來
-    // beforeEnter: authenticateIsLoggedinUser,
   },
 
   {
@@ -121,11 +116,7 @@ const routes = [{
     name: "user",
     component: () => import("@/views/User"),
   },
-  // {
-  //   path: "/user/:id",
-  //   name: "user",
-  //   component: () => import("@/views/User"),
-  // },
+
   {
     path: "/",
     name: "root",

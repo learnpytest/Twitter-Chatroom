@@ -90,7 +90,6 @@ export default {
       revokeAuthentication: REVOKE_AUTHENTICATION,
     }),
     logout() {
-      console.log("logout");
       this.revokeAuthentication();
       this.$router.push("/login");
     },

@@ -49,19 +49,12 @@ const actions = {
     }
   },
   [PUT_CURRENT_USER_PROFILE]: async ({
-    rootState,
     dispatch
   }, payload) => {
-    const userId = rootState.user.currentUser.id;
     try {
-      // // 測試用
-      // for (let [name, value] of formData.entries()) {
-      //   console.log(name + ": " + value);
-      // }
-
       dispatch(SET_IS_PROCESSING, true);
       const res = await usersAPI.putUserProfile(payload);
-      // console.log(res);
+
       const {
         data,
         statusText
@@ -70,43 +63,11 @@ const actions = {
         throw new Error(data.message);
       }
       dispatch(RESET_CURRENT_USER_PROFILE);
-      console.log("putuserprofile", userId, res);
+
       dispatch(SET_IS_PROCESSING, false);
     } catch (err) {
       dispatch(SET_IS_PROCESSING, false);
     }
-
-    // const {
-    //   account,
-    //   username: name,
-    //   email,
-    //   password,
-    //   checkPassword,
-    // } = state.accountInfo;
-    // if (!account || !name || !email || password !== checkPassword) {
-    //   throw new Error("欄位填寫不正確");
-    // }
-    // //  request api
-    // const id = rootState.user.currentUser.id;
-    // const res = await userAccountAPI.update(id, {
-    //   account,
-    //   name,
-    //   email,
-    //   password,
-    //   checkPassword,
-    // });
-    // const {
-    //   data,
-    //   statusText
-    // } = res;
-    // if (data.status !== "success" || statusText !== "OK") {
-    //   throw new Error(data.message);
-    // }
-    // // 提示修改資料成功再拉取當前使用者資料
-    // dispatch(ADD_NOTIFICATION, {
-    //   type: "success",
-    //   message: "已編輯個人資料",
-    // });
   },
 };
 

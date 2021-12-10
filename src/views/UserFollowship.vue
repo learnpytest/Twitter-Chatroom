@@ -15,7 +15,6 @@
             @click="redirect"
           />
           <div class="header-info">
-            <!-- <p>John Doe</p> -->
             <p>{{ userObj.name }}</p>
 
             <p>{{ userObj.TweetCount }} <span>推文</span></p>

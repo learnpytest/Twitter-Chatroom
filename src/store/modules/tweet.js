@@ -102,8 +102,6 @@ const actions = {
   [SET_ONE_USER_LIKES]: async ({
     commit
   }, userId) => {
-    // send api
-    console.log("set one user likes");
     try {
       const res = await tweets.getOneUserLikes(userId);
       const {
