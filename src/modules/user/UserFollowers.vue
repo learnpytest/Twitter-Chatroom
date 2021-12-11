@@ -107,6 +107,7 @@ export default {
 
 .user-info {
   color: $gray-600;
+ 
 }
 
 .follow-btn {
