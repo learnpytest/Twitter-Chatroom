@@ -53,7 +53,8 @@ import {
 
 Vue.use(VueRouter);
 
-const routes = [{
+const routes = [
+  {
     path: "/reply/:id",
     name: "reply-list",
     component: () => import("@/views/ReplyList"),
@@ -95,7 +96,8 @@ const routes = [{
     name: "user-followship",
 
     component: () => import("@/views/UserFollowship.vue"),
-    children: [{
+    children: [
+      {
         path: ":id/followers",
         name: "user-followers",
       },
@@ -105,7 +107,11 @@ const routes = [{
       },
     ],
   },
-
+  {
+    path: "/public-room",
+    name: "public-room",
+    component: () => import("@/views/PublicRoom"),
+  },
   {
     path: "/user/setting",
     name: "user-setting",
