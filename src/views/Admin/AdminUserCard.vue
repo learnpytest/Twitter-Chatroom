@@ -14,7 +14,7 @@
           class="feeds__icon"
           src="@/assets/images/icon_reply.png"
           alt=""
-        /><span class="feeds__count">{{ user.RepliesCount }}</span>
+        /><span class="feeds__count">{{ user.TweetsCount }}</span>
       </div>
       <div class="feeds">
         <img

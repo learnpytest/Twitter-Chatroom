@@ -197,6 +197,7 @@ export default {
 .profile-details {
   padding: 10px;
   margin-top: 15px;
+  word-break: break-all;
   .profile-name {
     font-weight: var(--fw-bolder);
     font-size: 18px;

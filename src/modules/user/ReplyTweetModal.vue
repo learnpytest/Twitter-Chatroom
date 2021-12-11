@@ -52,7 +52,7 @@
             class="form-control"
             rows="3"
             v-model="text"
-            maxlength="140"
+            maxlength="141"
             placeholder="推你的回覆"
             @click.stop.prevent="resetEmpty"
           /><span class="limiter">{{ charactersLeft }}</span>
@@ -122,6 +122,9 @@ export default {
       if (!this.text.length) {
         this.submitEmptyField = true;
 
+        return;
+      }
+      if (this.text.length > 140) {
         return;
       }
 

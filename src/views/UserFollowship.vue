@@ -20,14 +20,11 @@
             <p>{{ userObj.TweetCount }} <span>推文</span></p>
           </div>
         </div>
-        <tabs-followship class="tabs" :initialIndex="parentSelectedIndex">
+        <tabs-followship class="tabs">
           <tab class="follow-tab" title="跟隨者"
             ><UserFollowers :initialShowReplyModal="showReplyModal"
           /></tab>
-          <tab
-            class="follow-tab"
-            title="正在跟隨"
-            :initialIndex="parentSelectedIndex"
+          <tab class="follow-tab" title="正在跟隨"
             ><UserFollowings :initialShowReplyModal="showReplyModal"
           /></tab>
         </tabs-followship>

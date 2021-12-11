@@ -10,7 +10,7 @@
       <div class="follow-card_info">
         <p class="user-name">{{ follower.name }}</p>
         <p class="user-info">@{{ follower.account }}</p>
-        <p>{{ follower.introduction }}</p>
+        <p class="user-intro">{{ follower.introduction }}</p>
       </div>
       <div class="follow-btn" v-if="follower.isFollowed">
         <button
@@ -130,5 +130,8 @@ export default {
 }
 .user-name {
   font-weight: var(--fw-bold);
+}
+.user-intro {
+  word-break: break-all;
 }
 </style>

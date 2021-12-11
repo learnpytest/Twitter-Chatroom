@@ -20,7 +20,7 @@
             class="form-control"
             rows="3"
             v-model="text"
-            maxlength="140"
+            maxlength="141"
             placeholder="有什麽新鮮事？"
             @click.stop.prevent="resetEmpty"
           /><span class="limiter">{{ charactersLeft }}</span>
@@ -89,9 +89,9 @@ export default {
     async handleTweetSubmit() {
       if (!this.text.length) {
         this.submitEmptyField = true;
-        // todo validation
-
-        // test
+        return;
+      }
+      if (this.text.length > 140) {
         return;
       }
 

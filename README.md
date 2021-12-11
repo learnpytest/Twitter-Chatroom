@@ -56,6 +56,8 @@ $ git clone https://github.com/learnpytest/Front_End_Vue_Simple_Twitter.git
 
 $ cd Front_End_Vue_Simple_Twitter
 
+$ npm run install
+
 $ npm run serve
 
 ```

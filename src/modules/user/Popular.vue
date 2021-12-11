@@ -136,6 +136,9 @@ export default {
 .user-info {
   color: $gray-600;
 }
+.user-name {
+  word-break: break-all;
+}
 
 .follow-btn {
   width: 100%;

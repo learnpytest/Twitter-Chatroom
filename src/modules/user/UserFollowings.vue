@@ -10,7 +10,7 @@
       <div class="follow-card_info">
         <p class="user-name">{{ following.name }}</p>
         <p class="user-info">@{{ following.account }}</p>
-        <p>{{ following.introduction }}</p>
+        <p class="user-intro">{{ following.introduction }}</p>
       </div>
       <div class="follow-btn" v-if="following.isFollowed">
         <button
@@ -48,10 +48,8 @@ export default {
     cancel(followingId) {
       const userId = this.$route.params.id;
       this.cancelFollow({ followingId, userId });
-      // this.$store.dispatch(SET_CURRENT_USER_FOLLOWINGS, userId);
     },
     ...mapActions({
-      // setCurrentUserFollowings: SET_CURRENT_USER_FOLLOWINGS,
       cancelFollow: DELETE_FOLLOWSHIP,
     }),
   },
@@ -117,5 +115,8 @@ export default {
 }
 .user-name {
   font-weight: var(--fw-bold);
+}
+.user-intro {
+  word-break: break-all;
 }
 </style>

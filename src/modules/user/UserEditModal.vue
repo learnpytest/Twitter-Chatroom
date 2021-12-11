@@ -66,10 +66,10 @@
         <div class="form__group">
           <label for="name">名稱</label>
           <input
-            type="name"
+            type="text"
             id="name"
             name="name"
-            v-model="userName"
+            v-model="userObj.name"
             maxlength="50"
           />
           <div class="limit-error">
@@ -110,14 +110,13 @@
 import { mixinEmptyImage } from "../../utils/mixin";
 import { mapGetters, mapActions } from "vuex";
 import currentUserAPI from "@/apis/currentUserAPI";
-
 import {
   PUT_CURRENT_USER_PROFILE,
   GET_IS_PROCESSING,
 } from "../../store/store-types";
 export default {
+  mixins: [mixinEmptyImage],
   props: {
-    mixins: [mixinEmptyImage],
     initialEditModal: {
       type: Boolean,
       required: true,
@@ -136,10 +135,9 @@ export default {
       userIntroduction: "",
       showEditModal: false,
       limit: -1,
-      // newName: "",
-      // newIntro: "",
+
       submitEmptyField: false,
-      // currentUserId: "",
+
       userObj: {},
     };
   },
@@ -152,24 +150,23 @@ export default {
         this.submitEmptyField = true;
         return;
       }
-
       const form = e.target; // <form></form>
-
       const formData = new FormData(form);
       const payload = { formData, userId: this.userId };
       this.putCurrentUserProfile(payload);
-
+      // // 測試用
+      // for (let [name, value] of formData.entries()) {
+      //   console.log(name + ": " + value);
+      // }
       this.$emit("afterUpdateUserProfile", this.userId);
-
       setTimeout(() => {
         this.handleShowModalClick();
       }, 1000);
     },
-
     handleAvatarFileChange(e) {
       const { files } = e.target;
-
       if (files.length === 0) {
+        // this.userAvatar = "";
         return;
       } else {
         // 產生預覽圖
@@ -179,7 +176,6 @@ export default {
     },
     handleCoverFileChange(e) {
       const { files } = e.target;
-
       if (files.length === 0) {
         return;
       } else {
@@ -201,20 +197,19 @@ export default {
         if (statusText !== "OK") {
           throw new Error(statusText);
         }
+        this.userObj = { ...data };
 
-        this.userObj = data;
-        const { id, name, cover, avatar, introduction } = this.userObj;
-        [
-          this.userId,
-          this.userName,
-          this.userCover,
-          this.userAvatar,
-          this.userIntroduction,
-        ] = [id, name, cover, avatar, introduction];
+        // const { id, name, cover, avatar, introduction } = this.userObj;
+        // [
+        //   this.userId,
+        //   this.userName,
+        //   this.userCover,
+        //   this.userAvatar,
+        //   this.userIntroduction,
+        // ] = [id, name, cover, avatar, introduction];
       } catch (err) {
         console.log(err);
       }
-
       this.showEditModal = this.initialEditModal;
     },
     handleShowModalClick() {
@@ -232,13 +227,11 @@ export default {
     nameCharactersLeft() {
       let char = this.userName.length,
         limit = 50;
-
       return limit - char + " / " + limit;
     },
     introCharactersLeft() {
       let char = this.userIntroduction.length,
         limit = 160;
-
       return limit - char + " / " + limit;
     },
   },
@@ -252,7 +245,6 @@ export default {
 <style lang="scss" scoped>
 @import "./src/assets/scss/main.scss";
 @import "@/assets/scss/utils/_variables.scss";
-
 .userAvatar {
   border-radius: 50%;
 }
@@ -261,7 +253,6 @@ export default {
   left: 70px;
   font-weight: var(--fw-bold);
 }
-
 .header-btn {
   display: flex;
   flex-flow: row nowrap;
@@ -279,7 +270,6 @@ export default {
     background-color: $orange-100;
   }
 }
-
 .header-btn img {
   filter: invert(42%) sepia(75%) saturate(2795%) hue-rotate(2deg)
     brightness(105%) contrast(104%);
@@ -302,7 +292,6 @@ export default {
   height: 170px;
   object-fit: cover;
 }
-
 .background-pic {
   position: relative;
   .pic-btn-control {
@@ -319,11 +308,9 @@ export default {
     }
   }
 }
-
 .profile-pic {
   padding: 10px;
   margin-top: -90px;
-
   :nth-child(2) {
     width: 25px;
     height: 25px;

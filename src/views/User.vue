@@ -132,16 +132,12 @@ export default {
   },
   methods: {
     updateFollow() {
-      this.userObj = {
-        ...this.useObj,
-        FollowingsCount: this.userObj.FollowingsCount + 1,
-      };
+      let FollowingsCount = this.userObj.FollowingsCount + 1;
+      this.userObj = { ...this.userObj, FollowingsCount };
     },
     updateCancel() {
-      this.userObj = {
-        ...this.useObj,
-        FollowingsCount: this.userObj.FollowingsCount - 1,
-      };
+      let FollowingsCount = this.userObj.FollowingsCount - 1;
+      this.userObj = { ...this.userObj, FollowingsCount };
     },
 
     replyModalToggle(tweetId) {
