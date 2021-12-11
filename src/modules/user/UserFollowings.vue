@@ -20,9 +20,14 @@
           正在跟隨
         </button>
       </div>
-      <!-- <div class="follow-btn" v-else>
-        <button class="follower-btn">跟隨</button>
-      </div> -->
+      <div class="follow-btn" v-else>
+        <button
+          class="follower-btn"
+          @click.stop.prevent="post(following.followingId)"
+        >
+          跟隨
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -34,6 +39,7 @@ import {
   GET_CURRENT_USER_FOLLOWINGS,
   SET_CURRENT_USER_FOLLOWINGS,
   DELETE_FOLLOWSHIP,
+  POST_FOLLOWSHIP,
 } from "../../store/store-types";
 export default {
   name: "UserFollowings",
@@ -49,8 +55,14 @@ export default {
       const userId = this.$route.params.id;
       this.cancelFollow({ followingId, userId });
     },
+    post(followingId) {
+      const userId = this.$route.params.id;
+      this.postFollowship({ followingId, userId });
+      // this.$store.dispatch(SET_CURRENT_USER_FOLLOWINGS, userId);
+    },
     ...mapActions({
       cancelFollow: DELETE_FOLLOWSHIP,
+      postFollowship: POST_FOLLOWSHIP,
     }),
   },
   computed: {
