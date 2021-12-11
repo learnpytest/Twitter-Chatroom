@@ -151,7 +151,9 @@ export default {
   color: $white;
   background-color: $orange-100;
 }
-
+.user-name {
+  word-break: break-all;
+}
 .follower-btn {
   background-color: $gray-50;
   color: $orange-100;
