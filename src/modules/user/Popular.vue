@@ -63,12 +63,12 @@ export default {
     cancel(followingId) {
       const userId = this.$route.params.id;
       this.cancelFollow({ followingId, userId });
-      this.$emit("updateCancelView");
+      this.$emit("updateCancelView", followingId);
     },
     post(followingId) {
       const userId = this.$route.params.id;
       this.postFollowship({ followingId, userId });
-      this.$emit("updateFollowView");
+      this.$emit("updateFollowView", followingId);
     },
     ...mapActions({
       setTopUsers: SET_TOP_USERS,
