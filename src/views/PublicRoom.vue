@@ -69,6 +69,9 @@ export default {
     allMessages: function (data) {
       console.log("publichroom.js allMessages", data);
     },
+    Created: function (data) {
+      console.log("publichroom.js Created", data);
+    },
   },
   data() {
     return {
@@ -78,18 +81,15 @@ export default {
     };
   },
   mounted() {
-    this.$socket.on("allMessages", (obj) => {
-      console.log(obj);
-    });
+    // this.$socket.on("allMessages", (obj) => {
+    //   console.log(obj);
+    // });
     // io.on("allMessages", (obj) => {
     //   console.log(obj);
     // });
   },
   created() {
     socket.emit("Created", "StartPublicChatroom");
-    socket.on("Created", (data) => {
-      console.log(data);
-    });
   },
 
   methods: {
