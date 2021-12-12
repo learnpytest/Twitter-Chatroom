@@ -113,7 +113,6 @@ export default {
 <style lang="scss" scoped>
 @import "./src/assets/scss/main.scss";
 #chat-wrapper {
-  height: 80vh;
   display: flex;
   flex-flow: column nowrap;
   justify-content: end;
@@ -177,8 +176,7 @@ export default {
 }
 
 .chat-room-wrapper {
-  height: 100%;
-  overflow-y: auto;
+  // height: 100%;
   display: flex;
   flex-flow: column;
   justify-content: space-around;
