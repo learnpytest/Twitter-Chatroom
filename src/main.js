@@ -62,26 +62,18 @@ export const vm = new Vue({
   store,
   sockets: {
     connecting() {
-      console.log("main.js Socket connecting");
+      console.log("main.js connecting");
     },
     disconnect() {
-      console.log("main.js Socket Disconnect");
+      console.log("main.js Disconnect");
     },
     connect_failed() {
-      console.log("main.js Socket connect failed");
+      console.log("main.js connect failed");
     },
     connect() {
-      console.log("main.js socket connected in main.js");
+      console.log("main.js connected in main.js");
     },
-    messageNotify: function (data) {
-      console.log("main.js messageNotifydata", data);
-    },
-    subscribeNotify: function (data) {
-      console.log("main.js subscribeNotify", data);
-    },
-    reactionNotify: function (data) {
-      console.log("main.js reactionNotify", data);
-    },
+
     allMessages: function (data) {
       console.log("main.js allMessages", data);
       store.state.allMessages = [...data];
@@ -111,17 +103,6 @@ export const vm = new Vue({
         type: 1,
       });
     },
-    // joined: function (obj) {
-    //   const isExisted = store.state.allUsers.find((user) => user.id === obj.id);
-    //   if (isExisted) return;
-    //   // store.state.allUsers.filter((user) => user.id !== obj.id);
-    //   socket.emit("message", {
-    //     id: obj.id,
-    //     name: obj.name,
-    //     message: 0,
-    //     type: -1,
-    //   });
-    // },
 
     leaved: function (obj) {
       const isExisted = store.state.allUsers.find((user) => user.id === obj.id);

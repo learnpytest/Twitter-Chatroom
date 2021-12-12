@@ -33,7 +33,7 @@
               <div class="reply-text">{{ item.message }}</div>
             </div>
           </div>
-          <p class="reply-time">下午6:02</p>
+          <!-- <p class="reply-time">下午6:02</p> -->
         </div>
 
         <div
@@ -41,7 +41,7 @@
           class="sent-box right"
         >
           <div class="sent-text">{{ item.message }}</div>
-          <p class="sent-time">下午6:02</p>
+          <!-- <p class="sent-time">下午6:02</p> -->
         </div>
       </div>
       <div class="chat-wrapper">

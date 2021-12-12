@@ -58,17 +58,9 @@ export default {
       console.log("socket connected");
     },
     disconnect() {
-      console.log("socket disconnected!!!!!!!!!!!");
+      console.log("socket disconnected!");
     },
-    userConnected: function (data) {
-      this.messages.push(data);
-    },
-    userDisconnected: function (data) {
-      this.messages.push(data);
-    },
-    chatMessage: function (data) {
-      this.messages.push(data);
-    },
+
     allMessages: function (data) {
       console.log("publichroom.js allMessages", data);
     },
