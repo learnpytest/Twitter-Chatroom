@@ -5,32 +5,38 @@
         <p>公開聊天室</p>
       </div>
     </div>
-    <div class="chat-wrapper" v-for="(item, index) in allMessages" :key="index">
-      <!-- <div class="online-box center">
+    <div id="chat-wrapper">
+      <div
+        class="chat-wrapper"
+        v-for="(item, index) in allMessages"
+        :key="index"
+      >
+        <!-- <div class="online-box center">
         <span class="online-text">Jess 上線</span>
       </div> -->
 
-      <div class="reply-box" v-if="item.name !== currentUser.name">
-        <div class="reply-text-info bottom-align">
-          <img
-            class="user-pic"
-            src="./../../assets/images/Photo_user2.png"
-            alt=""
-          />
-          <div class="reply-text-time">
-            <div class="reply-text">{{ item.message }}</div>
+        <div class="reply-box" v-if="item.name !== currentUser.name">
+          <div class="reply-text-info bottom-align">
+            <img
+              class="user-pic"
+              src="./../../assets/images/Photo_user2.png"
+              alt=""
+            />
+            <div class="reply-text-time">
+              <div class="reply-text">{{ item.message }}</div>
+            </div>
           </div>
+          <p class="reply-time">下午6:02</p>
         </div>
-        <p class="reply-time">下午6:02</p>
-      </div>
 
-      <div v-if="item.name === currentUser.name" class="sent-box right">
-        <div class="sent-text">{{ item.message }}</div>
-        <p class="sent-time">下午6:02</p>
-      </div>
-      <!-- <div class="online-box center">
+        <div v-if="item.name === currentUser.name" class="sent-box right">
+          <div class="sent-text">{{ item.message }}</div>
+          <p class="sent-time">下午6:02</p>
+        </div>
+        <!-- <div class="online-box center">
         <span class="online-text">Jess 下線</span>
       </div> -->
+      </div>
     </div>
     <div class="chat-field">
       <input
@@ -101,6 +107,12 @@ export default {
 
 <style lang="scss" scoped>
 @import "./src/assets/scss/main.scss";
+#chat-wrapper {
+  height: 80vh;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: end;
+}
 
 .bottom-align {
   display: flex;
@@ -161,9 +173,10 @@ export default {
 
 .chat-room-wrapper {
   height: 100%;
-  // display: flex;
-  // flex-flow: column;
-  // justify-content: space-between;
+  overflow-y: auto;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
 }
 
 .chat-field {

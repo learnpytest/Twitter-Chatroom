@@ -150,7 +150,6 @@ export default {
   flex-flow: row nowrap;
   justify-content: right;
   height: 100%;
-  overflow-y: scroll;
 }
 .container {
   height: 100%;
@@ -167,6 +166,7 @@ export default {
   border-left: 1px solid $gray-75;
   border-right: 1px solid $gray-75;
   margin-left: 30px;
+  overflow-y: auto;
 }
 .chat-room {
   width: 44.5%;
