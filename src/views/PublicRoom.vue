@@ -36,6 +36,8 @@ import ChatRoom from "../modules/user/ChatRoom.vue";
 
 // import io from "socket.io-client";
 
+import socket from "../main";
+
 export default {
   components: {
     Sidebar,
@@ -72,6 +74,7 @@ export default {
     return {
       showModal: false,
       showReplyModal: false,
+      userName: "Louis",
     };
   },
   mounted() {
@@ -82,7 +85,13 @@ export default {
     //   console.log(obj);
     // });
   },
-  created() {},
+  created() {
+    socket.emit("Created", "StartPublicChatroom");
+    socket.on("Created", (data) => {
+      console.log(data);
+    });
+  },
+
   methods: {
     modalToggle() {
       if (!this.showModal) {
@@ -100,6 +109,10 @@ export default {
         this.replyTweetId = "";
         this.showReplyModal = false;
       }
+    },
+    clickButton: function (data) {
+      // $socket is socket.io-client instance
+      this.$socket.emit("emit_method", data);
     },
   },
 };
@@ -144,7 +157,6 @@ export default {
   flex-flow: row nowrap;
   justify-content: right;
   height: 100%;
-  overflow-y: scroll;
 }
 .container {
   height: 100%;
@@ -161,6 +173,7 @@ export default {
   border-left: 1px solid $gray-75;
   border-right: 1px solid $gray-75;
   margin-left: 30px;
+  overflow-y: auto;
 }
 .chat-room {
   width: 44.5%;
@@ -173,6 +186,8 @@ export default {
   padding-left: 15px;
   font-weight: var(--fw-bolder);
   background-color: $white;
+  position: sticky;
+  top: 0;
   .header-info {
     :nth-child(2) {
       font-size: 13px;
