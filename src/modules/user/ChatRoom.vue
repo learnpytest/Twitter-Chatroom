@@ -64,6 +64,14 @@ export default {
       currentUser: {},
     };
   },
+  mounted() {
+    // window.addEventListener("mouseOver", function (e) {
+    //   socket.emit("mouseMove", {
+    //     x: e.pageX,
+    //     y: e.pageY,
+    //   });
+    // });
+  },
   methods: {
     sendMessage() {
       // emit事件給server
@@ -87,12 +95,9 @@ export default {
   },
   created() {
     this.fetchCurrentUser();
-    // this.messages = [...this.$store.state.allMessages];
-    // this.userName = [...this.$store.state.allMessages.map(msg=>msg.name)]
   },
   computed: {
     ...mapState({
-      // allMessages: (state) => state.allMessages,
       allMessages: "allMessages",
     }),
   },
@@ -156,7 +161,7 @@ export default {
 }
 
 .chat-wrapper {
-  height: 100%;
+  // height: 100%;
   padding: 15px;
 }
 
