@@ -1,7 +1,7 @@
 import axios from "axios";
 // import store from "../../store"
 
-const baseURL = "https://twitter-llrs-chatroom.herokuapp.com/api";
+const baseURL = "https://twitter-llrs-api.herokuapp.com/api";
 
 const axiosInstance = axios.create({
   baseURL,

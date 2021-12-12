@@ -12,16 +12,16 @@
       <div class="online-users">
         <div class="header">
           <div class="header-info">
-            <p>上線使用者 (5)</p>
+            <p>上線使用者 ({{ allUsers.length }})</p>
           </div>
         </div>
 
         <div class="active-users">
-          <div class="active-user">
-            <img src="./../assets/images/Photo_user1.png" alt="" />
-            <p class="user-name">Jess</p>
+          <div class="active-user" v-for="user in allUsers" :key="user.id">
+            <img :src="user.avatar" alt="" />
+            <p class="user-name">{{ user.name }}</p>
 
-            <p class="user-id">@jess</p>
+            <p class="user-id">@{{ user.account }}</p>
           </div>
         </div>
       </div>
@@ -34,9 +34,13 @@ import Sidebar from "../modules/user/Sidebar.vue";
 import NewTweetModal from "../modules/user/NewTweetModal.vue";
 import ChatRoom from "../modules/user/ChatRoom.vue";
 
+import currentUserAPI from "@/apis/currentUserAPI";
+
 // import io from "socket.io-client";
 
 import socket from "../main";
+
+import { mapState } from "vuex";
 
 export default {
   components: {
@@ -44,18 +48,17 @@ export default {
     NewTweetModal,
     ChatRoom,
   },
-  beforeRouteUpdate() {
-    this.$socket.connect();
+  beforeRouteLeave(to, from, next) {
+    socket.emit("leaved", this.currentUser);
+    next();
   },
+
   sockets: {
     connect() {
       console.log("socket connected");
     },
     disconnect() {
       console.log("socket disconnected!!!!!!!!!!!");
-    },
-    users: function (data) {
-      this.users = data;
     },
     userConnected: function (data) {
       this.messages.push(data);
@@ -72,27 +75,64 @@ export default {
     Created: function (data) {
       console.log("publichroom.js Created", data);
     },
+    joined: function (obj) {
+      console.log("publicroom", obj);
+    },
+    newUserReady: function (obj) {
+      console.log("publicroom newUserReady", obj);
+      this.$store.state.newUserReady = { ...obj };
+    },
   },
   data() {
     return {
       showModal: false,
       showReplyModal: false,
       userName: "Louis",
+      currentUser: {},
     };
   },
-  mounted() {
-    // this.$socket.on("allMessages", (obj) => {
-    //   console.log(obj);
-    // });
-    // io.on("allMessages", (obj) => {
-    //   console.log(obj);
-    // });
-  },
+
   created() {
+    window.onbeforeunload = () => {
+      socket.emit("leaved", this.currentUser);
+    };
+
+    this.fetchCurrentUser();
     socket.emit("Created", "StartPublicChatroom");
+  },
+  computed: {
+    ...mapState({
+      allUsers: "allUsers",
+    }),
   },
 
   methods: {
+    newUser() {
+      socket.emit("user", { ...this.currentUser });
+      socket.emit("joined", {
+        id: this.currentUser.id,
+        name: this.currentUser.name,
+        message: 0,
+        type: 1,
+      });
+    },
+
+    async fetchCurrentUser() {
+      try {
+        const res = await currentUserAPI.getCurrentUser();
+        const { data, statusText } = res;
+
+        if (statusText !== "OK") {
+          throw new Error(statusText);
+        }
+        this.currentUser = { ...data };
+        this.newUser();
+        // socket.emit("joined", this.currentUser);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
     modalToggle() {
       if (!this.showModal) {
         this.showModal = true;

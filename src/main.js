@@ -22,11 +22,15 @@ const socketOptions = {
   transports: ["websocket", "polling"],
 };
 
-// const socket = io("http://localhost:3000", socketOptions);
 const socket = io(
   "http://2dd8-2001-b011-e-59a3-9de1-69a7-7562-a92f.ngrok.io/",
   socketOptions
 );
+
+// const socket = io(
+//   "https://twitter-llrs-chatroom.herokuapp.com/",
+//   socketOptions
+// );
 
 socket.onAny((event, ...args) => {
   console.log("main.js收到的資訊", event, args);
@@ -83,11 +87,52 @@ export const vm = new Vue({
       store.state.allMessages = [...data];
     },
     newMessage: function (obj) {
-      console.log("main.js newMessage", obj);
+      console.log("使用者加入", obj);
       store.state.allMessages.push({
-        ...obj
+        ...obj,
       });
-      console.log("store state", store.state.allMessages);
+    },
+    allUsers: function (data) {
+      console.log("main.js allUsers", data);
+      store.state.allUsers = [...data];
+    },
+    newUser: function (obj) {
+      const isExisted = store.state.allUsers.find((user) => user.id === obj.id);
+      if (isExisted) return;
+      store.state.allUsers.push({
+        ...obj,
+      });
+    },
+    joined: function (obj) {
+      socket.emit("message", {
+        id: obj.id,
+        name: obj.name,
+        message: 0,
+        type: 1,
+      });
+    },
+    // joined: function (obj) {
+    //   const isExisted = store.state.allUsers.find((user) => user.id === obj.id);
+    //   if (isExisted) return;
+    //   // store.state.allUsers.filter((user) => user.id !== obj.id);
+    //   socket.emit("message", {
+    //     id: obj.id,
+    //     name: obj.name,
+    //     message: 0,
+    //     type: -1,
+    //   });
+    // },
+
+    leaved: function (obj) {
+      const isExisted = store.state.allUsers.find((user) => user.id === obj.id);
+      if (!isExisted) return;
+      store.state.allUsers.filter((user) => user.id === obj.id);
+      socket.emit("message", {
+        id: obj.id,
+        name: obj.name,
+        message: 0,
+        type: -1,
+      });
     },
   },
   render: (h) => h(App),

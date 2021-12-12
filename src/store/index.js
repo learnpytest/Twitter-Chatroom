@@ -21,6 +21,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     allMessages: [],
+    allUsers: [],
+    newUserReady: {},
   },
   mutations: {},
   actions: {},
