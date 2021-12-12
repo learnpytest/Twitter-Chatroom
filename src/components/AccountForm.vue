@@ -22,7 +22,7 @@
       <div class="limit-error">
         <!-- todo error message -->
         <span class="warning-text" v-if="account.length >= 20"
-          >賬號字數不可超過 20 字</span
+          >帳號字數不可超過 20 字</span
         >
         <p>{{ accountCharactersLeft }}</p>
       </div>
@@ -40,7 +40,7 @@
       />
       <div class="limit-error">
         <!-- todo error message -->
-        <span class="warning-text" v-if="username.length >= 50"
+        <span class="warning-text" v-if="username.length >= 51"
           >名稱字數不可超過 50 字</span
         >
         <p>{{ nameCharactersLeft }}</p>
@@ -96,8 +96,6 @@
 </template>
 
 <script>
-// import { mapActions, mapGetters } from "vuex";
-// import { SET_ACCOUNT_INFO, GET_CURRENT_USER } from "../store/store-types";
 import { SET_ACCOUNT_INFO } from "../store/store-types";
 import { mapActions } from "vuex";
 

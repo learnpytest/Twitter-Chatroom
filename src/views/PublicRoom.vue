@@ -34,20 +34,54 @@ import Sidebar from "../modules/user/Sidebar.vue";
 import NewTweetModal from "../modules/user/NewTweetModal.vue";
 import ChatRoom from "../modules/user/ChatRoom.vue";
 
+// import io from "socket.io-client";
+
 export default {
   components: {
     Sidebar,
     NewTweetModal,
     ChatRoom,
   },
-
-  // },
+  beforeRouteUpdate() {
+    this.$socket.connect();
+  },
+  sockets: {
+    connect() {
+      console.log("socket connected");
+    },
+    disconnect() {
+      console.log("socket disconnected!!!!!!!!!!!");
+    },
+    users: function (data) {
+      this.users = data;
+    },
+    userConnected: function (data) {
+      this.messages.push(data);
+    },
+    userDisconnected: function (data) {
+      this.messages.push(data);
+    },
+    chatMessage: function (data) {
+      this.messages.push(data);
+    },
+    allMessages: function (data) {
+      console.log("publichroom.js allMessages", data);
+    },
+  },
   data() {
     return {
       showModal: false,
       showReplyModal: false,
       userName: "Louis",
     };
+  },
+  mounted() {
+    this.$socket.on("allMessages", (obj) => {
+      console.log(obj);
+    });
+    // io.on("allMessages", (obj) => {
+    //   console.log(obj);
+    // });
   },
   created() {},
 

@@ -10,7 +10,7 @@
       <div class="follow-card_info">
         <p class="user-name">{{ following.name }}</p>
         <p class="user-info">@{{ following.account }}</p>
-        <p>{{ following.introduction }}</p>
+        <p class="user-intro">{{ following.introduction }}</p>
       </div>
       <div class="follow-btn" v-if="following.isFollowed">
         <button
@@ -20,9 +20,14 @@
           正在跟隨
         </button>
       </div>
-      <!-- <div class="follow-btn" v-else>
-        <button class="follower-btn">跟隨</button>
-      </div> -->
+      <div class="follow-btn" v-else>
+        <button
+          class="follower-btn"
+          @click.stop.prevent="post(following.followingId)"
+        >
+          跟隨
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -34,6 +39,7 @@ import {
   GET_CURRENT_USER_FOLLOWINGS,
   SET_CURRENT_USER_FOLLOWINGS,
   DELETE_FOLLOWSHIP,
+  POST_FOLLOWSHIP,
 } from "../../store/store-types";
 export default {
   name: "UserFollowings",
@@ -48,11 +54,15 @@ export default {
     cancel(followingId) {
       const userId = this.$route.params.id;
       this.cancelFollow({ followingId, userId });
+    },
+    post(followingId) {
+      const userId = this.$route.params.id;
+      this.postFollowship({ followingId, userId });
       // this.$store.dispatch(SET_CURRENT_USER_FOLLOWINGS, userId);
     },
     ...mapActions({
-      // setCurrentUserFollowings: SET_CURRENT_USER_FOLLOWINGS,
       cancelFollow: DELETE_FOLLOWSHIP,
+      postFollowship: POST_FOLLOWSHIP,
     }),
   },
   computed: {
@@ -117,5 +127,8 @@ export default {
 }
 .user-name {
   font-weight: var(--fw-bold);
+}
+.user-intro {
+  word-break: break-all;
 }
 </style>

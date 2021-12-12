@@ -19,7 +19,9 @@ import likeship from "./modules/likeship";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
+  state: {
+    allMessages: [],
+  },
   mutations: {},
   actions: {},
   modules: {

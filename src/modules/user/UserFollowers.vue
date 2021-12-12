@@ -131,7 +131,6 @@ export default {
 .user-name {
   font-weight: var(--fw-bold);
 }
-
 .user-intro {
   word-break: break-all;
 }

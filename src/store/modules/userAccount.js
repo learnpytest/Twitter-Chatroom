@@ -83,21 +83,28 @@ const actions = {
         checkPassword,
       });
 
+      // if (res.data.status !== "success") {
+      //   if (res.data.message === "Email has already existed!") {
+      //     dispatch(ADD_NOTIFICATION, {
+      //       type: "error",
+      //       message: "「email 已重覆註冊！」",
+      //     });
+      //     return;
+      //   }
+      //   if (res.data.message === "Account has already existed!") {
+      //     dispatch(ADD_NOTIFICATION, {
+      //       type: "error",
+      //       message: "「account 已重覆註冊！」",
+      //     });
+      //     return;
+      //   }
+      // }
       if (res.data.status !== "success") {
-        if (res.data.message === "Email has already existed!") {
-          dispatch(ADD_NOTIFICATION, {
-            type: "error",
-            message: "「email 已重覆註冊！」",
-          });
-          return;
-        }
-        if (res.data.message === "Account has already existed!") {
-          dispatch(ADD_NOTIFICATION, {
-            type: "error",
-            message: "「account 已重覆註冊！」",
-          });
-          return;
-        }
+        dispatch(ADD_NOTIFICATION, {
+          type: "error",
+          message: res.data.message,
+        });
+        return;
       }
       // 導向登入頁提示註冊成功
       vm.$router.push("/login");
@@ -114,7 +121,7 @@ const actions = {
     state,
     dispatch
   }) => {
-    // todo 必填欄位與密碼確認的提示
+    // 必填欄位與密碼確認的提示
     const {
       account,
       username: name,
@@ -152,20 +159,20 @@ const actions = {
         return;
       }
 
-      if (res.data.message === " email 已重覆註冊!") {
-        dispatch(ADD_NOTIFICATION, {
-          type: "error",
-          message: "email 已重覆註冊!",
-        });
-        return;
-      }
-      if (res.data.message === "不可編輯他人的帳號資訊") {
-        dispatch(ADD_NOTIFICATION, {
-          type: "error",
-          message: "請登出重試",
-        });
-        return;
-      }
+      // if (res.data.message === " email 已重覆註冊!") {
+      //   dispatch(ADD_NOTIFICATION, {
+      //     type: "error",
+      //     message: "email 已重覆註冊!",
+      //   });
+      //   return;
+      // }
+      // if (res.data.message === "不可編輯他人的帳號資訊") {
+      //   dispatch(ADD_NOTIFICATION, {
+      //     type: "error",
+      //     message: "請登出重試",
+      //   });
+      //   return;
+      // }
 
       dispatch(ADD_NOTIFICATION, {
         type: "error",

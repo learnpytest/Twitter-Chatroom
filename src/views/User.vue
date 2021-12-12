@@ -88,7 +88,7 @@ import ReplyTweetModal from "../modules/user/ReplyTweetModal.vue";
 
 import usersAPI from "./../apis/usersAPI";
 import tweetsApi from "./../apis/tweets";
-
+import currentUserAPI from "@/apis/currentUserAPI";
 export default {
   components: {
     Popular,
@@ -131,17 +131,55 @@ export default {
     next();
   },
   methods: {
-    updateFollow() {
-      this.userObj = {
-        ...this.useObj,
-        FollowingsCount: this.userObj.FollowingsCount + 1,
-      };
+    async updateFollow(followingId) {
+      try {
+        const res = await currentUserAPI.getCurrentUser();
+        const { data, statusText } = res;
+        if (statusText !== "OK") {
+          throw new Error(statusText);
+        }
+
+        const currentUserIdForCheck = data.id;
+        if (currentUserIdForCheck === this.userObj.UserId) {
+          // 判斷this.userObj.UserId如果是當前使用者要做下面的事
+          console.log(followingId, "currentuser");
+          let FollowingsCount = this.userObj.FollowingsCount + 1;
+          this.userObj = { ...this.userObj, FollowingsCount };
+          return;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+
+      if (followingId === this.userObj.UserId) {
+        let FollowingsCount = this.userObj.FollowingsCount + 1;
+        this.userObj = { ...this.userObj, FollowingsCount };
+      }
     },
-    updateCancel() {
-      this.userObj = {
-        ...this.useObj,
-        FollowingsCount: this.userObj.FollowingsCount - 1,
-      };
+    async updateCancel(followingId) {
+      try {
+        const res = await currentUserAPI.getCurrentUser();
+        const { data, statusText } = res;
+        if (statusText !== "OK") {
+          throw new Error(statusText);
+        }
+
+        const currentUserIdForCheck = data.id;
+        if (currentUserIdForCheck === this.userObj.UserId) {
+          // 判斷this.userObj.UserId如果是當前使用者要做下面的事
+          console.log(followingId, "currentuser");
+          let FollowingsCount = this.userObj.FollowingsCount - 1;
+          this.userObj = { ...this.userObj, FollowingsCount };
+          return;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+
+      if (followingId === this.userObj.UserId) {
+        let FollowingsCount = this.userObj.FollowingsCount - 1;
+        this.userObj = { ...this.userObj, FollowingsCount };
+      }
     },
 
     replyModalToggle(tweetId) {
