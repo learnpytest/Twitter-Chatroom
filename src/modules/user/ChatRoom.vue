@@ -156,7 +156,6 @@ export default {
 }
 
 .chat-wrapper {
-  height: 100%;
   padding: 15px;
 }
 
@@ -169,6 +168,7 @@ export default {
 
 .chat-field {
   border-top: 1px solid $gray-75;
+  background-color: $white;
   padding: 11px 20px;
   position: sticky;
   position: -webkit-fixed;
@@ -203,9 +203,9 @@ export default {
   padding-left: 15px;
   font-weight: var(--fw-bolder);
   width: 100%;
+  background-color: $white;
   position: sticky;
   top: 0;
-  background-color: $white;
   .header-info {
     :nth-child(2) {
       font-size: 13px;
