@@ -170,6 +170,7 @@ export default {
 }
 .chat-room {
   width: 44.5%;
+  overflow-y: scroll;
 }
 .header {
   display: flex;
