@@ -143,6 +143,9 @@
   padding-left: 15px;
   font-weight: var(--fw-bolder);
   width: 100%;
+  position: sticky;
+  top: 0;
+  background-color: $white;
   .header-info {
     :nth-child(2) {
       font-size: 13px;

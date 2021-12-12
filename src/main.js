@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import VueSocketIO from "vue-socket.io";
+import SocketIO from "socket.io-client";
 
 // import "@fortawesome/fontawesome-free/css/all.css";
 // import "@fortawesome/fontawesome-free/js/all.js";
@@ -10,18 +11,18 @@ import VueSocketIO from "vue-socket.io";
 Vue.use(
   new VueSocketIO({
     debug: true,
-    connection: "http://metinseylan.com:1992",
+    connection: SocketIO("https://twitter-llrs-chatroom.herokuapp.com/"), //options object is Optional
     vuex: {
       store,
       actionPrefix: "SOCKET_",
       mutationPrefix: "SOCKET_",
     },
-    options: { path: "/my-app/" }, //Optional options
   })
 );
 
 new Vue({
   router,
   store,
+
   render: (h) => h(App),
 }).$mount("#app");

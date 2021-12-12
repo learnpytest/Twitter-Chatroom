@@ -20,7 +20,7 @@
           <div class="active-user">
             <img src="./../assets/images/Photo_user1.png" alt="" />
             <p class="user-name">Jess</p>
-         
+
             <p class="user-id">@jess</p>
           </div>
         </div>
@@ -40,13 +40,17 @@ export default {
     NewTweetModal,
     ChatRoom,
   },
+
+  // },
   data() {
     return {
       showModal: false,
       showReplyModal: false,
+      userName: "Louis",
     };
   },
   created() {},
+
   methods: {
     modalToggle() {
       if (!this.showModal) {
@@ -64,6 +68,10 @@ export default {
         this.replyTweetId = "";
         this.showReplyModal = false;
       }
+    },
+    clickButton: function (data) {
+      // $socket is socket.io-client instance
+      this.$socket.emit("emit_method", data);
     },
   },
 };
@@ -137,6 +145,8 @@ export default {
   padding-left: 15px;
   font-weight: var(--fw-bolder);
   background-color: $white;
+  position: sticky;
+  top: 0;
   .header-info {
     :nth-child(2) {
       font-size: 13px;
