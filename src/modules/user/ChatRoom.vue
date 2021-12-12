@@ -5,11 +5,12 @@
         <p>公開聊天室</p>
       </div>
     </div>
-    <div class="chat-wrapper">
-      <div class="online-box center">
+    <div class="chat-wrapper" v-for="(item, index) in allMessages" :key="index">
+      <!-- <div class="online-box center">
         <span class="online-text">Jess 上線</span>
-      </div>
-      <div class="reply-box">
+      </div> -->
+
+      <div class="reply-box" v-if="item.name !== currentUser.name">
         <div class="reply-text-info bottom-align">
           <img
             class="user-pic"
@@ -17,28 +18,87 @@
             alt=""
           />
           <div class="reply-text-time">
-            <div class="reply-text">你好</div>
+            <div class="reply-text">{{ item.message }}</div>
           </div>
         </div>
         <p class="reply-time">下午6:02</p>
       </div>
 
-      <div class="sent-box right">
-        <div class="sent-text">LOL</div>
+      <div v-if="item.name === currentUser.name" class="sent-box right">
+        <div class="sent-text">{{ item.message }}</div>
         <p class="sent-time">下午6:02</p>
       </div>
-      <div class="online-box center">
+      <!-- <div class="online-box center">
         <span class="online-text">Jess 下線</span>
-      </div>
+      </div> -->
     </div>
     <div class="chat-field">
-      <input type="text" id="sendtxt" placeholder="輸入訊息..." />
-      <button class="sendBtn">
+      <input
+        type="text"
+        id="sendtxt"
+        placeholder="輸入訊息..."
+        v-model="temp.message"
+      />
+      <button class="sendBtn" @click="sendMessage">
         <img src="./../../assets/images/send_button.png" />
       </button>
     </div>
   </div>
 </template>
+<script>
+import socket from "../../main";
+import { mapState } from "vuex";
+import currentUserAPI from "@/apis/currentUserAPI";
+
+export default {
+  name: "ChatRooom",
+  data() {
+    return {
+      messages: [],
+      userName: [],
+      temp: {
+        message: "",
+        name: "",
+      },
+      isNewuserComeIn: false,
+      currentUser: {},
+    };
+  },
+  methods: {
+    sendMessage() {
+      // emit事件給server
+      this.temp.name = this.currentUser.name;
+      socket.emit("message", this.temp);
+      this.temp.message = "";
+    },
+    async fetchCurrentUser() {
+      try {
+        const res = await currentUserAPI.getCurrentUser();
+        const { data, statusText } = res;
+
+        if (statusText !== "OK") {
+          throw new Error(statusText);
+        }
+        this.currentUser = { ...data };
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  },
+  created() {
+    this.fetchCurrentUser();
+    // this.messages = [...this.$store.state.allMessages];
+    // this.userName = [...this.$store.state.allMessages.map(msg=>msg.name)]
+  },
+  computed: {
+    ...mapState({
+      // allMessages: (state) => state.allMessages,
+      allMessages: "allMessages",
+    }),
+  },
+};
+</script>
+
 <style lang="scss" scoped>
 @import "./src/assets/scss/main.scss";
 

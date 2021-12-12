@@ -20,7 +20,7 @@
           <div class="active-user">
             <img src="./../assets/images/Photo_user1.png" alt="" />
             <p class="user-name">Jess</p>
-         
+
             <p class="user-id">@jess</p>
           </div>
         </div>
@@ -34,17 +34,53 @@ import Sidebar from "../modules/user/Sidebar.vue";
 import NewTweetModal from "../modules/user/NewTweetModal.vue";
 import ChatRoom from "../modules/user/ChatRoom.vue";
 
+// import io from "socket.io-client";
+
 export default {
   components: {
     Sidebar,
     NewTweetModal,
     ChatRoom,
   },
+  beforeRouteUpdate() {
+    this.$socket.connect();
+  },
+  sockets: {
+    connect() {
+      console.log("socket connected");
+    },
+    disconnect() {
+      console.log("socket disconnected!!!!!!!!!!!");
+    },
+    users: function (data) {
+      this.users = data;
+    },
+    userConnected: function (data) {
+      this.messages.push(data);
+    },
+    userDisconnected: function (data) {
+      this.messages.push(data);
+    },
+    chatMessage: function (data) {
+      this.messages.push(data);
+    },
+    allMessages: function (data) {
+      console.log("publichroom.js allMessages", data);
+    },
+  },
   data() {
     return {
       showModal: false,
       showReplyModal: false,
     };
+  },
+  mounted() {
+    this.$socket.on("allMessages", (obj) => {
+      console.log(obj);
+    });
+    // io.on("allMessages", (obj) => {
+    //   console.log(obj);
+    // });
   },
   created() {},
   methods: {
